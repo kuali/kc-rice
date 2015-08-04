@@ -16,7 +16,6 @@
 package org.kuali.rice.kcb.quartz;
 
 import org.apache.log4j.Logger;
-import org.kuali.rice.core.framework.persistence.dao.GenericDao;
 import org.kuali.rice.kcb.bo.Message;
 import org.kuali.rice.kcb.bo.MessageDelivery;
 import org.kuali.rice.kcb.bo.MessageDeliveryStatus;
@@ -287,7 +286,7 @@ public class MessageProcessingJob extends ConcurrentJob<MessageDelivery> impleme
         for (MessageDelivery md: result.getSuccesses()) {
             messageIds.add(md.getMessage().getId());
         }
-        MessageService ms = GlobalKCBServiceLocator.getInstance().getMessageService();
+        MessageService ms = GlobalKCBServiceLocator.getInstance().getKcbMessageService();
         for (Long id: messageIds) {
             LOG.debug("Finishing processing message " + id);
             //if (Mode.REMOVE == mode) {

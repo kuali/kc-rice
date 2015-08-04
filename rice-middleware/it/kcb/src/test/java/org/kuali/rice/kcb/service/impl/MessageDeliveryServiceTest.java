@@ -49,7 +49,7 @@ public class MessageDeliveryServiceTest extends KCBTestCase {
     public void setUp() throws Exception {
         super.setUp();
 
-        messageService = GlobalKCBServiceLocator.getInstance().getMessageService();
+        messageService = GlobalKCBServiceLocator.getInstance().getKcbMessageService();
         messageDeliveryService = GlobalKCBServiceLocator.getInstance().getMessageDeliveryService();
 
         MESSAGE = KCBTestData.getMessage1();

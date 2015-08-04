@@ -84,7 +84,7 @@
 		<property name="serviceName" value="kimRoleDao" />
 	</bean>
 
-	<bean id="lookupableHelperService" class="org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl">
+	<bean id="lookupableHelperService" class="org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl" scope="prototype">
 		<property name="persistenceStructureService">
 			<ref bean="rice.kim.import.persistenceStructureService" />
 		</property>

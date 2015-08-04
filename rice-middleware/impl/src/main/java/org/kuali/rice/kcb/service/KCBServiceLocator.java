@@ -15,7 +15,6 @@
  */
 package org.kuali.rice.kcb.service;
 
-import org.kuali.rice.core.framework.persistence.dao.GenericDao;
 import org.kuali.rice.kcb.api.service.MessagingService;
 import org.quartz.JobDetail;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -28,7 +27,7 @@ public interface KCBServiceLocator {
     public JobDetail getMessageProcessingJobDetail();
     public PlatformTransactionManager getTransactionManager();
     public MessageDeliveryService getMessageDeliveryService();
-    public MessageService getMessageService();
+    public MessageService getKcbMessageService();
     public MessagingService getMessagingService();
     public MessageDelivererRegistryService getMessageDelivererRegistryService();
     public EmailService getEmailService();

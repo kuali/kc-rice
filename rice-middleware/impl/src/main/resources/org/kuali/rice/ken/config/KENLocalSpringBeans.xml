@@ -210,7 +210,7 @@
             <property name="beanNames">
                 <list>
                     <value>messagingService</value>
-                    <value>messageService</value>
+                    <value>kcbMessageService</value>
                     <value>messageDeliveryService</value>
                     <value>messageDelivererRegistryService</value>
                     <value>recipientPreferenceService</value>
@@ -226,13 +226,13 @@
         <bean id="messagingService" class="org.kuali.rice.kcb.service.impl.MessagingServiceImpl">
             <property name="jobName"><value>${kcb.quartz.job.name}</value></property>
             <property name="jobGroup"><value>${kcb.quartz.group}</value></property>
-            <property name="messageService"><ref local="messageService"/></property>
+            <property name="messageService"><ref local="kcbMessageService"/></property>
             <property name="messageDeliveryService"><ref local="messageDeliveryService"/></property>
             <property name="recipientPreferenceService"><ref local="recipientPreferenceService"/></property>
             <property name="synchronous"><value>${kcb.messaging.synchronous}</value></property>
         </bean>
 
-        <bean id="messageService" class="org.kuali.rice.kcb.service.impl.MessageServiceImpl">
+        <bean id="kcbMessageService" class="org.kuali.rice.kcb.service.impl.MessageServiceImpl">
             <property name="dataObjectService"><ref local="dataObjectService"/></property>
         </bean>
 

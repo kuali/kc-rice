@@ -107,6 +107,8 @@
   * Travis Schneeberger on Tue, 21 Jul 2015 13:23:21 -0400 [View Commit](../../commit/8fa0c7eca5a5f5b80d9ed8e217a80cf05e576aa4)
 *  on a lookup, if the type is a string but all the values are integral or decimal treat the table sort behavior as integral or decimal
   * Travis Schneeberger on Wed, 22 Jul 2015 13:05:32 -0400 [View Commit](../../commit/36a59211aec6df59bae6b1e25669842164e09674)
+*  fixing several spring configuration issues.  Fixing lookup bean to be prototype as it should be.  Fixing MessageService bean name so that it doesn't conflict with the krad MessageService.  Fix the kualiMaintainable bean so it doesn't fail when requested.
+  * Travis Schneeberger on Tue, 4 Aug 2015 15:51:10 -0400 [View Commit](../../commit/9000b435a112c1a40d2add62837bf308aed3e6db)
 
 ##rice-2.5.4.6-kckualico
 * No Changes
@@ -143,6 +145,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1507.17-kckualico
+*  on a lookup, if the type is a string but all the values are integral or decimal treat the table sort behavior as integral or decimal
+  * Travis Schneeberger on Wed, 22 Jul 2015 13:05:32 -0400 [View Commit](../../commit/36a59211aec6df59bae6b1e25669842164e09674)
 
 ##rice-2.5.3.1507.16-kckualico
 * moving completely to bitronix. Removing xapool & jotm support

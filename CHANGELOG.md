@@ -111,6 +111,8 @@
   * Travis Schneeberger on Tue, 4 Aug 2015 15:51:10 -0400 [View Commit](../../commit/9000b435a112c1a40d2add62837bf308aed3e6db)
 * KULRICE-14269 - JPA predicates cause unnecessary SQL joins and performance degradation
   * Travis Schneeberger on Thu, 6 Aug 2015 10:13:52 -0400 [View Commit](../../commit/1ffe1444c8c329ef412ba2d34f443938bff586c3)
+*  if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad
+  * Travis Schneeberger on Thu, 6 Aug 2015 11:41:55 -0400 [View Commit](../../commit/d3e62878859eeae45f2242cf516c8077a4e3d833)
 
 ##rice-2.5.4.6-kckualico
 * No Changes
@@ -147,6 +149,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1508.2-kckualico
+* KULRICE-14269 - JPA predicates cause unnecessary SQL joins and performance degradation
+  * Travis Schneeberger on Thu, 6 Aug 2015 10:13:52 -0400 [View Commit](../../commit/1ffe1444c8c329ef412ba2d34f443938bff586c3)
 
 ##rice-2.5.3.1508.1-kckualico
 *  fixing several spring configuration issues.  Fixing lookup bean to be prototype as it should be.  Fixing MessageService bean name so that it doesn't conflict with the krad MessageService.  Fix the kualiMaintainable bean so it doesn't fail when requested.

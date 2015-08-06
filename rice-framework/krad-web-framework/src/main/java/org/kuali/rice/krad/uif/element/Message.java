@@ -16,6 +16,8 @@
 package org.kuali.rice.krad.uif.element;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.kuali.rice.krad.datadictionary.parse.BeanTag;
 import org.kuali.rice.krad.datadictionary.parse.BeanTagAttribute;
 import org.kuali.rice.krad.datadictionary.parse.BeanTags;
@@ -46,6 +48,7 @@ import java.util.regex.Pattern;
 @BeanTag(name = "message", parent = "Uif-Message")
 public class Message extends ContentElementBase {
     private static final long serialVersionUID = 4090058533452450395L;
+    private static final Log LOG = LogFactory.getLog(Message.class);
 
     // This regex is a check to see if the message is a rich message and it contains potential non-inline elements
     private static Pattern blockElementCheck = Pattern.compile(
@@ -94,9 +97,14 @@ public class Message extends ContentElementBase {
             if (StringUtils.isBlank(wrapperTag) && containsBlockElements) {
                 wrapperTag = UifConstants.WrapperTags.DIV;
             }
-
-            messageComponentStructure = MessageStructureUtils.parseMessage(this.getId(), this.getMessageText(),
-                    this.getInlineComponents(), ViewLifecycle.getView(), parseComponents);
+            try {
+                messageComponentStructure = MessageStructureUtils.parseMessage(this.getId(), this.getMessageText(),
+                        this.getInlineComponents(), ViewLifecycle.getView(), parseComponents);
+            } catch (RuntimeException e) {
+                //this can happen something if characters special to KRAD are used in form input fields (ex: budget [1]).  If a
+                //message can't be parsed then just render as normal
+                LOG.info("unable to parse message " + this.getMessageText() + " for id " + getId(), e);
+            }
         } else if (messageText != null && messageText.contains("<") && messageText.contains(">")) {
             // Straight inline html case
             // Check to see if message contains potential block elements (non-inline)

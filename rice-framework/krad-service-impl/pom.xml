@@ -21,7 +21,7 @@
   <parent>
     <artifactId>rice-framework</artifactId>
     <groupId>org.kuali.rice</groupId>
-   <version>1508.0002-SNAPSHOT</version>
+   <version>1508.0002</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 

@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.kuali.rice</groupId>
     <artifactId>rice-config</artifactId>
-   <version>1508.0002-SNAPSHOT</version>
+   <version>1508.0002</version>
   </parent>
   <artifactId>rice-checkstyle</artifactId>
   <packaging>jar</packaging>

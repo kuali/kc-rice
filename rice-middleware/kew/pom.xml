@@ -20,10 +20,10 @@
   <parent>
     <artifactId>rice-middleware</artifactId>
     <groupId>org.kuali.rice</groupId>
-    <version>1508.0003-SNAPSHOT</version>
+    <version>1508.0003</version>
   </parent>
   <artifactId>rice-kew</artifactId>
-  <version>1508.0003-SNAPSHOT</version>
+  <version>1508.0003</version>
   <packaging>pom</packaging>
   <name>Rice KEW</name>
   <modules>

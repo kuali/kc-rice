@@ -20,11 +20,11 @@
   <parent>
     <artifactId>rice-kew</artifactId>
     <groupId>org.kuali.rice</groupId>
-    <version>1508.0003-SNAPSHOT</version>
+    <version>1508.0003</version>
   </parent>
   <groupId>org.kuali.rice</groupId>
   <artifactId>rice-kew-impl</artifactId>
-  <version>1508.0003-SNAPSHOT</version>
+  <version>1508.0003</version>
   <name>Rice KEW Impl</name>
 
   <dependencies>

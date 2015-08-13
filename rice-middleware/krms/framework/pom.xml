@@ -21,7 +21,7 @@
   <parent>
     <artifactId>rice-krms</artifactId>
     <groupId>org.kuali.rice</groupId>
-   <version>1508.0003</version>
+   <version>1508.0004-SNAPSHOT</version>
   </parent>
   <artifactId>rice-krms-framework</artifactId>
   <name>Rice KRMS Framework</name>

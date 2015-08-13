@@ -21,7 +21,7 @@
     <parent>
         <artifactId>rice-middleware</artifactId>
         <groupId>org.kuali.rice</groupId>
-        <version>1508.0003</version>
+        <version>1508.0004-SNAPSHOT</version>
     </parent>
     <artifactId>rice-location</artifactId>
     <name>Rice Location</name>

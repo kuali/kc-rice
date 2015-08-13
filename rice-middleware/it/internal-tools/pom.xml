@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.kuali.rice</groupId>
     <artifactId>rice-it</artifactId>
-   <version>1508.0002</version>
+   <version>1508.0003-SNAPSHOT</version>
   </parent>
   <artifactId>rice-it-internal-tools</artifactId>
 

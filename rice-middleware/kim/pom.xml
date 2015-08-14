@@ -22,7 +22,7 @@
     <parent>
         <artifactId>rice-middleware</artifactId>
         <groupId>org.kuali.rice</groupId>
-        <version>1508.0004</version>
+        <version>1508.0005-SNAPSHOT</version>
     </parent>
     <artifactId>rice-kim</artifactId>
 

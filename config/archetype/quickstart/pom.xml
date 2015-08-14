@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.kuali.rice</groupId>
     <artifactId>rice-archetype</artifactId>
-   <version>1508.0004</version>
+   <version>1508.0005-SNAPSHOT</version>
   </parent>
   <artifactId>rice-archetype-quickstart</artifactId>
   <packaging>maven-archetype</packaging>

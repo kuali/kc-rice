@@ -21,7 +21,7 @@
     <parent>
         <artifactId>rice-location</artifactId>
         <groupId>org.kuali.rice</groupId>
-        <version>1508.0004-SNAPSHOT</version>
+        <version>1508.0004</version>
     </parent>
     <artifactId>rice-location-framework</artifactId>
     <name>Rice Location Framework</name>

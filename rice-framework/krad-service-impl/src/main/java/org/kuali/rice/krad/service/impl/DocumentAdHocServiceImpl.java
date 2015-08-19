@@ -45,21 +45,35 @@ public class DocumentAdHocServiceImpl implements DocumentAdHocService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void replaceAdHocsForDocument( String documentNumber, List<AdHocRouteRecipient> adHocRoutingRecipients ) {
-		if ( StringUtils.isBlank(documentNumber) ) {
+	public void replaceAdHocsForDocument(Document document) {
+		if ( document == null || StringUtils.isBlank(document.getDocumentNumber())) {
 			return;
 		}
-		dataObjectService.deleteMatching( AdHocRoutePerson.class,
-				QueryByCriteria.Builder.forAttribute("documentNumber", documentNumber).build() );
-		dataObjectService.deleteMatching( AdHocRouteWorkgroup.class,
-				QueryByCriteria.Builder.forAttribute("documentNumber", documentNumber).build() );
+		dataObjectService.deleteMatching(AdHocRoutePerson.class, QueryByCriteria.Builder.forAttribute("documentNumber",
+				document.getDocumentNumber()).build());
+		dataObjectService.deleteMatching(AdHocRouteWorkgroup.class, QueryByCriteria.Builder.forAttribute(
+				"documentNumber", document.getDocumentNumber()).build());
 
-		if ( adHocRoutingRecipients != null ) {
-			for ( AdHocRouteRecipient recipient : adHocRoutingRecipients ) {
+
+
+		document.setAdHocRoutePersons(saveAdHocRouteRecipients(document.getDocumentNumber(),
+				document.getAdHocRoutePersons()));
+		document.getAdHocRoutePersons().forEach(AdHocRoutePerson::getPerson);
+
+		document.setAdHocRouteWorkgroups(saveAdHocRouteRecipients(document.getDocumentNumber(),
+				document.getAdHocRouteWorkgroups()));
+		document.getAdHocRouteWorkgroups().forEach(adHocRouteWorkgroup -> adHocRouteWorkgroup.setId(adHocRouteWorkgroup.getId()));
+	}
+
+	protected <T extends AdHocRouteRecipient> List<T> saveAdHocRouteRecipients(String documentNumber, List<T> adHocRouteRecipients) {
+		final List<T> savedAdHocRouteWorkgroup = new ArrayList<>();
+		if (adHocRouteRecipients != null) {
+			for (T recipient : adHocRouteRecipients) {
 				recipient.setdocumentNumber(documentNumber);
-				dataObjectService.save(recipient);
+				savedAdHocRouteWorkgroup.add(dataObjectService.save(recipient));
 			}
 		}
+		return savedAdHocRouteWorkgroup;
 	}
 
 	/**

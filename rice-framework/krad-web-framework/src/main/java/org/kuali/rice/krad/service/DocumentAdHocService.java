@@ -33,15 +33,12 @@ public interface DocumentAdHocService {
 	 * This method populates the given {@link Document} with the {@link AdHocRoutePerson}s and {@link AdHocRouteWorkgroup}s
 	 * that are associated with it.
 	 *
-	 * @param doc
 	 */
 	void addAdHocs(Document doc);
 
 	/**
-	 * This method replaces the current ad-hoc recipients for a given document with the provided list.
+	 * This method replaces the current ad-hoc recipients for a given document.
 	 *
-	 * @param documentNumber Document Number to which to attach the route log recipients.  All existing stored ad-hoc recipients will be deleted.
-	 * @param adHocRoutingRecipients New list of ad-hoc recipients (Persons and Workgroups) which will be attached to the document.
 	 */
-	void replaceAdHocsForDocument( String documentNumber, List<AdHocRouteRecipient> adHocRoutingRecipients );
+	void replaceAdHocsForDocument(Document doc);
 }

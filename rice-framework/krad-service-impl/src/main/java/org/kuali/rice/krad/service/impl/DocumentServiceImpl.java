@@ -494,11 +494,8 @@ public class DocumentServiceImpl implements DocumentService {
          * Using this method to wrap validateAndPersistDocument to keep everything in one transaction. This avoids modifying the
          * signature on validateAndPersistDocument method
          */
-        List<AdHocRouteRecipient> adHocRoutingRecipients = new ArrayList<AdHocRouteRecipient>();
-        adHocRoutingRecipients.addAll(document.getAdHocRoutePersons());
-        adHocRoutingRecipients.addAll(document.getAdHocRouteWorkgroups());
 
-        documentAdHocService.replaceAdHocsForDocument( document.getDocumentNumber(), adHocRoutingRecipients );
+        documentAdHocService.replaceAdHocsForDocument(document);
         return validateAndPersistDocument(document, event);
     }
 
@@ -1090,9 +1087,9 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     private void removeAdHocPersonsAndWorkgroups(Document document) {
-    	documentAdHocService.replaceAdHocsForDocument(document.getDocumentNumber(), null);
         document.setAdHocRoutePersons(new ArrayList<AdHocRoutePerson>());
         document.setAdHocRouteWorkgroups(new ArrayList<AdHocRouteWorkgroup>());
+        documentAdHocService.replaceAdHocsForDocument(document);
     }
 
 	@Required

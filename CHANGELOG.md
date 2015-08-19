@@ -1,6 +1,10 @@
 
 
 ##CURRENT
+* return saved adhoc recipient when saving document to avoid sql exception with object id
+  * Joe Williams on Wed, 19 Aug 2015 10:37:36 -0500 [View Commit](../../commit/be92a50bc24329871c9922403c1fb9d2958ccdfb)
+
+##rice-1508.0004
 * No Changes
 
 

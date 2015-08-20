@@ -21,7 +21,7 @@
   <parent>
     <artifactId>rice-middleware</artifactId>
     <groupId>org.kuali.rice</groupId>
-   <version>1508.0006-SNAPSHOT</version>
+   <version>2.5.3.1508.0006-kualico</version>
   </parent>
   <name>Rice KRMS</name>
   <artifactId>rice-krms</artifactId>

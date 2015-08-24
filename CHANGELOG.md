@@ -1,8 +1,18 @@
 
 
 ##CURRENT
-* No Changes
+* fix dummy login page to not allow inactive users to log in
 
+  * Steps:
+
+  * 1.) edit quickstart person record and mark as inactive
+  * 2.) log in as quickstart
+  * 3.) try to do a proposal search get STE.
+
+  * Expected: quickstart shouldn't be able to log in when not active.
+
+  * Actual: quickstart is allowed to log in
+  * Joe Williams on Mon, 24 Aug 2015 13:51:27 -0500 [View Commit](../../commit/589c759f81b01da9d753f60858a35308d22de063)
 
 ##rice-1508.0005
 * return saved adhoc recipient when saving document to avoid sql exception with object id
@@ -179,6 +189,10 @@
   * Travis Schneeberger on Thu, 6 Aug 2015 10:13:52 -0400 [View Commit](../../commit/1ffe1444c8c329ef412ba2d34f443938bff586c3)
 
 ##rice-2.5.3.1508.1-kckualico
+* No Changes
+
+
+##rice-2.5.3.1508.0007-kualico
 * No Changes
 
 

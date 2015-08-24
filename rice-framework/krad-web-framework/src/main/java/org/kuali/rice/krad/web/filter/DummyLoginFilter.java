@@ -115,7 +115,7 @@ public class DummyLoginFilter implements Filter {
         // Very simple password checking. Nothing hashed or encrypted. This is strictly for demonstration purposes only.
         //    password must have non null value on krim_prncpl_t record
         Principal principal = showPassword ? auth.getPrincipalByPrincipalNameAndPassword(user, password) : auth.getPrincipalByPrincipalName(user);
-        if (principal == null) {
+        if (principal == null || !principal.isActive()) {
             handleInvalidLogin(request, response);
             return;
         }

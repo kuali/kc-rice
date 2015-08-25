@@ -69,7 +69,7 @@
             "c${colIndex}": {
 
                 <#-- value used for client side sorting.  Do we need this? -->
-                "val":${manager.richTable.getCellValue(KualiForm, item)?replace("@quot@","\"")},
+                "val":${manager.richTable.getCellValue(KualiForm, item)?js_string?replace("@quot@","\"")},
 
                 <#-- visible content -->
                 "render": "<@jsonEscape><@krad.template component=item/></@jsonEscape>"

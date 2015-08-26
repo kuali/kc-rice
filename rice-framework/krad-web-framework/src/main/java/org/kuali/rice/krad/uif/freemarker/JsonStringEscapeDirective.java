@@ -137,7 +137,7 @@ public class JsonStringEscapeDirective implements TemplateDirectiveModel {
          * @return true if the character needs escaping for inclusion in a JSON string.
          */
         private static boolean isNeedsEscaping(char c) {
-            return (c == '"' || c == '\n' || c == '\r');
+            return (c == '"' || c == '\n' || c == '\r' || c == '\\');
         }
     }
 }

@@ -15,6 +15,8 @@
   * Joe Williams on Mon, 24 Aug 2015 13:51:27 -0500 [View Commit](../../commit/589c759f81b01da9d753f60858a35308d22de063)
 * fix json error when rendering data tables
   * Joe Williams on Tue, 25 Aug 2015 12:16:05 -0500 [View Commit](../../commit/ee1fc1dc18da13280804479754cfd3645f7f1f86)
+* fix data table json string escaping
+  * Joe Williams on Wed, 26 Aug 2015 10:29:32 -0500 [View Commit](../../commit/049c5bd7f89c60c939db543a64ba8ebcd17afb89)
 
 ##rice-1508.0005
 * return saved adhoc recipient when saving document to avoid sql exception with object id
@@ -193,6 +195,10 @@
 ##rice-2.5.3.1508.1-kckualico
 * No Changes
 
+
+##rice-2.5.3.1508.0009-kualico
+* fix json error when rendering data tables
+  * Joe Williams on Tue, 25 Aug 2015 12:16:05 -0500 [View Commit](../../commit/ee1fc1dc18da13280804479754cfd3645f7f1f86)
 
 ##rice-2.5.3.1508.0008-kualico
 * fix dummy login page to not allow inactive users to log in

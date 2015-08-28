@@ -1429,11 +1429,9 @@
                 </pluginExecution>
                 <pluginExecution>
                   <pluginExecutionFilter>
-                    <groupId>au.com.alderaan</groupId>
-                    <artifactId>
-                      eclipselink-staticweave-maven-plugin
-                    </artifactId>
-                    <versionRange>[1.0.4,)</versionRange>
+                    <groupId>de.empulse.eclipselink</groupId>
+                    <artifactId>staticweave-maven-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
                     <goals>
                       <goal>weave</goal>
                     </goals>
@@ -1447,9 +1445,9 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>au.com.alderaan</groupId>
-          <artifactId>eclipselink-staticweave-maven-plugin</artifactId>
-          <version>1.0.4</version>
+          <groupId>de.empulse.eclipselink</groupId>
+          <artifactId>staticweave-maven-plugin</artifactId>
+          <version>1.0.0</version>
           <executions>
             <execution>
               <goals>

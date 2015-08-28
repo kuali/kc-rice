@@ -554,9 +554,9 @@ public class AccountExtension { ...}
             <para>
                 <programlisting><![CDATA[
 <plugin>
-  <groupId>au.com.alderaan</groupId>
-  <artifactId>eclipselink-staticweave-maven-plugin</artifactId>
-  <version>1.0.4</version>
+  <groupId>de.empulse.eclipselink</groupId>
+  <artifactId>staticweave-maven-plugin</artifactId>
+  <version>1.0.0</version>
     <executions>
       <execution>
         <goals>

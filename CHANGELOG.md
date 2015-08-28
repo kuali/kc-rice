@@ -17,6 +17,8 @@
   * Joe Williams on Tue, 25 Aug 2015 12:16:05 -0500 [View Commit](../../commit/ee1fc1dc18da13280804479754cfd3645f7f1f86)
 * fix data table json string escaping
   * Joe Williams on Wed, 26 Aug 2015 10:29:32 -0500 [View Commit](../../commit/049c5bd7f89c60c939db543a64ba8ebcd17afb89)
+* updating the static weaving plugin for Java 8 as per the documentation listed here: https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving & https://github.com/empulse-gmbh/eclipselink-static-weave-plugin
+  * Travis Schneeberger on Fri, 28 Aug 2015 09:07:01 -0400 [View Commit](../../commit/a928d3293a859efb6d3b6ccd1a447a5065bb54d9)
 
 ##rice-1508.0005
 * return saved adhoc recipient when saving document to avoid sql exception with object id
@@ -193,6 +195,10 @@
   * Travis Schneeberger on Thu, 6 Aug 2015 10:13:52 -0400 [View Commit](../../commit/1ffe1444c8c329ef412ba2d34f443938bff586c3)
 
 ##rice-2.5.3.1508.1-kckualico
+* No Changes
+
+
+##rice-2.5.3.1508.0011-kualico
 * No Changes
 
 

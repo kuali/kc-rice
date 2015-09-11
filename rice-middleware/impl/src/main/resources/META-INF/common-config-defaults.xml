@@ -84,9 +84,11 @@
     <param name="datasource.pool.class" override="false">${datasource.pool.class.${datasource.ojb.platform}}</param>
 
     <!-- datasource.btm.journal can be "null", "disk", or a class name -->
-    <param name="datasource.btm.journal" override="false">null</param>
-    <param name="datasource.btm.transactionTimeout" override="false">120</param>
     <param name="datasource.pool.class.non.xa" override="false">bitronix.tm.resource.jdbc.lrc.LrcXADataSource</param>
+
+    <param name="tm.btm.defaultTransactionTimeout" override="false">300</param>
+    <param name="tm.btm.logPart1Filename" override="false">btm1.tlog</param>
+    <param name="tm.btm.logPart2Filename" override="false">btm2.tlog</param>
 
 	<param name="rice.jpa.persistence.provider" override="false">eclipselink</param>
 

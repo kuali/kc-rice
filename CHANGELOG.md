@@ -1,6 +1,10 @@
 
 
 ##CURRENT
+* Enable KEW annotations for KRMS peopleflow role requests
+
+  * When KRMS action triggers peopleflow routing, role members of the peopleflow have no annotations next to them describing the details for why the users were added into workflow. This adds an annotation for role based peopleflow members such that workflow requests now include something similar to "Role: KC-PD Investigators from Peopleflow Name: Proposal Development Standard Workflow"
+  * blackcathacker on Tue, 22 Sep 2015 18:51:53 -0700 [View Commit](../../commit/59e90ea237a08608833dcc97854f35fdc3096e85)
 * allowing btm log location, transaction timeout via configuration
   * Travis Schneeberger on Fri, 11 Sep 2015 17:20:08 -0400 [View Commit](../../commit/b4c948bfcc630422d9df358fd78ce15d36c3dbac)
 * updating the static weaving plugin for Java 8 as per the documentation listed here: https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving & https://github.com/empulse-gmbh/eclipselink-static-weave-plugin
@@ -187,6 +191,30 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1509.0001-kualico
+* allowing btm log location, transaction timeout via configuration
+  * Travis Schneeberger on Fri, 11 Sep 2015 17:20:08 -0400 [View Commit](../../commit/b4c948bfcc630422d9df358fd78ce15d36c3dbac)
+* updating the static weaving plugin for Java 8 as per the documentation listed here: https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving & https://github.com/empulse-gmbh/eclipselink-static-weave-plugin
+  * Travis Schneeberger on Fri, 28 Aug 2015 09:07:01 -0400 [View Commit](../../commit/a928d3293a859efb6d3b6ccd1a447a5065bb54d9)
+* fix data table json string escaping
+  * Joe Williams on Wed, 26 Aug 2015 10:29:32 -0500 [View Commit](../../commit/049c5bd7f89c60c939db543a64ba8ebcd17afb89)
+* fix json error when rendering data tables
+  * Joe Williams on Tue, 25 Aug 2015 12:16:05 -0500 [View Commit](../../commit/ee1fc1dc18da13280804479754cfd3645f7f1f86)
+* fix dummy login page to not allow inactive users to log in
+
+  * Steps:
+
+  * 1.) edit quickstart person record and mark as inactive
+  * 2.) log in as quickstart
+  * 3.) try to do a proposal search get STE.
+
+  * Expected: quickstart shouldn't be able to log in when not active.
+
+  * Actual: quickstart is allowed to log in
+  * Joe Williams on Mon, 24 Aug 2015 13:51:27 -0500 [View Commit](../../commit/589c759f81b01da9d753f60858a35308d22de063)
+* return saved adhoc recipient when saving document to avoid sql exception with object id
+  * Joe Williams on Wed, 19 Aug 2015 10:37:36 -0500 [View Commit](../../commit/be92a50bc24329871c9922403c1fb9d2958ccdfb)
 
 ##rice-2.5.3.1508.3-kckualico
 *  if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad

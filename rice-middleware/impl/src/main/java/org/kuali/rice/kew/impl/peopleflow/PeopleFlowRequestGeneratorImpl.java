@@ -53,6 +53,7 @@ import org.kuali.rice.ksb.api.KsbApiServiceLocator;
 import org.kuali.rice.ksb.api.bus.Endpoint;
 
 import javax.xml.namespace.QName;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,9 +95,13 @@ public class PeopleFlowRequestGeneratorImpl implements PeopleFlowRequestGenerato
                 generateDelegationRequests(context, Collections.singletonList(actionRequest), member);
             }
 
-            actionRequest.setAnnotation(PEOPLE_FLOW_NAME + context.getPeopleFlow().getName() + System.getProperty("line.separator"));
+            actionRequest.setAnnotation(getPeopleflowNameAnnotation(context));
         }
     }
+
+	private String getPeopleflowNameAnnotation(Context context) {
+		return PEOPLE_FLOW_NAME + context.getPeopleFlow().getName() + System.getProperty("line.separator");
+	}
 
     /**
      * generates requests for a PeopleFlow member of type Role.
@@ -136,7 +141,10 @@ public class PeopleFlowRequestGeneratorImpl implements PeopleFlowRequestGenerato
             if (request != null) {
                 roleMemberRequests.add(request);
                 generateDelegationRequestsForRoleMember(context, request, member, roleQualifiers);
+                request.setAnnotation("Role: " + role.getNamespaceCode() + " " + role.getName() + " from " + getPeopleflowNameAnnotation(context));
             }
+            
+            
         }
 
         return roleMemberRequests;

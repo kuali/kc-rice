@@ -39,7 +39,13 @@
         <function-signature>org.kuali.rice.kns.util.TabState getTabState(org.kuali.rice.kns.web.struts.form.KualiForm, java.lang.String)</function-signature>
         <example>&lt;c:set var="tabState" value="${kfunc:getTabState(KualiForm, tabTitle)}"></example>
     </function>
-    
+    <function>
+        <description>Gets a List from a Values Finder</description>
+        <name>getOptionList</name>
+        <function-class>org.kuali.rice.kns.util.WebUtils</function-class>
+        <function-signature>java.util.List getOptionList(java.lang.String, java.util.Map)</function-signature>
+        <example>&lt;c:forEach items="${kfunc:getOptionList()}"&gt;></example>
+    </function>
     <function>
         <description>Generates a key from a string that can be used for the tab state key.</description>
         <name>generateTabKey</name>

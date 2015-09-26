@@ -21,6 +21,7 @@
 
 <%@ include file="/kr/WEB-INF/jsp/tldHeader.jsp"%>
 <c:set var="docAddressAttributes" value="${DataDictionary.PersonDocumentAddress.attributes}" />
+<jsp:useBean id="paramMap1" class="java.util.HashMap"/>
 
 <c:set var="canModify" scope="request" value="${!KualiForm.document.privacy.suppressAddress || KualiForm.canOverrideEntityPrivacyPreferences}" />
 <c:set var="maskData" value="${KualiForm.document.privacy.suppressAddress && !KualiForm.canOverrideEntityPrivacyPreferences}" />
@@ -80,7 +81,8 @@
                     </div>
                 </td>
                 <td>
-                    <div align="center"><kul:htmlControlAttribute property="newAddress.countryCode" attributeEntry="${docAddressAttributes.countryCode}" styleClass="fixed-size-200-select" readOnly="${readOnlyEntity}" />
+                    <div align="center"><kul:htmlControlAttribute property="newAddress.countryCode" attributeEntry="${docAddressAttributes.countryCode}"
+                                                                  onchange="updateStatesBasedOnCountryCode()" styleClass="fixed-size-200-select" readOnly="${readOnlyEntity}" />
                     </div>
                 </td>
                 <td>
@@ -110,9 +112,24 @@
                 <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].line2" attributeEntry="${docAddressAttributes.line2}" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="Xxxxxxx" />
                 <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].line3" attributeEntry="${docAddressAttributes.line3}" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="Xxxxxxx" />
                 <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].city" attributeEntry="${docAddressAttributes.city}" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="Xxxxxxx" />
-                <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].stateProvinceCode" attributeEntry="${docAddressAttributes.stateProvinceCode}" styleClass="fixed-size-200-select" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="XX" />
-                <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].postalCode" attributeEntry="${docAddressAttributes.postalCode}" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="XXXXX" />
-                <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].countryCode" attributeEntry="${docAddressAttributes.countryCode}" styleClass="fixed-size-200-select" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="XX" />
+                  <td align="left" width valign="middle" class="infoline">
+                      <c:set target="${paramMap1}" property="countryCode" value="${KualiForm.document.addrs[status.index].countryCode}" />
+                      <html:select property="document.addrs[${status.index}].stateProvinceCode" tabindex="0" styleId="document.addrs[${status.index}].stateProvinceCode">
+                          <c:forEach items="${kfunc:getOptionList('org.kuali.rice.location.framework.state.StateValuesFinder', paramMap1)}" var="option">
+                              <c:choose>
+                                  <c:when test="${KualiForm.document.addrs[status.index].stateProvinceCode == option.key}">
+                                      <option value="${option.key}" selected>${option.value}</option>
+                                  </c:when>
+                                  <c:otherwise>
+                                      <c:out value="${option.value}"/>
+                                      <option value="${option.key}">${option.value}</option>
+                                  </c:otherwise>
+                              </c:choose>
+                          </c:forEach>
+                      </html:select>
+                  </td>
+                  <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].postalCode" attributeEntry="${docAddressAttributes.postalCode}" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="XXXXX" />
+                <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].countryCode" attributeEntry="${docAddressAttributes.countryCode}" onchange="updateStatesBasedOnCountryCode(${status.index})" styleClass="fixed-size-200-select" readOnly="${readOnlyEntity or !canModify}" displayMask="${maskData}" displayMaskValue="XX" />
                 <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].dflt" attributeEntry="${docAddressAttributes.dflt}" readOnly="${readOnlyEntity or !canModify}" />
                 <kim:cell inquiry="${inquiry}" valign="middle" cellClass="infoline" textAlign="center" property="document.addrs[${status.index}].active" attributeEntry="${docAddressAttributes.active}" readOnly="${readOnlyEntity or !canModify}" />
 

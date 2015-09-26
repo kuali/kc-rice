@@ -319,6 +319,10 @@
       <param-name>config-kns</param-name>
       <param-value>/WEB-INF/dwr-kns.xml</param-value>
     </init-param>
+    <init-param>
+        <param-name>config-krlc</param-name>
+        <param-value>/WEB-INF/dwr-krlc.xml</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
 

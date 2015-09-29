@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+*  Adding support for Canadian provinces.
+  * Gayathri Athreya on Fri, 25 Sep 2015 19:48:09 -0700 [View Commit](../../commit/c1b5d969b814985d01d5e2127225a4739b0c0b7b)
 * Enable KEW annotations for KRMS peopleflow role requests
 
   * When KRMS action triggers peopleflow routing, role members of the peopleflow have no annotations next to them describing the details for why the users were added into workflow. This adds an annotation for role based peopleflow members such that workflow requests now include something similar to "Role: KC-PD Investigators from Peopleflow Name: Proposal Development Standard Workflow"
@@ -191,6 +193,12 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1509.0002-kualico
+* Enable KEW annotations for KRMS peopleflow role requests
+
+  * When KRMS action triggers peopleflow routing, role members of the peopleflow have no annotations next to them describing the details for why the users were added into workflow. This adds an annotation for role based peopleflow members such that workflow requests now include something similar to "Role: KC-PD Investigators from Peopleflow Name: Proposal Development Standard Workflow"
+  * blackcathacker on Tue, 22 Sep 2015 18:51:53 -0700 [View Commit](../../commit/59e90ea237a08608833dcc97854f35fdc3096e85)
 
 ##rice-2.5.3.1509.0001-kualico
 * allowing btm log location, transaction timeout via configuration

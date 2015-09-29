@@ -167,7 +167,7 @@
     <param name="mailing.list.batch" override="false">mailing.list.batch</param>
 
     <!-- TODO: remove once all KNS screen converted to KRAD -->
-    <param name="kns.javascript.files" override="false">plugins/jquery/jquery-1.8.3.js,plugins/cookie/jquery.cookie.js,kr/scripts/core.js,kr/scripts/dhtml.js,kr/scripts/my_common.js,kr/scripts/jscalendar-1.0/calendar.js,kr/scripts/jscalendar-1.0/lang/calendar-en.js,kr/scripts/jscalendar-1.0/calendar-setup.js,dwr/engine.js,dwr/util.js,dwr/interface/PersonService.js,kr/scripts/objectInfo.js</param>
+    <param name="kns.javascript.files" override="false">plugins/jquery/jquery-1.8.3.js,plugins/cookie/jquery.cookie.js,kr/scripts/core.js,kr/scripts/dhtml.js,kr/scripts/my_common.js,kr/scripts/jscalendar-1.0/calendar.js,kr/scripts/jscalendar-1.0/lang/calendar-en.js,kr/scripts/jscalendar-1.0/calendar-setup.js,dwr/engine.js,dwr/util.js,dwr/interface/PersonService.js,dwr/interface/StateService.js,kr/scripts/objectInfo.js, kim/scripts/person.js</param>
     <param name="kns.css.files" override="false">kr/css/kuali.css,kr/scripts/jscalendar-1.0/calendar-win2k-1.css</param>
 
     <param name="portal.css.files" override="false">plugins/fancybox/jquery.fancybox.css,plugins/textpopout/popoutTextarea.css,plugins/jgrowl/jquery.jgrowl.css</param>

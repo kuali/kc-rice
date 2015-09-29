@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
@@ -76,6 +77,7 @@ import org.kuali.rice.krad.datadictionary.DataDictionaryEntryBase;
 import org.kuali.rice.krad.datadictionary.mask.MaskFormatter;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.exception.ValidationException;
+import org.kuali.rice.krad.keyvalues.KeyValuesFinder;
 import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -96,6 +98,9 @@ public class WebUtils {
 
 	private static final String APPLICATION_IMAGE_URL_PROPERTY_PREFIX = "application.custom.image.url";
 	private static final String DEFAULT_IMAGE_URL_PROPERTY_NAME = "kr.externalizable.images.url";
+    private static final String SETTING_PARAMS_PROLOG = "Setting params ";
+    private static final String PROPERTY_SETTING_EXC_PROLOG = "Could not set property ";
+    private static final String VALUES_FINDER_CLASS_EXC_PROLOG = "Could not find valuesFinder class ";
 
     /**
      * Prefixes indicating an absolute url
@@ -952,6 +957,94 @@ public class WebUtils {
             return path;
         }
         return base + path;
+    }
+
+    /**
+     * Returns a list of key/value pairs for displaying in an HTML option for a select list. This is a customized approach to retrieving
+     * key/value data from database based on criteria specified in the <code>params {@link Map}</code>
+     *
+     * Here is an example of how the code is used from a JSP:
+     * <code>
+     * <jsp:useBean id="paramMap" class="java.util.HashMap"/>
+     <c:set target="${paramMap}" property="forAddedPerson" value="true" />
+     <kul:checkErrors keyMatch="${proposalPerson}.proposalPersonRoleId" auditMatch="${proposalPerson}.proposalPersonRoleId"/>
+     <c:set var="roleStyle" value=""/>
+     <c:if test="${hasErrors==true}">
+     <c:set var="roleStyle" value="background-color:#FFD5D5"/>
+     </c:if>
+     <html:select property="${proposalPerson}.proposalPersonRoleId" tabindex="0" style="${roleStyle}">
+     <c:forEach items="${krafn:getOptionList('org.kuali.coeus.propdev.impl.person.ProposalPersonRoleValuesFinder', paramMap)}" var="option">
+     <c:choose>
+     <c:when test="${KualiForm.document.proposalPersons[personIndex].proposalPersonRoleId == option.key}">
+     <option value="${option.key}" selected>${option.label}</option>
+     </c:when>
+     <c:otherwise>
+     <option value="${option.key}">${option.label}</option>
+     </c:otherwise>
+     </c:choose>
+     </c:forEach>
+     </html:select>
+     </code>
+     *
+     *
+     * @param valuesFinderClassName
+     * @param params mapped parameters
+     * @return List of key values
+     */
+    @SuppressWarnings("unchecked")
+    public static List getOptionList(String valuesFinderClassName, Map params) {
+        return setupValuesFinder(valuesFinderClassName, (Map<String, Object>) params).getKeyValues();
+    }
+
+    /**
+     * Initiates the values finder by its <code>valuesFinderClassName</code>. First locates the class in the class path. Then,
+     * creates an instance of it. A <code>{@link Map}</code> of key/values <code>{@link String}</code> instances a is used
+     * to set properties on the values finder instance. Uses the apache <code>{@link BeanUtils}</code> class to set properties
+     * by the name of the key in the <code>{@link Map}</code>.
+     *
+     * Basically, a new values finder is created. the <code>params</code> parameter is a <code>{@link Map}</code> of arbitrary values
+     * mapped to properties of the values finder class.
+     *
+     * Since this is so flexible and the ambiguity of properties referenced in the <code>{@link Map}</code>, a number of exceptions are caught
+     * if a property cannot be set or if the values finder cannot be instantiated. All of these exceptions are handled within the method. None
+     * of these exceptions are thrown back.
+     *
+     *
+     * @param valuesFinderClassName
+     * @param params
+     * @return KeyValuesFinder
+     * @see BeanUtils#setProperty(Object, String, Object)
+     */
+    protected static KeyValuesFinder setupValuesFinder(String valuesFinderClassName, Map<String, Object> params) {
+        KeyValuesFinder retval = getKeyFinder(valuesFinderClassName);
+        addParametersToFinder(params, retval);
+        return retval;
+    }
+
+    protected static void addParametersToFinder(Map<String, Object> params, KeyValuesFinder finder) {
+        if (finder != null && params != null) {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                try {
+                    BeanUtils.setProperty(finder, entry.getKey(), entry.getValue());
+                } catch (Exception e) {
+                    warn(PROPERTY_SETTING_EXC_PROLOG + entry.getKey(), e);
+                }
+            }
+        }
+    }
+
+    protected static KeyValuesFinder getKeyFinder(String valuesFinderClassName) {
+        KeyValuesFinder retval = null;
+        try {
+            retval = (KeyValuesFinder) Class.forName(valuesFinderClassName).newInstance();
+        } catch (ClassNotFoundException|InstantiationException|IllegalAccessException e) {
+            warn(VALUES_FINDER_CLASS_EXC_PROLOG + valuesFinderClassName, e);
+        }
+        return retval;
+    }
+
+    protected static void warn(String message, Exception e) {
+            LOG.warn(message, e);
     }
 
 }

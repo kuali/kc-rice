@@ -39,6 +39,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.beanutils.BeanUtils;
+import com.google.common.io.ByteStreams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
@@ -372,10 +373,19 @@ public class WebUtils {
 
 		// write to output
 		OutputStream out = response.getOutputStream();
-		while (inStream.available() > 0) {
-			out.write(inStream.read());
+		try {
+			ByteStreams.copy(inStream, out);
+		} finally {
+			try {
+				if (out != null) {
+					out.flush();
+				}
+			} finally {
+				if (inStream != null) {
+					inStream.close();
+				}
+			}
 		}
-		out.flush();
 	}
 
 	/**

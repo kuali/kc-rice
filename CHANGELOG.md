@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* closing the inputstream in a finally block.  This avoids a resource leak which can be important with some stream types.
+  * Travis Schneeberger on Sun, 4 Oct 2015 17:33:27 -0400 [View Commit](../../commit/dafd94cf0194170a54a37ade0cbff0c0f28a1561)
 *  Adding support for Canadian provinces.
   * Gayathri Athreya on Fri, 25 Sep 2015 19:48:09 -0700 [View Commit](../../commit/c1b5d969b814985d01d5e2127225a4739b0c0b7b)
 * Enable KEW annotations for KRMS peopleflow role requests
@@ -193,6 +195,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1509.0003-kualico
+*  Adding support for Canadian provinces.
+  * Gayathri Athreya on Fri, 25 Sep 2015 19:48:09 -0700 [View Commit](../../commit/c1b5d969b814985d01d5e2127225a4739b0c0b7b)
 
 ##rice-2.5.3.1509.0002-kualico
 * Enable KEW annotations for KRMS peopleflow role requests

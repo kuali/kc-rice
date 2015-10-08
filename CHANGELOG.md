@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* Add KRMS comparison service for general date fields
+  * blackcathacker on Thu, 8 Oct 2015 10:56:04 -0700 [View Commit](../../commit/889f9581392ed653883d02046deb08a18d8e41dc)
 * closing the inputstream in a finally block.  This avoids a resource leak which can be important with some stream types.
   * Travis Schneeberger on Sun, 4 Oct 2015 17:33:27 -0400 [View Commit](../../commit/dafd94cf0194170a54a37ade0cbff0c0f28a1561)
 *  Adding support for Canadian provinces.
@@ -195,6 +197,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1510.0001-kualico
+* closing the inputstream in a finally block.  This avoids a resource leak which can be important with some stream types.
+  * Travis Schneeberger on Sun, 4 Oct 2015 17:33:27 -0400 [View Commit](../../commit/dafd94cf0194170a54a37ade0cbff0c0f28a1561)
 
 ##rice-2.5.3.1509.0003-kualico
 *  Adding support for Canadian provinces.

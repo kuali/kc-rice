@@ -120,12 +120,19 @@
     <property name="termRepositoryService" ref="termRepositoryService"/>
     <property name="comparisonOperatorService" ref="comparisonOperatorService"/>
   </bean>
+  
+  <bean id="dateComparisonOperator" class="org.kuali.rice.krms.framework.engine.expression.DateComparisonOperator">
+  	<property name="dateTimeService" ref="dateTimeService"/>
+  </bean>
 
   <bean id="comparisonOperatorService"
         class="org.kuali.rice.krms.framework.engine.expression.ComparisonOperatorServiceImpl"
         factory-method="getInstance">
     <property name="stringCoercionExtensions">
-      <list><!-- your beans here --></list>
+      <list><ref bean="dateComparisonOperator"/></list>
+    </property>
+    <property name="operators">
+      <list><ref bean="dateComparisonOperator"/></list>
     </property>
   </bean>
 

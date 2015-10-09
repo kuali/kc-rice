@@ -45,6 +45,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.UUID;
@@ -77,7 +78,7 @@ public class UserLoginFilter implements Filter {
         this.doFilter((HttpServletRequest) request, (HttpServletResponse) response, chain);
     }
 
-    private void doFilter(HttpServletRequest request, HttpServletResponse response,
+    protected void doFilter(HttpServletRequest request, HttpServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         try {
             establishUserSession(request);
@@ -100,41 +101,63 @@ public class UserLoginFilter implements Filter {
     /**
      * Checks if a user can be authenticated and if so establishes a UserSession for that user.
      */
-    private void establishUserSession(HttpServletRequest request) {
-        if (!isUserSessionEstablished(request)) {
-            String principalName = ((AuthenticationService) GlobalResourceLoader.getResourceLoader().getService(
-                    new QName("kimAuthenticationService"))).getPrincipalName(request);
-            if (StringUtils.isBlank(principalName)) {
-                throw new AuthenticationException("Blank User from AuthenticationService - This should never happen.");
-            }
-
-            final Principal principal = getKualiConfigurationService().getPropertyValueAsBoolean(KRADConstants.AUTHN_USE_PRINCIPAL_ID) 
-                ? getIdentityService().getPrincipal(principalName)
-                : getIdentityService().getPrincipalByPrincipalName(principalName);
-
-            if (principal == null) {
-                throw new AuthenticationException("Unknown User: " + principalName);
-            }
-
-            if (!isAuthorizedToLogin(principal.getPrincipalId())) {
-                throw new AuthenticationException(
-                        "You cannot log in, because you are not an active Kuali user.\nPlease ask someone to activate your account if you need to use Kuali Systems.\nThe user id provided was: "
-                                + principalName + ".\n");
-            }
-
-            final UserSession userSession = new UserSession(principalName);
-            if (userSession.getPerson() == null) {
-                throw new AuthenticationException("Invalid User: " + principalName);
-            }
-
-            request.getSession().setAttribute(KRADConstants.USER_SESSION_KEY, userSession);
+    protected void establishUserSession(HttpServletRequest request) {
+        UserSession userSession = (UserSession) request.getSession().getAttribute(KRADConstants.USER_SESSION_KEY);
+        String principalName = extractPrincipalName(request);
+		if (userSession == null || !StringUtils.equals(userSession.getLoggedInUserPrincipalName(), principalName)) {
+            validatePrincipal(principalName);
+            userSession = createUserSession(request, principalName);
         }
+		updateUserSession(userSession, request);
     }
+    
+    /**
+     * Method to allow local overrides to update the userSession as necessary during each request. Defaults to a noop. 
+     */
+    protected void updateUserSession(UserSession userSession, HttpServletRequest request) { }
+
+	protected void validatePrincipal(String principalName) {
+		if (StringUtils.isBlank(principalName)) {
+		    throw new AuthenticationException("Blank User from AuthenticationService - This should never happen.");
+		}
+
+		final Principal principal = getKualiConfigurationService().getPropertyValueAsBoolean(KRADConstants.AUTHN_USE_PRINCIPAL_ID) 
+		    ? getIdentityService().getPrincipal(principalName)
+		    : getIdentityService().getPrincipalByPrincipalName(principalName);
+
+		if (principal == null) {
+		    throw new AuthenticationException("Unknown User: " + principalName);
+		}
+
+		if (!isAuthorizedToLogin(principal.getPrincipalId())) {
+		    throw new AuthenticationException(
+		            "You cannot log in, because you are not an active Kuali user.\nPlease ask someone to activate your account if you need to use Kuali Systems.\nThe user id provided was: "
+		                    + principalName + ".\n");
+		}
+	}
+
+	protected String extractPrincipalName(HttpServletRequest request) {
+		String principalName = ((AuthenticationService) GlobalResourceLoader.getResourceLoader().getService(
+		        new QName("kimAuthenticationService"))).getPrincipalName(request);
+		return principalName;
+	}
+
+	protected UserSession createUserSession(HttpServletRequest request,
+			String principalName) {
+		UserSession userSession;
+		userSession = new UserSession(principalName);
+		if (userSession.getPerson() == null) {
+		    throw new AuthenticationException("Invalid User: " + principalName);
+		}
+
+		request.getSession().setAttribute(KRADConstants.USER_SESSION_KEY, userSession);
+		return userSession;
+	}
 
     /**
      * checks if the passed in principalId is authorized to log in.
      */
-    private boolean isAuthorizedToLogin(String principalId) {
+	protected boolean isAuthorizedToLogin(String principalId) {
         return getPermissionService().isAuthorized(principalId, KimConstants.KIM_TYPE_DEFAULT_NAMESPACE,
                 KimConstants.PermissionNames.LOG_IN, Collections.singletonMap("principalId", principalId));
     }
@@ -143,7 +166,7 @@ public class UserLoginFilter implements Filter {
      * Creates a session id cookie if one does not exists.  Write the cookie out to the response with that session id.
      * Also, sets the cookie on the established user session.
      */
-    private void establishSessionCookie(HttpServletRequest request, HttpServletResponse response) {
+	protected void establishSessionCookie(HttpServletRequest request, HttpServletResponse response) {
         String kualiSessionId = this.getKualiSessionId(request.getCookies());
         if (kualiSessionId == null) {
             kualiSessionId = UUID.randomUUID().toString();
@@ -158,7 +181,7 @@ public class UserLoginFilter implements Filter {
     /**
      * gets the kuali session id from an array of cookies.  If a session id does not exist returns null.
      */
-    private String getKualiSessionId(final Cookie[] cookies) {
+	protected String getKualiSessionId(final Cookie[] cookies) {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (KRADConstants.KUALI_SESSION_ID.equals(cookie.getName())) {
@@ -198,17 +221,7 @@ public class UserLoginFilter implements Filter {
         MDC.remove(MDC_USER);
     }
 
-    /**
-     * Checks if the user who made the request has a UserSession established
-     *
-     * @param request the HTTPServletRequest object passed in
-     * @return true if the user session has been established, false otherwise
-     */
-    private boolean isUserSessionEstablished(HttpServletRequest request) {
-        return (request.getSession().getAttribute(KRADConstants.USER_SESSION_KEY) != null);
-    }
-
-    private IdentityService getIdentityService() {
+    protected IdentityService getIdentityService() {
         if (this.identityService == null) {
             this.identityService = KimApiServiceLocator.getIdentityService();
         }
@@ -216,7 +229,7 @@ public class UserLoginFilter implements Filter {
         return this.identityService;
     }
 
-    private PermissionService getPermissionService() {
+    protected PermissionService getPermissionService() {
         if (this.permissionService == null) {
             this.permissionService = KimApiServiceLocator.getPermissionService();
         }
@@ -224,7 +237,7 @@ public class UserLoginFilter implements Filter {
         return this.permissionService;
     }
 
-    private ConfigurationService getKualiConfigurationService() {
+    protected ConfigurationService getKualiConfigurationService() {
         if (this.kualiConfigurationService == null) {
             this.kualiConfigurationService = CoreApiServiceLocator.getKualiConfigurationService();
         }
@@ -232,7 +245,7 @@ public class UserLoginFilter implements Filter {
         return this.kualiConfigurationService;
     }
 
-    private ParameterService getParameterService() {
+    protected ParameterService getParameterService() {
         if (this.parameterService == null) {
             this.parameterService = CoreFrameworkServiceLocator.getParameterService();
         }

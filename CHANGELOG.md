@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* Refactor of UserLoginFilter to facilitate overrides for Core Auth Service
+  * blackcathacker on Fri, 9 Oct 2015 10:16:56 -0700 [View Commit](../../commit/e89f6ad541e004ed60f5472f2dc58d9df5866804)
 * Add KRMS comparison service for general date fields
   * blackcathacker on Thu, 8 Oct 2015 10:56:04 -0700 [View Commit](../../commit/889f9581392ed653883d02046deb08a18d8e41dc)
 * closing the inputstream in a finally block.  This avoids a resource leak which can be important with some stream types.
@@ -197,6 +199,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1510.0002-kualico
+* Add KRMS comparison service for general date fields
+  * blackcathacker on Thu, 8 Oct 2015 10:56:04 -0700 [View Commit](../../commit/889f9581392ed653883d02046deb08a18d8e41dc)
 
 ##rice-2.5.3.1510.0001-kualico
 * closing the inputstream in a finally block.  This avoids a resource leak which can be important with some stream types.

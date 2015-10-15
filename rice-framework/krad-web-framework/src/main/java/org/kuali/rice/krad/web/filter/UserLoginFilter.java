@@ -16,6 +16,7 @@
 package org.kuali.rice.krad.web.filter;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
@@ -58,6 +59,7 @@ import java.util.UUID;
  */
 public class UserLoginFilter implements Filter {
 
+    private static final Logger LOG = Logger.getLogger(UserLoginFilter.class);
     private static final String MDC_USER = "user";
 
     private IdentityService identityService;
@@ -103,51 +105,84 @@ public class UserLoginFilter implements Filter {
      */
     protected void establishUserSession(HttpServletRequest request) {
         UserSession userSession = (UserSession) request.getSession().getAttribute(KRADConstants.USER_SESSION_KEY);
-        String principalName = extractPrincipalName(request);
-		if (userSession == null || !StringUtils.equals(userSession.getLoggedInUserPrincipalName(), principalName)) {
-            validatePrincipal(principalName);
-            userSession = createUserSession(request, principalName);
+        String remoteUser = extractRemoteUser(request);
+        logDebugInfoAboutUser(remoteUser, userSession);
+        if (userSession == null || !isRemoteUserSameAsUserSession(userSession, remoteUser)) {
+            LOG.info("creating new user session for " + remoteUser);
+            validatePrincipal(remoteUser);
+            userSession = createUserSession(request, remoteUser);
         }
 		updateUserSession(userSession, request);
     }
+    
+    protected void logDebugInfoAboutUser(String remoteUser, UserSession userSession) {
+    	if (LOG.isDebugEnabled()) {
+    		StringBuilder buffer = new StringBuilder();
+    		buffer.append("remote user = ").append(remoteUser);
+    		if (userSession != null) {
+    			buffer.append(" -- current user = ")
+    			.append(userSession.getLoggedInUserPrincipalName())
+    			.append("(")
+    			.append(userSession.getLoggedInUserPrincipalId())
+    			.append(")");
+    		} else {
+    			buffer.append(" -- no usersession");
+    		}
+    		LOG.debug(buffer.toString());
+    	}
+    }
+
+	protected boolean isRemoteUserSameAsUserSession(UserSession userSession,
+			String remoteUser) {
+		if (userSession == null) {
+			return false;
+		} else {
+			return isRemoteUserPrincpialId()
+				? StringUtils.equals(userSession.getLoggedInUserPrincipalId(), remoteUser)
+				: StringUtils.equals(userSession.getLoggedInUserPrincipalName(), remoteUser);
+		}
+	}
     
     /**
      * Method to allow local overrides to update the userSession as necessary during each request. Defaults to a noop. 
      */
     protected void updateUserSession(UserSession userSession, HttpServletRequest request) { }
 
-	protected void validatePrincipal(String principalName) {
-		if (StringUtils.isBlank(principalName)) {
+	protected void validatePrincipal(String remoteUser) {
+		if (StringUtils.isBlank(remoteUser)) {
 		    throw new AuthenticationException("Blank User from AuthenticationService - This should never happen.");
 		}
 
-		final Principal principal = getKualiConfigurationService().getPropertyValueAsBoolean(KRADConstants.AUTHN_USE_PRINCIPAL_ID) 
-		    ? getIdentityService().getPrincipal(principalName)
-		    : getIdentityService().getPrincipalByPrincipalName(principalName);
+		final Principal principal = isRemoteUserPrincpialId() 
+		    ? getIdentityService().getPrincipal(remoteUser)
+		    : getIdentityService().getPrincipalByPrincipalName(remoteUser);
 
 		if (principal == null) {
-		    throw new AuthenticationException("Unknown User: " + principalName);
+		    throw new AuthenticationException("Unknown User: " + remoteUser);
 		}
 
 		if (!isAuthorizedToLogin(principal.getPrincipalId())) {
 		    throw new AuthenticationException(
 		            "You cannot log in, because you are not an active Kuali user.\nPlease ask someone to activate your account if you need to use Kuali Systems.\nThe user id provided was: "
-		                    + principalName + ".\n");
+		                    + remoteUser + ".\n");
 		}
 	}
 
-	protected String extractPrincipalName(HttpServletRequest request) {
-		String principalName = ((AuthenticationService) GlobalResourceLoader.getResourceLoader().getService(
+	protected boolean isRemoteUserPrincpialId() {
+		return getKualiConfigurationService().getPropertyValueAsBoolean(KRADConstants.AUTHN_USE_PRINCIPAL_ID);
+	}
+
+	protected String extractRemoteUser(HttpServletRequest request) {
+		return ((AuthenticationService) GlobalResourceLoader.getResourceLoader().getService(
 		        new QName("kimAuthenticationService"))).getPrincipalName(request);
-		return principalName;
 	}
 
 	protected UserSession createUserSession(HttpServletRequest request,
-			String principalName) {
+			String remoteUser) {
 		UserSession userSession;
-		userSession = new UserSession(principalName);
+		userSession = new UserSession(remoteUser);
 		if (userSession.getPerson() == null) {
-		    throw new AuthenticationException("Invalid User: " + principalName);
+		    throw new AuthenticationException("Invalid User: " + remoteUser);
 		}
 
 		request.getSession().setAttribute(KRADConstants.USER_SESSION_KEY, userSession);
@@ -157,7 +192,7 @@ public class UserLoginFilter implements Filter {
     /**
      * checks if the passed in principalId is authorized to log in.
      */
-	protected boolean isAuthorizedToLogin(String principalId) {
+    protected boolean isAuthorizedToLogin(String principalId) {
         return getPermissionService().isAuthorized(principalId, KimConstants.KIM_TYPE_DEFAULT_NAMESPACE,
                 KimConstants.PermissionNames.LOG_IN, Collections.singletonMap("principalId", principalId));
     }
@@ -166,7 +201,7 @@ public class UserLoginFilter implements Filter {
      * Creates a session id cookie if one does not exists.  Write the cookie out to the response with that session id.
      * Also, sets the cookie on the established user session.
      */
-	protected void establishSessionCookie(HttpServletRequest request, HttpServletResponse response) {
+    protected void establishSessionCookie(HttpServletRequest request, HttpServletResponse response) {
         String kualiSessionId = this.getKualiSessionId(request.getCookies());
         if (kualiSessionId == null) {
             kualiSessionId = UUID.randomUUID().toString();
@@ -181,7 +216,7 @@ public class UserLoginFilter implements Filter {
     /**
      * gets the kuali session id from an array of cookies.  If a session id does not exist returns null.
      */
-	protected String getKualiSessionId(final Cookie[] cookies) {
+    protected String getKualiSessionId(final Cookie[] cookies) {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (KRADConstants.KUALI_SESSION_ID.equals(cookie.getName())) {

@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* Fix user filter problem when remote user is configured as principal id
+  * blackcathacker on Thu, 15 Oct 2015 11:35:46 -0700 [View Commit](../../commit/e129b6500afd3946fccd14e9f33ce65d5eb44a82)
 * Refactor of UserLoginFilter to facilitate overrides for Core Auth Service
   * blackcathacker on Fri, 9 Oct 2015 10:16:56 -0700 [View Commit](../../commit/e89f6ad541e004ed60f5472f2dc58d9df5866804)
 * Add KRMS comparison service for general date fields
@@ -199,6 +201,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1510.0003-kualico
+* Refactor of UserLoginFilter to facilitate overrides for Core Auth Service
+  * blackcathacker on Fri, 9 Oct 2015 10:16:56 -0700 [View Commit](../../commit/e89f6ad541e004ed60f5472f2dc58d9df5866804)
 
 ##rice-2.5.3.1510.0002-kualico
 * Add KRMS comparison service for general date fields

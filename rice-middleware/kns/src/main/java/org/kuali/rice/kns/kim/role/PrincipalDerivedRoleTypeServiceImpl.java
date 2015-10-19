@@ -90,7 +90,7 @@ public class PrincipalDerivedRoleTypeServiceImpl extends DerivedRoleTypeServiceB
 		qualification = translateInputAttributes(qualification);
 		// check that the principal ID is not null
 		String principalId = qualification.get( KimConstants.AttributeConstants.PRINCIPAL_ID );
-		if ( hasDerivedRole(principalId, null, namespaceCode, roleName, qualification)) {
+		if ( hasDerivedRole(principalId, Collections.emptyList(), namespaceCode, roleName, qualification)) {
 	        tempIdList.add( RoleMembership.Builder.create(null/*roleId*/, null, principalId, MemberType.PRINCIPAL, null).build());
 		}
 		return tempIdList;

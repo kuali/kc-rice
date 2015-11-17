@@ -256,11 +256,11 @@ public class PropertiesUtils {
         while (iter.hasNext()) {
             String key = (String) iter.next();
             if (arg == null || arg.equals("")) {
-                if (!props.contains(key)) {
+                if (!props.containsValue(key)) {
                     props.setProperty(key, System.getProperty(key));
                 }
             } else {
-                if (key.startsWith(arg) && !props.contains(key)) {
+                if (key.startsWith(arg) && !props.containsValue(key)) {
                     props.setProperty(key, System.getProperty(key));
                 }
             }

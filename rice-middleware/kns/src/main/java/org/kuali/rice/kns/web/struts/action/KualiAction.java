@@ -15,8 +15,8 @@
  */
 package org.kuali.rice.kns.web.struts.action;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -1024,7 +1024,7 @@ public abstract class KualiAction extends DispatchAction {
         
         // Set document related parameter
         String docWebScope=(String)request.getAttribute(KRADConstants.DOCUMENT_WEB_SCOPE);
-        if (docWebScope != null && docWebScope.trim().length() >= 0) {
+        if (docWebScope != null && StringUtils.isNotBlank(docWebScope)) {
             request.setAttribute(KRADConstants.DOCUMENT_WEB_SCOPE, docWebScope);
         }
 

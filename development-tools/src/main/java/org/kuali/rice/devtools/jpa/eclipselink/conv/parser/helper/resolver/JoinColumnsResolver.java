@@ -15,8 +15,8 @@
  */
 package org.kuali.rice.devtools.jpa.eclipselink.conv.parser.helper.resolver;
 
-import japa.parser.ast.BlockComment;
-import japa.parser.ast.Comment;
+import japa.parser.ast.comments.BlockComment;
+import japa.parser.ast.comments.Comment;
 import japa.parser.ast.ImportDeclaration;
 import japa.parser.ast.expr.AnnotationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;

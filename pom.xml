@@ -55,7 +55,7 @@
 
     <!--added for KualiCo's release process -->
     <maven-scm-provider-gitexe.version>1.9.4</maven-scm-provider-gitexe.version>
-    <maven-release-plugin.version>2.5.2</maven-release-plugin.version>
+    <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
 
 
     <!-- These properties modify the release process -->
@@ -71,7 +71,7 @@
     <checkstyle.suppressions.location>/org/kuali/rice/suppressions.xml</checkstyle.suppressions.location>
     <oracle.jdbc.version>12.1.0.2</oracle.jdbc.version>
     <oracle.jdbc.artifactId>ojdbc7</oracle.jdbc.artifactId>
-    <mysql.jdbc.version>5.1.36</mysql.jdbc.version>
+    <mysql.jdbc.version>5.1.37</mysql.jdbc.version>
     <mysql.jdbc.artifactId>mysql-connector-java</mysql.jdbc.artifactId>
 
     <jmeter.phase>verify</jmeter.phase>
@@ -110,38 +110,38 @@
 
     <!-- project dependency versions: -->
 
-    <ant.version>1.7.0</ant.version>
+    <ant.version>1.9.6</ant.version>
     <antlr.version>2.7.7</antlr.version>
     <aopalliance.version>1.0</aopalliance.version>
     <asm.group.string>org.ow2.asm</asm.group.string>
-    <asm.version>5.0.3</asm.version>
-    <aspectj.version>1.8.1</aspectj.version>
+    <asm.version>5.0.4</asm.version>
+    <aspectj.version>1.8.7</aspectj.version>
     <bcprov.version>1.46</bcprov.version>
     <bitronix.version>2.1.4</bitronix.version>
-    <closure.version>v20140730</closure.version>
-    <cglib.version>3.1</cglib.version>
+    <closure.version>v20151015</closure.version>
+    <cglib.version>3.2.0</cglib.version>
     <commons-beanutils.version>1.8.3-kuali-4</commons-beanutils.version>
-    <commons-codec.version>1.9</commons-codec.version>
-    <commons-collections.version>3.2.1</commons-collections.version>
+    <commons-codec.version>1.10</commons-codec.version>
+    <commons-collections.version>3.2.2</commons-collections.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <commons-fileupload.version>1.3.1</commons-fileupload.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang.version>2.6</commons-lang.version>
-    <commons-lang3.version>3.3.2</commons-lang3.version>
+    <commons-lang3.version>3.4</commons-lang3.version>
     <commons-pool.version>1.6</commons-pool.version>
     <commons-digester.version>2.1</commons-digester.version>
-    <commons-validator.version>1.4.0</commons-validator.version>
+    <commons-validator.version>1.4.1</commons-validator.version>
     <cxf.version>2.7.12</cxf.version>
     <displaytag.version>1.2</displaytag.version>
     <dom4j.version>1.6.1</dom4j.version>
     <dwr.version>3.0.0-RELEASE</dwr.version>
-    <eclipselink.version>2.6.0</eclipselink.version>
-    <ehcache.version>2.6.9</ehcache.version>
+    <eclipselink.version>2.6.1</eclipselink.version>
+    <ehcache.version>2.6.11</ehcache.version>
     <freemarker.version>2.3.20-patch2</freemarker.version>
     <lesscss.version>1.3.3</lesscss.version>
     <glassfish-javax-json.version>1.0.4</glassfish-javax-json.version>
     <groovy.version>1.8.9</groovy.version>
-    <guava.version>17.0</guava.version>
+    <guava.version>18.0</guava.version>
     <httpclient.version>4.3.5</httpclient.version>
 
     <!-- Can't get rid of this dependency until the JAXB RI in our current JDK is >= this version.
@@ -149,17 +149,17 @@
     <jaxb-impl.version>2.2.6</jaxb-impl.version>
 
     <jackson.version>1.9.13</jackson.version>
-    <javassist.version>3.18.2-GA</javassist.version>
+    <javassist.version>3.20.0-GA</javassist.version>
     <javax.inject.version>1</javax.inject.version>
     <jaxen.version>1.1.6</jaxen.version>
     <jdom.version>1.1.3</jdom.version>
     <jetty.version>8.1.15.v20140411</jetty.version>
-    <joda-time.version>2.4</joda-time.version>
+    <joda-time.version>2.9.1</joda-time.version>
     <joda-time-jsptags.version>1.1.1</joda-time-jsptags.version>
     <jpa.version>2.1.0</jpa.version>
     <json-api.version>1.0</json-api.version>
     <jsp-api.version>2.1</jsp-api.version>
-    <jsr305.version>2.0.3</jsr305.version>
+    <jsr305.version>3.0.1</jsr305.version>
     <jsr311-api.version>1.1.1</jsr311-api.version>
 
     <!--
@@ -169,24 +169,24 @@
     <jstl.version>1.2</jstl.version>
 
     <jta.version>1.1</jta.version>
-    <junit.version>4.11</junit.version>
+    <junit.version>4.12</junit.version>
     <kuali-mvn.version>1.0.2</kuali-mvn.version>
     <log4j.version>1.2.17</log4j.version>
     <mail.version>1.5.2</mail.version>
-    <mockito.version>1.9.5</mockito.version>
-    <plexus-utils.version>3.0.17</plexus-utils.version>
+    <mockito.version>1.10.19</mockito.version>
+    <plexus-utils.version>3.0.22</plexus-utils.version>
     <!-- According to KULRICE-11635 (see comment) we'll need to upgrade this to >= 2.1.4 to get to Spring 4.1-->
     <!-- Quartz 2.0.x is an impacting api and database-level change -->
     <quartz.version>1.8.6</quartz.version>
-    <reflections.version>0.9.9-RC1</reflections.version>
+    <reflections.version>0.9.10</reflections.version>
     <sauce.java.common.version>1.0.19</sauce.java.common.version>
     <sauce.junit.version>1.0.19</sauce.junit.version>
     <sauce.rest.version>1.0.11</sauce.rest.version>
     <saucelabs.connect.version>3.1.32</saucelabs.connect.version>
-    <selenium-java.version>2.41.0</selenium-java.version>
+    <selenium-java.version>2.48.2</selenium-java.version>
     <serializer.version>2.7.2</serializer.version>
     <servlet-api.version>3.0.1</servlet-api.version>
-    <slf4j.version>1.7.7</slf4j.version>
+    <slf4j.version>1.7.13</slf4j.version>
     <soa.model.core.version>1.2.2</soa.model.core.version>
     <spring-modules-ojb.version>0.8a</spring-modules-ojb.version>
     <spring.version>3.2.13.RELEASE</spring.version>
@@ -201,9 +201,9 @@
     <xercesImpl.version>2.11.0</xercesImpl.version>
     <!-- need v. 1.4.01 of xml-apis with xercesImpl 2.11.0 -->
     <xml-apis.version>1.4.01</xml-apis.version>
-    <xmlunit.version>1.3</xmlunit.version>
+    <xmlunit.version>1.6</xmlunit.version>
     <xstream.version>1.2.2</xstream.version>
-    <yuicompressor.version>2.4.7</yuicompressor.version>
+    <yuicompressor.version>2.4.8</yuicompressor.version>
 
     <!-- Plugin versions: -->
 
@@ -282,9 +282,9 @@
     <jdk.source.version>1.8</jdk.source.version>
     <jdk.target.version>1.8</jdk.target.version>
 
-    <error_prone_core.version>2.0.2</error_prone_core.version>
-    <plexus-compiler-javac.version>2.5</plexus-compiler-javac.version>
-    <plexus-compiler-javac-errorprone.version>2.5</plexus-compiler-javac-errorprone.version>
+    <error_prone_core.version>2.0.6</error_prone_core.version>
+    <plexus-compiler-javac.version>2.6</plexus-compiler-javac.version>
+    <plexus-compiler-javac-errorprone.version>2.6</plexus-compiler-javac-errorprone.version>
 
     <scm.connection>scm:git:git://github.com/kuali/kc-rice.git</scm.connection>
     <scm.developerConnection>scm:git:git@github.com:kuali/kc-rice.git</scm.developerConnection>
@@ -954,6 +954,13 @@
 
                   <bannedDependencies>
                     <excludes>
+
+                      <!--
+                      excluding all versions because of https://issues.apache.org/jira/browse/COLLECTIONS-580
+                      including specific fixed version below
+                      -->
+                      <exclude>commons-collections:commons-collections</exclude>
+
                       <!-- using bitronix over xapool and jotm -->
                       <exclude>*:xapool</exclude>
                       <exclude>*:jotm-core</exclude>
@@ -1101,6 +1108,8 @@
                       <include>net.sf.ehcache:*:${ehcache.version}:jar:runtime</include>
                       <include>com.sun.xml.bind:jaxb-impl:${jaxb-impl.version}</include>
                       <include>org.apache.ws.security:wss4j:${wss4j.version}</include>
+
+                      <exclude>commons-collections:commons-collections:${commons-collections.version}</exclude>
                     </includes>
                   </bannedDependencies>
                 </rules>

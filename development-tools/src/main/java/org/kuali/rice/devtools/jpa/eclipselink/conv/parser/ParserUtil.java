@@ -53,7 +53,8 @@ public final class ParserUtil {
                 parent.getMembers().remove(index);
                 List<FieldDeclaration> deconstructed = new ArrayList<FieldDeclaration>();
                 for (VariableDeclarator v : field.getVariables()) {
-                    FieldDeclaration f = new FieldDeclaration(field.getJavaDoc(), field.getModifiers(), field.getAnnotations(), field.getType(), Collections.singletonList(v));
+                    FieldDeclaration f = new FieldDeclaration(field.getModifiers(), field.getAnnotations(), field.getType(), Collections.singletonList(v));
+                    f.setJavaDoc(field.getJavaDoc());
                     f.setComment(field.getComment());
                     f.setParentNode(field.getParentNode());
                     deconstructed.add(f);

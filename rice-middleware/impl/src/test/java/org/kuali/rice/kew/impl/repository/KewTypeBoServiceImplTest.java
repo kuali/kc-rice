@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -77,10 +76,6 @@ public class KewTypeBoServiceImplTest {
     private static final String ATTR_ID_3 = "NewAttr";
     private static final String NEW_ATTR_DEF_ID = "1004";
     private static final Integer SEQUENCE_NUMBER_3 = new Integer(3);
-
-    private static final String ORG_NAME = "ORG";
-    private static final String ORG_LABEL = "Organization";
-    private static final String COMPONENT = "someOrgComponent";
 
     private static KewAttributeDefinition.Builder unitNumAttrDefn = KewAttributeDefinition.Builder.create(UNIT_NUM_ATTR_DEF_ID, "testAttrDef1", NAMESPACE);
     private static KewAttributeDefinition.Builder campusAttrDefn = KewAttributeDefinition.Builder.create(CAMPUS_ATTR_DEF_ID, "testAttrDef2", NAMESPACE);
@@ -143,9 +138,6 @@ public class KewTypeBoServiceImplTest {
     public void testGetType() {
         kewTypeBoService.setDataObjectService(mockDataObjectService);
 
-        when(mockDataObjectService.find(any(Class.class), any(String.class))).thenReturn(TEST_KEW_TYPE_ATTRIBUTE_BO);
-        when(mockDataObjectService.save(any(KewTypeAttributeBo.class))).thenReturn(TEST_KEW_TYPE_ATTRIBUTE_BO);
-
         when(mockDataObjectService.find(KewTypeBo.class, "1")).thenReturn(sampleTypes.get("1"));
         KewTypeDefinition testDefn = getKewTypeBoService().getTypeById("1");
         verify(mockDataObjectService).find(KewTypeBo.class, "1");
@@ -156,8 +148,6 @@ public class KewTypeBoServiceImplTest {
     public void testGetByIdWhenNoneFound() {
         kewTypeBoService.setDataObjectService(mockDataObjectService);
 
-        when(mockDataObjectService.find(any(Class.class), any(String.class))).thenReturn(TEST_KEW_TYPE_ATTRIBUTE_BO);
-        when(mockDataObjectService.save(any(KewTypeAttributeBo.class))).thenReturn(TEST_KEW_TYPE_ATTRIBUTE_BO);
         when(mockDataObjectService.find(KewTypeBo.class, "I DONT EXIST")).thenReturn(null);
 
         KewTypeDefinition testDefn = getKewTypeBoService().getTypeById("I DONT EXIST");
@@ -318,18 +308,18 @@ public class KewTypeBoServiceImplTest {
 
     @Test
     public void test_updateKewType_success() {
-        setupDOSFetchKewTypeBoByFind(TEST_KEW_TYPE_BO);
+        //setupDOSFetchKewTypeBoByFind(TEST_KEW_TYPE_BO);
 
         kewTypeBoService = new KewTypeBoServiceImpl();
         kewTypeBoService.setDataObjectService(mockDataObjectService);
-
-        when(mockDataObjectService.find(eq(KewTypeAttributeBo.class), any(String.class))).thenReturn(TEST_KEW_TYPE_ATTRIBUTE_BO);
-        when(mockDataObjectService.save(any(KewTypeAttributeBo.class))).thenReturn(TEST_KEW_TYPE_ATTRIBUTE_BO);
+        final String id = TEST_KEW_TYPE_DEF.getId();
+        when(mockDataObjectService.find(KewTypeBo.class, id)).thenReturn(TEST_KEW_TYPE_BO);
         when(mockDataObjectService.save(any(KewTypeBo.class))).thenReturn(TEST_KEW_TYPE_BO);
 
         getKewTypeBoService().updateKewType(TEST_KEW_TYPE_DEF);
 
-        verify(mockDataObjectService, times(1)).find(Matchers.argThat(new ClassOrSubclassMatcher<KewTypeBo>(KewTypeBo.class)), any(String.class));
+        verify(mockDataObjectService,
+                times(1)).find(Matchers.argThat(new ClassOrSubclassMatcher<>(KewTypeBo.class)), eq(id));
     }
 
     @Test(expected = IllegalArgumentException.class)

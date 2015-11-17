@@ -201,7 +201,7 @@ public class DataDictionaryIndex implements Runnable {
         if (duplicateAdd) {
             throw new DataDictionaryException(
                     "Detected duplicate InactivationBlockingDefinition for class " + inactivationBlockingDefinition
-                            .getBlockingReferenceBusinessObjectClass().getClass().getName());
+                            .getBlockingReferenceBusinessObjectClass().getName());
         }
     }
 

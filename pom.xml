@@ -1109,7 +1109,7 @@
                       <include>com.sun.xml.bind:jaxb-impl:${jaxb-impl.version}</include>
                       <include>org.apache.ws.security:wss4j:${wss4j.version}</include>
 
-                      <exclude>commons-collections:commons-collections:${commons-collections.version}</exclude>
+                      <include>commons-collections:commons-collections:${commons-collections.version}</include>
                     </includes>
                   </bannedDependencies>
                 </rules>

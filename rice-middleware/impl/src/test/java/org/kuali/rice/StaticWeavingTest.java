@@ -42,9 +42,9 @@ public class StaticWeavingTest {
     public void testStaticWeaving() {
         // first, scan for all files on the classpath with an @Entity or @MappedSuperClass annotation
         Reflections reflections = new Reflections("org.kuali.rice.kew", "org.kuali.rice.kim", "org.kuali.rice.kcb", "org.kuali.rice.ken");
-        Set<Class<?>> entityTypes = reflections.getTypesAnnotatedWith(Entity.class);
-        Set<Class<?>> superTypes = reflections.getTypesAnnotatedWith(MappedSuperclass.class);
-        Set<Class<?>> embeddableTypes = reflections.getTypesAnnotatedWith(Embeddable.class);
+        Set<Class<?>> entityTypes = reflections.getTypesAnnotatedWith(Entity.class, true);
+        Set<Class<?>> superTypes = reflections.getTypesAnnotatedWith(MappedSuperclass.class, true);
+        Set<Class<?>> embeddableTypes = reflections.getTypesAnnotatedWith(Embeddable.class, true);
 
         // next, let's assert that they have been statically weaved
         assertStaticWeaved(entityTypes, superTypes, embeddableTypes);

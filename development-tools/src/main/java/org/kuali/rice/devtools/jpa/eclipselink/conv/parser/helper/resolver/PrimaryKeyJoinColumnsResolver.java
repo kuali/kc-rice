@@ -15,29 +15,20 @@
  */
 package org.kuali.rice.devtools.jpa.eclipselink.conv.parser.helper.resolver;
 
-import japa.parser.ast.BlockComment;
-import japa.parser.ast.Comment;
+import japa.parser.ast.comments.BlockComment;
+import japa.parser.ast.comments.Comment;
 import japa.parser.ast.ImportDeclaration;
 import japa.parser.ast.expr.AnnotationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;
 import japa.parser.ast.expr.Expression;
-import japa.parser.ast.expr.MemberValuePair;
 import japa.parser.ast.expr.NameExpr;
-import japa.parser.ast.expr.NormalAnnotationExpr;
 import japa.parser.ast.expr.QualifiedNameExpr;
 import japa.parser.ast.expr.SingleMemberAnnotationExpr;
-import japa.parser.ast.expr.StringLiteralExpr;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
-import org.apache.ojb.broker.metadata.FieldDescriptor;
-import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
-import org.kuali.rice.devtools.jpa.eclipselink.conv.ojb.OjbUtil;
 import org.kuali.rice.devtools.jpa.eclipselink.conv.parser.helper.NodeData;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;

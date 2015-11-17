@@ -15,10 +15,9 @@
  */
 package org.kuali.rice.devtools.jpa.eclipselink.conv.parser.helper.resolver;
 
-import japa.parser.ast.BlockComment;
-import japa.parser.ast.Comment;
+import japa.parser.ast.comments.BlockComment;
+import japa.parser.ast.comments.Comment;
 import japa.parser.ast.ImportDeclaration;
-import japa.parser.ast.LineComment;
 import japa.parser.ast.expr.ArrayInitializerExpr;
 import japa.parser.ast.expr.BooleanLiteralExpr;
 import japa.parser.ast.expr.Expression;
@@ -26,7 +25,6 @@ import japa.parser.ast.expr.MemberValuePair;
 import japa.parser.ast.expr.NameExpr;
 import japa.parser.ast.expr.NormalAnnotationExpr;
 import japa.parser.ast.expr.QualifiedNameExpr;
-import japa.parser.ast.expr.StringLiteralExpr;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;

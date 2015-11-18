@@ -204,6 +204,10 @@
 * No Changes
 
 
+##rice-2.5.3.1511.0001-kualico
+* No Changes
+
+
 ##rice-2.5.3.1510.0005-kualico
 *  fix NullPointerException in derived User role
   * Travis Schneeberger on Mon, 19 Oct 2015 09:10:50 -0400 [View Commit](../../commit/49b187f55ba190b959fb2f1d4094c02cb5d3c334)

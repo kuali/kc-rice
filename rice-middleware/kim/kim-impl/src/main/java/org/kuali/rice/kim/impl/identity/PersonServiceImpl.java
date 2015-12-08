@@ -481,7 +481,6 @@ public class PersonServiceImpl implements PersonService {
 		boolean nameCriteria = false;
 		boolean addressCriteria = false;
 		boolean externalIdentifierCriteria = false;
-		boolean affiliationCriteria = false;
 		boolean affiliationDefaultOnlyCriteria = false;
 		boolean phoneCriteria = false;
 		boolean emailCriteria = false;
@@ -546,9 +545,6 @@ public class PersonServiceImpl implements PersonService {
 				if ( isExternalIdentifierEntityCriteria( entityProperty ) ) {
 					externalIdentifierCriteria = true;
 				}
-				if ( isAffiliationEntityCriteria( entityProperty ) ) {
-					affiliationCriteria = true;
-				}
 				if ( isAddressEntityCriteria( entityProperty ) ) {
 					addressCriteria = true;
 				}
@@ -595,9 +591,7 @@ public class PersonServiceImpl implements PersonService {
                     newCriteria.remove("entityTypeContactInfos.entityTypeCode");
                 }
 			}
-			if ( affiliationCriteria ) {
-				newCriteria.put( ENTITY_AFFILIATION_PROPERTY_PREFIX + "active", "Y" );
-			}
+			newCriteria.put( ENTITY_AFFILIATION_PROPERTY_PREFIX + "active", "Y" );
 			if ( affiliationDefaultOnlyCriteria ) {
 				newCriteria.put( ENTITY_AFFILIATION_PROPERTY_PREFIX + "defaultValue", "Y" );
 			}

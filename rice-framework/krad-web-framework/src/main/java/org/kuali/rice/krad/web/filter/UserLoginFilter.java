@@ -138,8 +138,8 @@ public class UserLoginFilter implements Filter {
 			return false;
 		} else {
 			return isRemoteUserPrincpialId()
-				? StringUtils.equals(userSession.getLoggedInUserPrincipalId(), remoteUser)
-				: StringUtils.equals(userSession.getLoggedInUserPrincipalName(), remoteUser);
+				? StringUtils.equalsIgnoreCase(userSession.getLoggedInUserPrincipalId(), remoteUser)
+				: StringUtils.equalsIgnoreCase(userSession.getLoggedInUserPrincipalName(), remoteUser);
 		}
 	}
     

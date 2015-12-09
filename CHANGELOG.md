@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+*  make remote user check case insensitive
+  * Joe Williams on Wed, 9 Dec 2015 15:52:32 -0600 [View Commit](../../commit/abd21a04958ff599b69ff949186e97e6e978371b)
 * Person Search missing results when search by last name
   * PD Issue:
   * User created proposal.
@@ -223,6 +225,28 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1512.0001-kualico
+* Person Search missing results when search by last name
+  * PD Issue:
+  * User created proposal.
+  * On Key Personnel screen selected Add Person and searched for Employee with only search criteria of Last Name "Hill"
+  * The results returned 13 Hills but none are Christopher N. Hill who has an active person record in KC. He is a principle research scientist for EAPS she needs to add to proposal.
+  * User then searched with first name "C*" and got Christopher N Hill as well as another Christopher Hill not on original result list.
+  * Desired Results:
+  * Search results should include ALL persons with last name of "Hill" in list of results.
+  * IRB issue:
+  * RT ticket: 3318837 - IRB office user M. Koehane in IRB using "Person Training" and then Person Search for last name of Shapiro in last name field
+  * Result: Stephanie Shapiro does not appear in list.
+  * KC support tried same with Active Indicator = Both and same results - no Stephanie Shapiro
+  * Repeat search with both first and last name > results return with Stephanie Shapiro.
+  * Desired Results:
+  * Search results should include ALL persons with last name only.
+  * Person search is linked to various tables.
+  * One of them - affiliations has multiple records where only one is active. This is causing issue as the query is returning multiple results for the same person based on number of records available in affiliation and the search limit settings is limiting the count.
+  * We now have incorrect result displayed.
+  * The fix is to turn on the active indicator for affiliations.
+  * rmancher on Tue, 8 Dec 2015 12:42:33 -0500 [View Commit](../../commit/f9e9e94f658a7972dc944a8bda99501bb7804f16)
 
 ##rice-2.5.3.1511.0003-kualico
 * No Changes

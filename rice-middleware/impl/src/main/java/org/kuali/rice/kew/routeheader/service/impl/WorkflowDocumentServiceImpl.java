@@ -92,7 +92,7 @@ public class WorkflowDocumentServiceImpl implements WorkflowDocumentService {
 		KEWServiceLocator.getRouteHeaderService().saveRouteHeader(routeHeader);
 	}
 
-    private DocumentRouteHeaderValue finish(DocumentRouteHeaderValue routeHeader) {
+    public DocumentRouteHeaderValue finish(DocumentRouteHeaderValue routeHeader) {
     	// reload the document from the database to get a "fresh and clean" copy if we aren't in the context of a
     	// document being routed
     	if (RouteContext.getCurrentRouteContext().getDocument() == null) {
@@ -496,7 +496,7 @@ public class WorkflowDocumentServiceImpl implements WorkflowDocumentService {
 		return finish(document);
 	}
 
-	protected Principal loadPrincipal(String principalId) {
+	public Principal loadPrincipal(String principalId) {
 		return KEWServiceLocator.getIdentityHelperService().getPrincipal(principalId);
 	}
 

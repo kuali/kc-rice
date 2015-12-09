@@ -161,7 +161,7 @@ public class ReturnToPreviousNodeAction extends ActionTakenEvent {
         return ActionRequestType.APPROVE;
     }
     
-    private void processReturnToInitiator(RouteNodeInstance newNodeInstance) {
+    public void processReturnToInitiator(RouteNodeInstance newNodeInstance) {
 	    // important to pull this from the RouteNode's DocumentType so we get the proper version
         RouteNode initialNode = newNodeInstance.getRouteNode().getDocumentType().getPrimaryProcess().getInitialRouteNode();
         if (initialNode != null) {
@@ -394,7 +394,7 @@ public class ReturnToPreviousNodeAction extends ActionTakenEvent {
 		}
     }
 
-    private void executeNodeChange(Collection activeNodes, NodeGraphSearchResult result) throws InvalidActionTakenException {
+    public void executeNodeChange(Collection activeNodes, NodeGraphSearchResult result) throws InvalidActionTakenException {
         Integer oldRouteLevel = null;
         Integer newRouteLevel = null;
         if (CompatUtils.isRouteLevelCompatible(getRouteHeader())) {

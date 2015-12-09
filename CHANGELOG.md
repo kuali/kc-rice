@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+*  Making some methods public in order to override.
+  * Gayathri Athreya on Wed, 9 Dec 2015 15:22:29 -0700 [View Commit](../../commit/123f33d5de2946f3c8f29e23afa1d5f427fccd4d)
 *  make remote user check case insensitive
   * Joe Williams on Wed, 9 Dec 2015 15:52:32 -0600 [View Commit](../../commit/abd21a04958ff599b69ff949186e97e6e978371b)
 * Person Search missing results when search by last name
@@ -225,6 +227,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1512.0002-kualico
+*  make remote user check case insensitive
+  * Joe Williams on Wed, 9 Dec 2015 15:52:32 -0600 [View Commit](../../commit/abd21a04958ff599b69ff949186e97e6e978371b)
 
 ##rice-2.5.3.1512.0001-kualico
 * Person Search missing results when search by last name

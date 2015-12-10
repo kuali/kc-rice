@@ -1,6 +1,10 @@
 
 
 ##CURRENT
+* Person Search missing results when search by last name"
+
+  * This reverts commit f9e9e94f658a7972dc944a8bda99501bb7804f16.
+  * Gayathri Athreya on Thu, 10 Dec 2015 15:21:30 -0700 [View Commit](../../commit/144446d95f3e7b9edb115c9e9e707ec3b0977855)
 *  Making some methods public in order to override.
   * Gayathri Athreya on Wed, 9 Dec 2015 15:22:29 -0700 [View Commit](../../commit/123f33d5de2946f3c8f29e23afa1d5f427fccd4d)
 *  make remote user check case insensitive
@@ -227,6 +231,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1512.0003-kualico
+*  Making some methods public in order to override.
+  * Gayathri Athreya on Wed, 9 Dec 2015 15:22:29 -0700 [View Commit](../../commit/123f33d5de2946f3c8f29e23afa1d5f427fccd4d)
 
 ##rice-2.5.3.1512.0002-kualico
 *  make remote user check case insensitive

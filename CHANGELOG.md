@@ -1,6 +1,21 @@
 
 
 ##CURRENT
+*  STE When you click on the Proposition Inquiry link inside a Rule Inquiry Screen.
+
+  * As a Functional Administrator I need to be able to review the full logic included in a rule when designing Questionnaires and Agendas.
+
+  * Steps to Recreate:
+  * 1 Create a New Agenda and Add a Rule
+  * 2 Click on the Search Link for Copy a Rule
+  * 3 Search for a Rule and click on the inquiry link for that rule
+  * 4 Click on a Proposition ID link in the rule
+  * Result:
+  * When you do this you get a STE
+
+  * Acceptance Criteria
+  * Given that I have clicked on a Proposition ID link in a Rule Inquiry Screen, the full logic for the proposition should appear on the inquiry screen that opens. (this would be consistent with the results in the Rule section of the Agenda document)
+  * Travis Schneeberger on Tue, 12 Jan 2016 10:33:28 -0500 [View Commit](../../commit/9513d23c50526c234a1c7ccc0c86c28bff762360)
 * Person Search missing results when search by last name"
 
   * This reverts commit f9e9e94f658a7972dc944a8bda99501bb7804f16.
@@ -231,6 +246,12 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1512.0004-kualico
+* Person Search missing results when search by last name"
+
+  * This reverts commit f9e9e94f658a7972dc944a8bda99501bb7804f16.
+  * Gayathri Athreya on Thu, 10 Dec 2015 15:21:30 -0700 [View Commit](../../commit/144446d95f3e7b9edb115c9e9e707ec3b0977855)
 
 ##rice-2.5.3.1512.0003-kualico
 *  Making some methods public in order to override.

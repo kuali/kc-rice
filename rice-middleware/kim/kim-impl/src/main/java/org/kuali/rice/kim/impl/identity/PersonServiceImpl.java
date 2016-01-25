@@ -30,10 +30,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
-import org.kuali.rice.core.api.criteria.CountFlag;
-import org.kuali.rice.core.api.criteria.Predicate;
-import org.kuali.rice.core.api.criteria.PredicateUtils;
-import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.*;
 import org.kuali.rice.kim.api.identity.IdentityService;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.identity.PersonService;
@@ -350,7 +347,6 @@ public class PersonServiceImpl implements PersonService {
 	    return people;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected List<Person> findPeopleInternal(Map<String,String> criteria, boolean unbounded ) {
 		// convert the criteria to a form that can be used by the ORM layer
 
@@ -361,23 +357,21 @@ public class PersonServiceImpl implements PersonService {
 
         QueryByCriteria.Builder queryBuilder = QueryByCriteria.Builder.create();
         queryBuilder.setPredicates(predicate);
-		List<Person> people;
 
-		if (!unbounded) {
-			queryBuilder.setCountFlag(CountFlag.INCLUDE);
-			Long matchingResultsCount = new Long(getIdentityService(). findEntityDefaults(queryBuilder.build()).getTotalRowCount());
-			people = new CollectionIncomplete<Person>(new ArrayList<Person>(),matchingResultsCount);
-			Integer searchResultsLimit = org.kuali.rice.kns.lookup.LookupUtils.getSearchResultsLimit(PersonImpl.class);
-    		if (searchResultsLimit != null && searchResultsLimit >= 0) {
-    			queryBuilder.setMaxResults(searchResultsLimit);
+		final List<Person> people;
 
-			}
+		final Integer searchResultsLimit = org.kuali.rice.kns.lookup.LookupUtils.getSearchResultsLimit(PersonImpl.class);
+
+		if (!unbounded && searchResultsLimit != null && searchResultsLimit >= 0) {
+			queryBuilder.setCountFlag(CountFlag.ONLY);
+			Long matchingResultsCount = Long.valueOf(getIdentityService().findEntityDefaults(queryBuilder.build()).getTotalRowCount());
+			people = new CollectionIncomplete<>(new ArrayList<>(), matchingResultsCount);
+			queryBuilder.setMaxResults(searchResultsLimit);
 		} else {
-			people = new ArrayList<Person>();
+			people = new ArrayList<>();
 		}
 
-
-
+		queryBuilder.setCountFlag(CountFlag.INCLUDE);
 		EntityDefaultQueryResults qr = getIdentityService().findEntityDefaults( queryBuilder.build() );
 
         if (qr.getResults().size() > 0) {
@@ -399,7 +393,7 @@ public class PersonServiceImpl implements PersonService {
                 }
 		    }
         } else if (!qr.isMoreResultsAvailable() && entityCriteria.containsKey("principals.principalId")) {
-            HashMap<String,String> newEntityCriteria = new HashMap<String,String>();
+            HashMap<String,String> newEntityCriteria = new HashMap<>();
             String principalID = entityCriteria.get("principals.principalId");
             newEntityCriteria.put( KIMPropertyConstants.Person.ACTIVE, "Y" );
             newEntityCriteria.put(KIMPropertyConstants.Entity.ID, principalID);
@@ -444,7 +438,7 @@ public class PersonServiceImpl implements PersonService {
         } else if (!qr.isMoreResultsAvailable() &&  entityCriteria.containsKey("principals.principalName")) {
             if (!(entityCriteria.containsKey(KIMPropertyConstants.Person.ACTIVE)) || (criteria.get(KIMPropertyConstants.Person.ACTIVE).equals("N"))) {
 
-                HashMap<String,String> newEntityCriteria = new HashMap<String,String>();
+                HashMap<String,String> newEntityCriteria = new HashMap<>();
                 String principalName = entityCriteria.get("principals.principalName");
                 newEntityCriteria.put( KIMPropertyConstants.Person.ACTIVE, KRADConstants.YES_INDICATOR_VALUE );
                 newEntityCriteria.put("principals.principalName", principalName);
@@ -487,7 +481,7 @@ public class PersonServiceImpl implements PersonService {
 		boolean emailCriteria = false;
 		boolean employeeIdCriteria = false;
 		// add base lookups for all person lookups
-		HashMap<String,String> newCriteria = new HashMap<String,String>();
+		HashMap<String,String> newCriteria = new HashMap<>();
 		newCriteria.putAll( baseLookupCriteria );
 
 		newCriteria.put( "entityTypeContactInfos.entityTypeCode", personEntityTypeLookupCriteria );

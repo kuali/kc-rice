@@ -1,9 +1,27 @@
 
 
 ##CURRENT
-*  improving performance of person search.  When using a bounded search the person search database query gets executed twice.  The first time for the total number of results unbounded and again for the actual results bounded.  The first query should have only been returning a count but was actually returning person records as well.
+* RESKC-1185: Fixing doc operations screen.
+  * Steps to recreate
+  * 1) create a proposal (basic with enough to submit)
+  * 2) PI submit proposal (or PI approves proposal)
+  * 3) Then recall that proposal
+  * This generates an FYI record in KREW_ACTN_RQST_T and the document can no longer be opened in document operations.
+  * 4. ) Try to open the document in “document operations” you can no longer do so- STE generated.
+  * > Navigation: System Admin Portal > System Admin > Workflow > Document Operations
+  * >> Enter the Document ID in the eponymous field.
+  * STE
+
+  * Caused by: java.lang.IllegalStateException: During synchronization a new object was found through a relationship that was not marked cascade PERSIST: org.kuali.rice.kew.engine.node.RouteNodeInstance@e367be6[routeNodeInstanceId=,documentId=,branch=,routeNode=,active=false,complete=false,initial=true,process=,state=0].
+  * at org.eclipse.persistence.internal.sessions.RepeatableWriteUnitOfWork.discoverUnregisteredNewObjects(RepeatableWriteUnitOfWork.java:313)
+  * at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.calculateChanges(UnitOfWorkImpl.java:723)
+  * at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.commitToDatabaseWithChangeSet(UnitOfWorkImpl.java:1516)
+  * at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.issueSQLbeforeCompletion(UnitOfWorkImpl.java:3168)
+  * at
+  * Gayathri Athreya on Fri, 11 Mar 2016 08:26:45 -0700 [View Commit](../../commit/2c75cc01ff6f645b729965ddfe8fb72eccd3ef7d)
+* improving performance of person search.  When using a bounded search the person search database query gets executed twice.  The first time for the total number of results unbounded and again for the actual results bounded.  The first query should have only been returning a count but was actually returning person records as well.
   * Travis Schneeberger on Mon, 25 Jan 2016 10:18:15 -0500 [View Commit](../../commit/52ab6fc781dc4916a9e1a47da5287ab82b4d0f9f)
-*  STE When you click on the Proposition Inquiry link inside a Rule Inquiry Screen.
+* RESKC-445: STE When you click on the Proposition Inquiry link inside a Rule Inquiry Screen.
 
   * As a Functional Administrator I need to be able to review the full logic included in a rule when designing Questionnaires and Agendas.
 
@@ -18,15 +36,15 @@
   * Acceptance Criteria
   * Given that I have clicked on a Proposition ID link in a Rule Inquiry Screen, the full logic for the proposition should appear on the inquiry screen that opens. (this would be consistent with the results in the Rule section of the Agenda document)
   * Travis Schneeberger on Tue, 12 Jan 2016 10:33:28 -0500 [View Commit](../../commit/9513d23c50526c234a1c7ccc0c86c28bff762360)
-* Person Search missing results when search by last name"
+* RESKC-1057: Revert "RESKC-1053:Person Search missing results when search by last name"
 
   * This reverts commit f9e9e94f658a7972dc944a8bda99501bb7804f16.
   * Gayathri Athreya on Thu, 10 Dec 2015 15:21:30 -0700 [View Commit](../../commit/144446d95f3e7b9edb115c9e9e707ec3b0977855)
-*  Making some methods public in order to override.
+* RESKC-639: Making some methods public in order to override.
   * Gayathri Athreya on Wed, 9 Dec 2015 15:22:29 -0700 [View Commit](../../commit/123f33d5de2946f3c8f29e23afa1d5f427fccd4d)
-*  make remote user check case insensitive
+* make remote user check case insensitive
   * Joe Williams on Wed, 9 Dec 2015 15:52:32 -0600 [View Commit](../../commit/abd21a04958ff599b69ff949186e97e6e978371b)
-* Person Search missing results when search by last name
+* RESKC-1053:Person Search missing results when search by last name
   * PD Issue:
   * User created proposal.
   * On Key Personnel screen selected Add Person and searched for Employee with only search criteria of Last Name "Hill"
@@ -46,17 +64,17 @@
   * We now have incorrect result displayed.
   * The fix is to turn on the active indicator for affiliations.
   * rmancher on Tue, 8 Dec 2015 12:42:33 -0500 [View Commit](../../commit/f9e9e94f658a7972dc944a8bda99501bb7804f16)
-*  fix NullPointerException in derived User role
+* fix NullPointerException in derived User role
   * Travis Schneeberger on Mon, 19 Oct 2015 09:10:50 -0400 [View Commit](../../commit/49b187f55ba190b959fb2f1d4094c02cb5d3c334)
-* Fix user filter problem when remote user is configured as principal id
+* RESKC-885:Fix user filter problem when remote user is configured as principal id
   * blackcathacker on Thu, 15 Oct 2015 11:35:46 -0700 [View Commit](../../commit/e129b6500afd3946fccd14e9f33ce65d5eb44a82)
-* Refactor of UserLoginFilter to facilitate overrides for Core Auth Service
+* RESKC-885:Refactor of UserLoginFilter to facilitate overrides for Core Auth Service
   * blackcathacker on Fri, 9 Oct 2015 10:16:56 -0700 [View Commit](../../commit/e89f6ad541e004ed60f5472f2dc58d9df5866804)
 * Add KRMS comparison service for general date fields
   * blackcathacker on Thu, 8 Oct 2015 10:56:04 -0700 [View Commit](../../commit/889f9581392ed653883d02046deb08a18d8e41dc)
 * closing the inputstream in a finally block.  This avoids a resource leak which can be important with some stream types.
   * Travis Schneeberger on Sun, 4 Oct 2015 17:33:27 -0400 [View Commit](../../commit/dafd94cf0194170a54a37ade0cbff0c0f28a1561)
-*  Adding support for Canadian provinces.
+* RESKC-771: Adding support for Canadian provinces.
   * Gayathri Athreya on Fri, 25 Sep 2015 19:48:09 -0700 [View Commit](../../commit/c1b5d969b814985d01d5e2127225a4739b0c0b7b)
 * Enable KEW annotations for KRMS peopleflow role requests
 
@@ -66,11 +84,11 @@
   * Travis Schneeberger on Fri, 11 Sep 2015 17:20:08 -0400 [View Commit](../../commit/b4c948bfcc630422d9df358fd78ce15d36c3dbac)
 * updating the static weaving plugin for Java 8 as per the documentation listed here: https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving & https://github.com/empulse-gmbh/eclipselink-static-weave-plugin
   * Travis Schneeberger on Fri, 28 Aug 2015 09:07:01 -0400 [View Commit](../../commit/a928d3293a859efb6d3b6ccd1a447a5065bb54d9)
-* fix data table json string escaping
+* RESKC-758:fix data table json string escaping
   * Joe Williams on Wed, 26 Aug 2015 10:29:32 -0500 [View Commit](../../commit/049c5bd7f89c60c939db543a64ba8ebcd17afb89)
-* fix json error when rendering data tables
+* RESKC-758:fix json error when rendering data tables
   * Joe Williams on Tue, 25 Aug 2015 12:16:05 -0500 [View Commit](../../commit/ee1fc1dc18da13280804479754cfd3645f7f1f86)
-* fix dummy login page to not allow inactive users to log in
+* RESKC-755:fix dummy login page to not allow inactive users to log in
 
   * Steps:
 
@@ -84,7 +102,7 @@
   * Joe Williams on Mon, 24 Aug 2015 13:51:27 -0500 [View Commit](../../commit/589c759f81b01da9d753f60858a35308d22de063)
 
 ##rice-1508.0005
-* return saved adhoc recipient when saving document to avoid sql exception with object id
+* RESKC-696:return saved adhoc recipient when saving document to avoid sql exception with object id
   * Joe Williams on Wed, 19 Aug 2015 10:37:36 -0500 [View Commit](../../commit/be92a50bc24329871c9922403c1fb9d2958ccdfb)
 
 ##rice-1508.0004
@@ -100,52 +118,52 @@
 
 
 ##rice-1508.0001
-*  if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad
+* RESKC-716: if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad
   * Travis Schneeberger on Thu, 6 Aug 2015 11:41:55 -0400 [View Commit](../../commit/d3e62878859eeae45f2242cf516c8077a4e3d833)
 * KULRICE-14269 - JPA predicates cause unnecessary SQL joins and performance degradation
   * Travis Schneeberger on Thu, 6 Aug 2015 10:13:52 -0400 [View Commit](../../commit/1ffe1444c8c329ef412ba2d34f443938bff586c3)
-*  fixing several spring configuration issues.  Fixing lookup bean to be prototype as it should be.  Fixing MessageService bean name so that it doesn't conflict with the krad MessageService.  Fix the kualiMaintainable bean so it doesn't fail when requested.
+* fixing several spring configuration issues.  Fixing lookup bean to be prototype as it should be.  Fixing MessageService bean name so that it doesn't conflict with the krad MessageService.  Fix the kualiMaintainable bean so it doesn't fail when requested.
   * Travis Schneeberger on Tue, 4 Aug 2015 15:51:10 -0400 [View Commit](../../commit/9000b435a112c1a40d2add62837bf308aed3e6db)
-*  on a lookup, if the type is a string but all the values are integral or decimal treat the table sort behavior as integral or decimal
+* RESKC-646: on a lookup, if the type is a string but all the values are integral or decimal treat the table sort behavior as integral or decimal
   * Travis Schneeberger on Wed, 22 Jul 2015 13:05:32 -0400 [View Commit](../../commit/36a59211aec6df59bae6b1e25669842164e09674)
 * moving completely to bitronix. Removing xapool & jotm support
   * Travis Schneeberger on Tue, 21 Jul 2015 13:23:21 -0400 [View Commit](../../commit/8fa0c7eca5a5f5b80d9ed8e217a80cf05e576aa4)
-*  changing nexus config
+* changing nexus config
   * Travis Schneeberger on Fri, 17 Jul 2015 13:42:59 -0400 [View Commit](../../commit/6ef1a89951212c90bf484c3a23c1232c79cea9d0)
 * Deleting the broken reloading data dictionary
   * Travis Schneeberger on Thu, 16 Jul 2015 15:56:27 -0400 [View Commit](../../commit/d7d61acef4f3b1d9f28be8bc412c0850d9ae25ba)
 * Deleting the broken reloading data dictionary
   * Travis Schneeberger on Thu, 16 Jul 2015 14:58:01 -0400 [View Commit](../../commit/d31dd4b7625beb447f0cc602db86413f23c38f3a)
-*  Fixing role member fetch.
+* RESKC-608: Fixing role member fetch.
   * "Proposal Creator" role is behaving like a Unit Hierarchy role with descend enabled in stead of Unit role sometimes.
   * User with the "Unit" Proposal Creator role assigned at a unit that has children, has all the children listed in the
   * PD "Lead Unit" drop down when Creating or Copying a proposal, even if they do not have the role assigned for the child units. User can select, create/copy and successfully save the new proposal.
 
   * After testing I think this behavior is random. I assigned coiadmin to the Proposal Creator role with unit BL-BL and had access to ALL units not just its descendents. The behavior seems to be dependent on the other roles assigned to the user. This is because of how rice fetches role members when given a role id and user id.
   * Gayathri Athreya on Thu, 9 Jul 2015 16:57:29 -0700 [View Commit](../../commit/049deab42684b58e0c73f1fb683f3ba64f085ec7)
-*  upgrading ojb to avoid concurrency issues under heavy load
+* RESKC-594: upgrading ojb to avoid concurrency issues under heavy load
   * Travis Schneeberger on Tue, 7 Jul 2015 12:30:57 -0400 [View Commit](../../commit/b05230f782ecefa87ba0311c877b9b6c2a768a6d)
-* fix to display number of items found on person lookupable
+* RESKC-550:fix to display number of items found on person lookupable
   * Joe Williams on Thu, 2 Jul 2015 13:12:04 -0500 [View Commit](../../commit/43851e909ff82ff7563d904c08a51d633f581cd8)
 * RESKC-397 People flow annotation display fix
 
   * People flow annotation for route log was displaying null values or blank information, this corrects that behavior by showing Namespace and Name of people flow
   * bsmith83 on Mon, 29 Jun 2015 15:38:53 -0700 [View Commit](../../commit/c4517d7b126779928322e37be8e9983fe5f68749)
-*  Reject Enhancement
+* RESKC-521: Reject Enhancement
   * Control the reject action with permissions.
   * Gayathri Athreya on Thu, 4 Jun 2015 20:33:58 -0700 [View Commit](../../commit/c815a720344cb0ff4bfdf62f5aea4e20028040f6)
-*  allow the jpa vendor adapter to be configured such that a java melody vendor adapter can be used if desired.
+* allow the jpa vendor adapter to be configured such that a java melody vendor adapter can be used if desired.
   * Travis Schneeberger on Thu, 4 Jun 2015 15:53:25 -0400 [View Commit](../../commit/fd4f8b5c74610eb468748fae569c80fd0dfc9291)
-*  Modified parent annotation for action request to display people flow name.
+* RESKC-491: Modified parent annotation for action request to display people flow name.
   * For the KRMS Agenda based routing approval stops, PPL Flow Member "Annotation" is still blank and does not display any PPL Flow info to user when they open the Future routing.
 
   * Only the delegates, visible only once the show is expanded, have the PPL flow name included.
 
   * PPL Flow Member Annotation field in Routing Log needs to show PPL Flow Name. User needs to be able to see PPL Flow names for each Pending Approval stop without expanding to display delegates.
   * Gayathri on Fri, 29 May 2015 18:49:07 -0700 [View Commit](../../commit/e7cecb382163b727ae0e20ad0a3e6237f7fa7d83)
-*  enable quartz jobs to be monitored & extra statistics for ehcache with java melody
+* enable quartz jobs to be monitored & extra statistics for ehcache with java melody
   * Travis Schneberger on Fri, 29 May 2015 13:53:09 -0400 [View Commit](../../commit/822c2544d158f12875feaea2469eb68801b5cbb0)
-*  FE issue - People Flow KRMS - Descriptors need to feed to PD Proposal Action>Route Log>Future Routing Requests details
+* RESKC-491: FE issue - People Flow KRMS - Descriptors need to feed to PD Proposal Action>Route Log>Future Routing Requests details
   * I think the issue here is that in Future actions, while people flow members' and delegates' names appear correctly in the PD Route Log, there is no field in PD route log that displays what Routing Agenda rule or which People Flow is associated with the required approval.
   * Unit Administrators, Deans Office reviewers and OSP need to be able to easily identify the unit to which the proposal will route (or has routed, or is currently at the stop for).
   * Possibly the easiest way for this to be done is to display the People Flow name, e.g. "151000 Biology All Proposals." in the Route Log, so users could see which approval group the stop is for.
@@ -165,7 +183,7 @@
   * Travis Schneberger on Sun, 17 May 2015 21:26:34 -0400 [View Commit](../../commit/f01c8978571c95b60b3244628ecbb0dccb1c4015)
 * turning off lint for javadoc because of Java 8's strict javadoc compiler.
   * Travis Schneberger on Thu, 14 May 2015 17:10:57 -0400 [View Commit](../../commit/f3fdfe8900a53686b2355d89000de4701ff93d92)
-*  Fix test. The test was wrong earlier.
+* RESKC-422: Fix test. The test was wrong earlier.
   * Gayathri on Thu, 14 May 2015 11:45:34 -0700 [View Commit](../../commit/ef77e4c09f46a06b20d91c1dd032900310a90648)
 * fixing java 8 generic inference compilation issue.
   * Travis Schneberger on Thu, 14 May 2015 11:30:18 -0400 [View Commit](../../commit/149380ff4e4b53a4d673472d57e50c36541d1330)
@@ -173,7 +191,7 @@
   * Travis Schneberger on Thu, 14 May 2015 10:57:29 -0400 [View Commit](../../commit/7148d3b52dedf0a0f03823436f435c829948a0cc)
 * move to java 8
   * Travis Schneberger on Thu, 14 May 2015 07:52:29 -0400 [View Commit](../../commit/5f2dcf22328d6bf8532eca08e7150bd70cc88239)
-*  Fix !=null comparison on prepositions.
+* RESKC-422: Fix !=null comparison on prepositions.
   * Steps to Recreate
   * 1 Create a People Flow
   * 2 Create an Agenda with a single single proposition. Activity Type != null. I did this because I wanted the rule to always fire no matter what, and as Activity Type is required to save a prop dev doc this field cannot be null.
@@ -182,7 +200,7 @@
   * Gayathri on Wed, 13 May 2015 10:22:51 -0700 [View Commit](../../commit/e40f8389dec88fe9e2703105ed302203ab04c4f3)
 * Preparing code and libraries to switch to Java 8
   * Travis Schneberger on Fri, 8 May 2015 09:56:51 -0400 [View Commit](../../commit/ac9e1e14f6b6504003dc02bdd8c93adf525aa607)
-*  Fixing exception while exporting results.
+* RESKC-345: Fixing exception while exporting results.
   * Rice added an enhancement to check permissions before displaying the options to export search results. Rice assumes that the export functionality is only used in lookupForms which have a boEntry but KC uses it in other forms as well. Therefore, when the boEntry is null, I bypass the perm check. I could not override the helper because it is not spring injected, therefore this solution. Additionally, in the absence of a boEntry, how would you check perms? Hence this solution.
   * Details
   * --------
@@ -226,11 +244,11 @@
   * blackcathacker on Thu, 16 Apr 2015 09:26:27 -0700 [View Commit](../../commit/180509ac282ccb118a11b8a61350ba7a069be0ee)
 
 ##rice-2.5.4.4-kckualico
-* fixed agenda editor to save term paramters
+* RESKC-330:fixed agenda editor to save term paramters
   * Joe Williams on Wed, 15 Apr 2015 16:24:01 -0500 [View Commit](../../commit/fe575b10e05dfacc4296f8ea4f9e6bf2d1f81978)
 
 ##rice-2.5.4.3-kckualico
-* Do not serialize AgendaBo.ContextBo due to additional agendas
+* RESKC-329:Do not serialize AgendaBo.ContextBo due to additional agendas
 
   * When attempting to serialize the contextBo off the agenda in the maint doc the context has links to more all agendas in the context and these are serialized as well which ends up frequently causing an exception due to un-materialized lists.
   * blackcathacker on Tue, 14 Apr 2015 14:59:16 -0700 [View Commit](../../commit/7bd6a6ed866fcf8dfe2a10a252b95f9f3c3219e6)
@@ -242,15 +260,19 @@
   * rojlarge on Tue, 7 Apr 2015 12:05:04 -0400 [View Commit](../../commit/cba19ce67fc5f92d7cf129a58aa4b3315214f65f)
 
 ##rice-2.5.4.1-kckualico
-*  Fixing context serialization
+* RESKC-256: Fixing context serialization
   * Gayathri on Thu, 9 Apr 2015 15:03:09 -0700 [View Commit](../../commit/ac7f7f10d76d54315eede9c3ceca0857db2563d7)
 
 ##rice-2.5.4.0-kckualico
 * No Changes
 
 
+##rice-2.5.3.1601.0002-kualico
+* improving performance of person search.  When using a bounded search the person search database query gets executed twice.  The first time for the total number of results unbounded and again for the actual results bounded.  The first query should have only been returning a count but was actually returning person records as well.
+  * Travis Schneeberger on Mon, 25 Jan 2016 10:18:15 -0500 [View Commit](../../commit/52ab6fc781dc4916a9e1a47da5287ab82b4d0f9f)
+
 ##rice-2.5.3.1601.0001-kualico
-*  STE When you click on the Proposition Inquiry link inside a Rule Inquiry Screen.
+* RESKC-445: STE When you click on the Proposition Inquiry link inside a Rule Inquiry Screen.
 
   * As a Functional Administrator I need to be able to review the full logic included in a rule when designing Questionnaires and Agendas.
 
@@ -267,21 +289,21 @@
   * Travis Schneeberger on Tue, 12 Jan 2016 10:33:28 -0500 [View Commit](../../commit/9513d23c50526c234a1c7ccc0c86c28bff762360)
 
 ##rice-2.5.3.1512.0004-kualico
-* Person Search missing results when search by last name"
+* RESKC-1057: Revert "RESKC-1053:Person Search missing results when search by last name"
 
   * This reverts commit f9e9e94f658a7972dc944a8bda99501bb7804f16.
   * Gayathri Athreya on Thu, 10 Dec 2015 15:21:30 -0700 [View Commit](../../commit/144446d95f3e7b9edb115c9e9e707ec3b0977855)
 
 ##rice-2.5.3.1512.0003-kualico
-*  Making some methods public in order to override.
+* RESKC-639: Making some methods public in order to override.
   * Gayathri Athreya on Wed, 9 Dec 2015 15:22:29 -0700 [View Commit](../../commit/123f33d5de2946f3c8f29e23afa1d5f427fccd4d)
 
 ##rice-2.5.3.1512.0002-kualico
-*  make remote user check case insensitive
+* make remote user check case insensitive
   * Joe Williams on Wed, 9 Dec 2015 15:52:32 -0600 [View Commit](../../commit/abd21a04958ff599b69ff949186e97e6e978371b)
 
 ##rice-2.5.3.1512.0001-kualico
-* Person Search missing results when search by last name
+* RESKC-1053:Person Search missing results when search by last name
   * PD Issue:
   * User created proposal.
   * On Key Personnel screen selected Add Person and searched for Employee with only search criteria of Last Name "Hill"
@@ -315,15 +337,15 @@
 
 
 ##rice-2.5.3.1510.0005-kualico
-*  fix NullPointerException in derived User role
+* fix NullPointerException in derived User role
   * Travis Schneeberger on Mon, 19 Oct 2015 09:10:50 -0400 [View Commit](../../commit/49b187f55ba190b959fb2f1d4094c02cb5d3c334)
 
 ##rice-2.5.3.1510.0004-kualico
-* Fix user filter problem when remote user is configured as principal id
+* RESKC-885:Fix user filter problem when remote user is configured as principal id
   * blackcathacker on Thu, 15 Oct 2015 11:35:46 -0700 [View Commit](../../commit/e129b6500afd3946fccd14e9f33ce65d5eb44a82)
 
 ##rice-2.5.3.1510.0003-kualico
-* Refactor of UserLoginFilter to facilitate overrides for Core Auth Service
+* RESKC-885:Refactor of UserLoginFilter to facilitate overrides for Core Auth Service
   * blackcathacker on Fri, 9 Oct 2015 10:16:56 -0700 [View Commit](../../commit/e89f6ad541e004ed60f5472f2dc58d9df5866804)
 
 ##rice-2.5.3.1510.0002-kualico
@@ -335,7 +357,7 @@
   * Travis Schneeberger on Sun, 4 Oct 2015 17:33:27 -0400 [View Commit](../../commit/dafd94cf0194170a54a37ade0cbff0c0f28a1561)
 
 ##rice-2.5.3.1509.0003-kualico
-*  Adding support for Canadian provinces.
+* RESKC-771: Adding support for Canadian provinces.
   * Gayathri Athreya on Fri, 25 Sep 2015 19:48:09 -0700 [View Commit](../../commit/c1b5d969b814985d01d5e2127225a4739b0c0b7b)
 
 ##rice-2.5.3.1509.0002-kualico
@@ -349,11 +371,11 @@
   * Travis Schneeberger on Fri, 11 Sep 2015 17:20:08 -0400 [View Commit](../../commit/b4c948bfcc630422d9df358fd78ce15d36c3dbac)
 * updating the static weaving plugin for Java 8 as per the documentation listed here: https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving & https://github.com/empulse-gmbh/eclipselink-static-weave-plugin
   * Travis Schneeberger on Fri, 28 Aug 2015 09:07:01 -0400 [View Commit](../../commit/a928d3293a859efb6d3b6ccd1a447a5065bb54d9)
-* fix data table json string escaping
+* RESKC-758:fix data table json string escaping
   * Joe Williams on Wed, 26 Aug 2015 10:29:32 -0500 [View Commit](../../commit/049c5bd7f89c60c939db543a64ba8ebcd17afb89)
-* fix json error when rendering data tables
+* RESKC-758:fix json error when rendering data tables
   * Joe Williams on Tue, 25 Aug 2015 12:16:05 -0500 [View Commit](../../commit/ee1fc1dc18da13280804479754cfd3645f7f1f86)
-* fix dummy login page to not allow inactive users to log in
+* RESKC-755:fix dummy login page to not allow inactive users to log in
 
   * Steps:
 
@@ -365,11 +387,11 @@
 
   * Actual: quickstart is allowed to log in
   * Joe Williams on Mon, 24 Aug 2015 13:51:27 -0500 [View Commit](../../commit/589c759f81b01da9d753f60858a35308d22de063)
-* return saved adhoc recipient when saving document to avoid sql exception with object id
+* RESKC-696:return saved adhoc recipient when saving document to avoid sql exception with object id
   * Joe Williams on Wed, 19 Aug 2015 10:37:36 -0500 [View Commit](../../commit/be92a50bc24329871c9922403c1fb9d2958ccdfb)
 
 ##rice-2.5.3.1508.3-kckualico
-*  if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad
+* RESKC-716: if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad
   * Travis Schneeberger on Thu, 6 Aug 2015 11:41:55 -0400 [View Commit](../../commit/d3e62878859eeae45f2242cf516c8077a4e3d833)
 
 ##rice-2.5.3.1508.2-kckualico
@@ -389,15 +411,15 @@
 
 
 ##rice-2.5.3.1508.0010-kualico
-* fix data table json string escaping
+* RESKC-758:fix data table json string escaping
   * Joe Williams on Wed, 26 Aug 2015 10:29:32 -0500 [View Commit](../../commit/049c5bd7f89c60c939db543a64ba8ebcd17afb89)
 
 ##rice-2.5.3.1508.0009-kualico
-* fix json error when rendering data tables
+* RESKC-758:fix json error when rendering data tables
   * Joe Williams on Tue, 25 Aug 2015 12:16:05 -0500 [View Commit](../../commit/ee1fc1dc18da13280804479754cfd3645f7f1f86)
 
 ##rice-2.5.3.1508.0008-kualico
-* fix dummy login page to not allow inactive users to log in
+* RESKC-755:fix dummy login page to not allow inactive users to log in
 
   * Steps:
 
@@ -415,17 +437,17 @@
 
 
 ##rice-2.5.3.1508.0006-kualico
-* return saved adhoc recipient when saving document to avoid sql exception with object id
+* RESKC-696:return saved adhoc recipient when saving document to avoid sql exception with object id
   * Joe Williams on Wed, 19 Aug 2015 10:37:36 -0500 [View Commit](../../commit/be92a50bc24329871c9922403c1fb9d2958ccdfb)
-*  if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad
+* RESKC-716: if message parsing fails fallback to just displaying the message text.  This allows cases where the user input has krad special characters and confuses krad
   * Travis Schneeberger on Thu, 6 Aug 2015 11:41:55 -0400 [View Commit](../../commit/d3e62878859eeae45f2242cf516c8077a4e3d833)
 * KULRICE-14269 - JPA predicates cause unnecessary SQL joins and performance degradation
   * Travis Schneeberger on Thu, 6 Aug 2015 10:13:52 -0400 [View Commit](../../commit/1ffe1444c8c329ef412ba2d34f443938bff586c3)
-*  fixing several spring configuration issues.  Fixing lookup bean to be prototype as it should be.  Fixing MessageService bean name so that it doesn't conflict with the krad MessageService.  Fix the kualiMaintainable bean so it doesn't fail when requested.
+* fixing several spring configuration issues.  Fixing lookup bean to be prototype as it should be.  Fixing MessageService bean name so that it doesn't conflict with the krad MessageService.  Fix the kualiMaintainable bean so it doesn't fail when requested.
   * Travis Schneeberger on Tue, 4 Aug 2015 15:51:10 -0400 [View Commit](../../commit/9000b435a112c1a40d2add62837bf308aed3e6db)
 
 ##rice-2.5.3.1507.17-kckualico
-*  on a lookup, if the type is a string but all the values are integral or decimal treat the table sort behavior as integral or decimal
+* RESKC-646: on a lookup, if the type is a string but all the values are integral or decimal treat the table sort behavior as integral or decimal
   * Travis Schneeberger on Wed, 22 Jul 2015 13:05:32 -0400 [View Commit](../../commit/36a59211aec6df59bae6b1e25669842164e09674)
 
 ##rice-2.5.3.1507.16-kckualico
@@ -465,7 +487,7 @@
 
 
 ##rice-2.5.3.1507.7-kckualico
-*  changing nexus config
+* changing nexus config
   * Travis Schneeberger on Fri, 17 Jul 2015 13:42:59 -0400 [View Commit](../../commit/6ef1a89951212c90bf484c3a23c1232c79cea9d0)
 
 ##rice-2.5.3.1507.6-kckualico
@@ -479,7 +501,7 @@
   * Travis Schneeberger on Thu, 16 Jul 2015 14:58:01 -0400 [View Commit](../../commit/d31dd4b7625beb447f0cc602db86413f23c38f3a)
 
 ##rice-2.5.3.1507.4-kckualico
-*  Fixing role member fetch.
+* RESKC-608: Fixing role member fetch.
   * "Proposal Creator" role is behaving like a Unit Hierarchy role with descend enabled in stead of Unit role sometimes.
   * User with the "Unit" Proposal Creator role assigned at a unit that has children, has all the children listed in the
   * PD "Lead Unit" drop down when Creating or Copying a proposal, even if they do not have the role assigned for the child units. User can select, create/copy and successfully save the new proposal.
@@ -488,11 +510,11 @@
   * Gayathri Athreya on Thu, 9 Jul 2015 16:57:29 -0700 [View Commit](../../commit/049deab42684b58e0c73f1fb683f3ba64f085ec7)
 
 ##rice-2.5.3.1507.3-kckualico
-*  upgrading ojb to avoid concurrency issues under heavy load
+* RESKC-594: upgrading ojb to avoid concurrency issues under heavy load
   * Travis Schneeberger on Tue, 7 Jul 2015 12:30:57 -0400 [View Commit](../../commit/b05230f782ecefa87ba0311c877b9b6c2a768a6d)
 
 ##rice-2.5.3.1507.2-kckualico
-* fix to display number of items found on person lookupable
+* RESKC-550:fix to display number of items found on person lookupable
   * Joe Williams on Thu, 2 Jul 2015 13:12:04 -0500 [View Commit](../../commit/43851e909ff82ff7563d904c08a51d633f581cd8)
 
 ##rice-2.5.3.1507.1-kckualico
@@ -502,12 +524,12 @@
   * bsmith83 on Mon, 29 Jun 2015 15:38:53 -0700 [View Commit](../../commit/c4517d7b126779928322e37be8e9983fe5f68749)
 
 ##rice-2.5.3.1506.3-kckualico
-*  Reject Enhancement
+* RESKC-521: Reject Enhancement
   * Control the reject action with permissions.
   * Gayathri Athreya on Thu, 4 Jun 2015 20:33:58 -0700 [View Commit](../../commit/c815a720344cb0ff4bfdf62f5aea4e20028040f6)
 
 ##rice-2.5.3.1506.2-kckualico
-*  Modified parent annotation for action request to display people flow name.
+* RESKC-491: Modified parent annotation for action request to display people flow name.
   * For the KRMS Agenda based routing approval stops, PPL Flow Member "Annotation" is still blank and does not display any PPL Flow info to user when they open the Future routing.
 
   * Only the delegates, visible only once the show is expanded, have the PPL flow name included.
@@ -516,11 +538,11 @@
   * Gayathri on Fri, 29 May 2015 18:49:07 -0700 [View Commit](../../commit/e7cecb382163b727ae0e20ad0a3e6237f7fa7d83)
 
 ##rice-2.5.3.1506.1-kckualico
-*  allow the jpa vendor adapter to be configured such that a java melody vendor adapter can be used if desired.
+* allow the jpa vendor adapter to be configured such that a java melody vendor adapter can be used if desired.
   * Travis Schneeberger on Thu, 4 Jun 2015 15:53:25 -0400 [View Commit](../../commit/fd4f8b5c74610eb468748fae569c80fd0dfc9291)
 
 ##rice-2.5.3.1505.17-kckualico
-*  enable quartz jobs to be monitored & extra statistics for ehcache with java melody
+* enable quartz jobs to be monitored & extra statistics for ehcache with java melody
   * Travis Schneberger on Fri, 29 May 2015 13:53:09 -0400 [View Commit](../../commit/822c2544d158f12875feaea2469eb68801b5cbb0)
 
 ##rice-2.5.3.1505.16-kckualico
@@ -528,7 +550,7 @@
 
 
 ##rice-2.5.3.1505.15-kckualico
-*  FE issue - People Flow KRMS - Descriptors need to feed to PD Proposal Action>Route Log>Future Routing Requests details
+* RESKC-491: FE issue - People Flow KRMS - Descriptors need to feed to PD Proposal Action>Route Log>Future Routing Requests details
   * I think the issue here is that in Future actions, while people flow members' and delegates' names appear correctly in the PD Route Log, there is no field in PD route log that displays what Routing Agenda rule or which People Flow is associated with the required approval.
   * Unit Administrators, Deans Office reviewers and OSP need to be able to easily identify the unit to which the proposal will route (or has routed, or is currently at the stop for).
   * Possibly the easiest way for this to be done is to display the People Flow name, e.g. "151000 Biology All Proposals." in the Route Log, so users could see which approval group the stop is for.
@@ -580,7 +602,7 @@
 ##rice-2.5.3.1505.4-kckualico
 * turning off lint for javadoc because of Java 8's strict javadoc compiler.
   * Travis Schneberger on Thu, 14 May 2015 17:10:57 -0400 [View Commit](../../commit/f3fdfe8900a53686b2355d89000de4701ff93d92)
-*  Fix test. The test was wrong earlier.
+* RESKC-422: Fix test. The test was wrong earlier.
   * Gayathri on Thu, 14 May 2015 11:45:34 -0700 [View Commit](../../commit/ef77e4c09f46a06b20d91c1dd032900310a90648)
 
 ##rice-2.5.3.1505.3-kckualico
@@ -590,7 +612,7 @@
   * Travis Schneberger on Thu, 14 May 2015 10:57:29 -0400 [View Commit](../../commit/7148d3b52dedf0a0f03823436f435c829948a0cc)
 * move to java 8
   * Travis Schneberger on Thu, 14 May 2015 07:52:29 -0400 [View Commit](../../commit/5f2dcf22328d6bf8532eca08e7150bd70cc88239)
-*  Fix !=null comparison on prepositions.
+* RESKC-422: Fix !=null comparison on prepositions.
   * Steps to Recreate
   * 1 Create a People Flow
   * 2 Create an Agenda with a single single proposition. Activity Type != null. I did this because I wanted the rule to always fire no matter what, and as Activity Type is required to save a prop dev doc this field cannot be null.
@@ -607,7 +629,7 @@
 
 
 ##rice-2.5.3.1504.2-kckualico
-*  Fixing exception while exporting results.
+* RESKC-345: Fixing exception while exporting results.
   * Rice added an enhancement to check permissions before displaying the options to export search results. Rice assumes that the export functionality is only used in lookupForms which have a boEntry but KC uses it in other forms as well. Therefore, when the boEntry is null, I bypass the perm check. I could not override the helper because it is not spring injected, therefore this solution. Additionally, in the absence of a boEntry, how would you check perms? Hence this solution.
   * Details
   * --------
@@ -645,15 +667,15 @@
   * Travis Schneberger on Thu, 16 Apr 2015 16:50:14 -0400 [View Commit](../../commit/1cc22b01950082f12a61618f53d8307e2ce6db1f)
 * update pom to point to new kualico repo location
   * blackcathacker on Thu, 16 Apr 2015 09:26:27 -0700 [View Commit](../../commit/180509ac282ccb118a11b8a61350ba7a069be0ee)
-* fixed agenda editor to save term paramters
+* RESKC-330:fixed agenda editor to save term paramters
   * Joe Williams on Wed, 15 Apr 2015 16:24:01 -0500 [View Commit](../../commit/fe575b10e05dfacc4296f8ea4f9e6bf2d1f81978)
-* Do not serialize AgendaBo.ContextBo due to additional agendas
+* RESKC-329:Do not serialize AgendaBo.ContextBo due to additional agendas
 
   * When attempting to serialize the contextBo off the agenda in the maint doc the context has links to more all agendas in the context and these are serialized as well which ends up frequently causing an exception due to un-materialized lists.
   * blackcathacker on Tue, 14 Apr 2015 14:59:16 -0700 [View Commit](../../commit/7bd6a6ed866fcf8dfe2a10a252b95f9f3c3219e6)
 * Removing IDE files from tracking and adding them to gitignore
   * blackcathacker on Tue, 14 Apr 2015 14:58:03 -0700 [View Commit](../../commit/49a04428c42269f5cd052c80817074be4e2dd96c)
-*  Fixing context serialization
+* RESKC-256: Fixing context serialization
   * Gayathri on Thu, 9 Apr 2015 15:03:09 -0700 [View Commit](../../commit/ac7f7f10d76d54315eede9c3ceca0857db2563d7)
 * Need to set the ID on TermBo's TermSpecificationBo, or else a new ID will be incorrectly assigned when the TermBo is persisted.
   * rojlarge on Tue, 7 Apr 2015 12:05:04 -0400 [View Commit](../../commit/cba19ce67fc5f92d7cf129a58aa4b3315214f65f)
@@ -669,24 +691,24 @@
   * Travis Schneberger on Thu, 26 Mar 2015 16:25:05 -0400 [View Commit](../../commit/fb578da4e79ca84d88605b1449b98978e8759419)
 * adding error prone compiler, fixing errors
   * Travis Schneberger on Thu, 26 Mar 2015 14:06:00 -0400 [View Commit](../../commit/3507eb5f92b98f2f2e68421418fcc8908745dce0)
-* fix note delete STE
+* RESKC-241:fix note delete STE
   * Joe Williams on Wed, 25 Mar 2015 11:12:12 -0500 [View Commit](../../commit/36b67bf75a820a2b41f1e42b1be8a1ee0a0811ee)
-*  unmodifiable list change
+* RESKC-225: unmodifiable list change
   * Gayathri on Tue, 17 Mar 2015 14:31:24 -0700 [View Commit](../../commit/3da68c31da90ce393a56e6a1c0dbed2b821f6b93)
-*  Fix role document
+* RESKC-217: Fix role document
   * Gayathri on Mon, 16 Mar 2015 14:01:55 -0700 [View Commit](../../commit/098f5aba3c678f0fcb60c8e550e4efe39ceb0091)
 * next iteration
   * Travis Schneberger on Mon, 16 Mar 2015 14:08:23 -0400 [View Commit](../../commit/15c6f88ce16c3b3d3bd083858ecc82c17deae062)
-*  Fixing super user approve
+* RESKC-25: Fixing super user approve
   * Gayathri on Wed, 11 Mar 2015 11:12:26 -0700 [View Commit](../../commit/4812286a1c83e51a36e9bca98e092449bbacc7cb)
 
 ##rice-2.5.3-kckualico
 * releasing
   * Travis Schneberger on Mon, 16 Mar 2015 14:04:20 -0400 [View Commit](../../commit/bb24347540ccf33aa9289ee4bcace5ab1f28dd81)
-* Use custom mapper to fix peristence mappings
+* RESKC-208:Use custom mapper to fix peristence mappings
   * Instead of trying to use default mappings and custom converters, use custom mapper so xstream will seriazlie and deserialize all proxied/managed lists as real lists.
   * blackcathacker on Wed, 11 Mar 2015 15:33:05 -0700 [View Commit](../../commit/53c0eddd6b2e137a7e3ad09740ec98e4e0acd1b4)
-* Resolve issue with default xstream implementations
+* RESKC-208:Resolve issue with default xstream implementations
   * Setting a default implementation for a class, also overrides the inverse in xstream so removing default implementations as we define a custom implementation for lazy loaded lists
   * And handling JPA Indirect Lists similarly to OJB Lazy lists
   * blackcathacker on Wed, 11 Mar 2015 11:43:16 -0700 [View Commit](../../commit/15734e81fde820e0f32a84e46c03d4a9e72ca0cd)

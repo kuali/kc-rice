@@ -115,7 +115,6 @@ public class DocumentOperationAction extends KewKualiAction {
 			if (routeHeader == null) {
 				GlobalVariables.getMessageMap().putError("documentId", RiceKeyConstants.ERROR_EXISTENCE, "document");
 			} else {
-				materializeDocument(routeHeader);
 				docForm.setRouteHeader(routeHeader);
 				setRouteHeaderTimestampsToString(docForm);
 				docForm.setRouteHeaderOp(KewApiConstants.NOOP);
@@ -154,21 +153,6 @@ public class DocumentOperationAction extends KewKualiAction {
 		}
 			
 		return mapping.findForward("basic");
-	}
-
-	/**
-	 * Sets up various objects on the document which are required for use inside of the Struts and JSP framework.
-	 *
-	 * Specifically, if a document has action requests with null RouteNodeInstances, it will create empty node instance
-	 * objects.
-	 */
-	private void materializeDocument(DocumentRouteHeaderValue document) {
-		for (Iterator iterator = document.getActionRequests().iterator(); iterator.hasNext();) {
-			ActionRequestValue request = (ActionRequestValue) iterator.next();
-			if (request.getNodeInstance() == null) {
-				request.setNodeInstance(new RouteNodeInstance());
-			}
-		}
 	}
 
 	public ActionForward clear(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

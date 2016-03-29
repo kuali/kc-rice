@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* RICE-15 - removed the peopleflow behavior to execute multiple PeopleFlows at the same node in parallel instead of sequentially
+  * Eric Westfall on Wed, 23 Mar 2016 00:41:35 -0400 [View Commit](../../commit/5e5e1c56948d1a06998cd0617b1c7de4f5ad7265)
 * RESKC-1185: Fixing doc operations screen.
   * Steps to recreate
   * 1) create a proposal (basic with enough to submit)
@@ -266,6 +268,26 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1603.0001-kualico
+* RESKC-1185: Fixing doc operations screen.
+  * Steps to recreate
+  * 1) create a proposal (basic with enough to submit)
+  * 2) PI submit proposal (or PI approves proposal)
+  * 3) Then recall that proposal
+  * This generates an FYI record in KREW_ACTN_RQST_T and the document can no longer be opened in document operations.
+  * 4. ) Try to open the document in “document operations” you can no longer do so- STE generated.
+  * > Navigation: System Admin Portal > System Admin > Workflow > Document Operations
+  * >> Enter the Document ID in the eponymous field.
+  * STE
+
+  * Caused by: java.lang.IllegalStateException: During synchronization a new object was found through a relationship that was not marked cascade PERSIST: org.kuali.rice.kew.engine.node.RouteNodeInstance@e367be6[routeNodeInstanceId=,documentId=,branch=,routeNode=,active=false,complete=false,initial=true,process=,state=0].
+  * at org.eclipse.persistence.internal.sessions.RepeatableWriteUnitOfWork.discoverUnregisteredNewObjects(RepeatableWriteUnitOfWork.java:313)
+  * at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.calculateChanges(UnitOfWorkImpl.java:723)
+  * at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.commitToDatabaseWithChangeSet(UnitOfWorkImpl.java:1516)
+  * at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.issueSQLbeforeCompletion(UnitOfWorkImpl.java:3168)
+  * at
+  * Gayathri Athreya on Fri, 11 Mar 2016 08:26:45 -0700 [View Commit](../../commit/2c75cc01ff6f645b729965ddfe8fb72eccd3ef7d)
 
 ##rice-2.5.3.1601.0002-kualico
 * improving performance of person search.  When using a bounded search the person search database query gets executed twice.  The first time for the total number of results unbounded and again for the actual results bounded.  The first query should have only been returning a count but was actually returning person records as well.

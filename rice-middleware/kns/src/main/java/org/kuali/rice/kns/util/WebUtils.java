@@ -970,9 +970,9 @@ public class WebUtils {
         return base + path;
     }
     
-    public static String sanitizeBackLocation(String backLocation) {
+    public static String sanitizeBackLocation(String backLocation) {    	
         Pattern pattern = Pattern.compile(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.BACK_LOCATION_ALLOWED_REGEX));
-        if(pattern.matcher(backLocation).matches()) {
+        if(StringUtils.isEmpty(backLocation) || pattern.matcher(backLocation).matches()) {
             return backLocation;
         } else {
             return ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.BACK_LOCATION_DEFAULT_URL);

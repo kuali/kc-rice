@@ -1,6 +1,10 @@
 
 
 ##CURRENT
+* RESKC-1235:Misc fixes to backlocation security fix for RES
+  * blackcathacker on Mon, 28 Mar 2016 19:10:06 -0700 [View Commit](../../commit/fad87e76cb808203b7ff6074382bc3cb1e84bf3f)
+* RICE-8: Backported back location whitelist
+  * James Bennett on Tue, 8 Mar 2016 22:10:01 -0500 [View Commit](../../commit/0e0217692625e2ca6346832d6b43aeb6bbfededc)
 * RICE-15 - removed the peopleflow behavior to execute multiple PeopleFlows at the same node in parallel instead of sequentially
   * Eric Westfall on Wed, 23 Mar 2016 00:41:35 -0400 [View Commit](../../commit/5e5e1c56948d1a06998cd0617b1c7de4f5ad7265)
 * RESKC-1185: Fixing doc operations screen.
@@ -268,6 +272,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1603.0002-kualico
+* RICE-15 - removed the peopleflow behavior to execute multiple PeopleFlows at the same node in parallel instead of sequentially
+  * Eric Westfall on Wed, 23 Mar 2016 00:41:35 -0400 [View Commit](../../commit/5e5e1c56948d1a06998cd0617b1c7de4f5ad7265)
 
 ##rice-2.5.3.1603.0001-kualico
 * RESKC-1185: Fixing doc operations screen.

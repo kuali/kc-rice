@@ -15,13 +15,19 @@
  */
 package org.kuali.rice.ksb.messaging.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.action.RequestProcessor;
 import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.util.CsrfValidator;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADUtils;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * A RequestProcessor implementation for Struts which handles determining whether or not access
@@ -49,4 +55,27 @@ public class KSBStrutsRequestProcessor extends RequestProcessor {
         GlobalVariables.clear();
 		return super.processPreprocess(request, response);
 	}
+
+	@Override
+	protected boolean processValidate(HttpServletRequest request, HttpServletResponse response, ActionForm form, ActionMapping mapping) throws IOException, ServletException, InvalidCancelException {
+		// need to make sure that we don't check CSRF until after the form is populated so that Struts will parse the
+		// multipart parameters into the request if it's a multipart request
+		if (!CsrfValidator.validateCsrf(request, response)) {
+			try {
+				return false;
+			} finally {
+				// Special handling for multipart request
+				if (form.getMultipartRequestHandler() != null) {
+					if (log.isTraceEnabled()) {
+						log.trace("  Rolling back multipart request");
+					}
+
+					form.getMultipartRequestHandler().rollback();
+				}
+			}
+		}
+
+		return super.processValidate(request, response, form, mapping);
+	}
+
 }

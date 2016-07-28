@@ -48,6 +48,7 @@
     <html-el:hidden name="NoteForm" property="note.noteCreateLongDate" />
     <html-el:hidden name="NoteForm" property="note.lockVerNbr" />
     <html-el:hidden name="NoteForm" property="attachmentTarget" />
+    <kul:csrf />
 
           <table width="100%" border=0 cellspacing=0 cellpadding=0>
   		<tr>

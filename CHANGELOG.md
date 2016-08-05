@@ -275,6 +275,10 @@
 * No Changes
 
 
+##rice-2.5.3.1608.0001-kualico
+* Ported XSS, CSRF security fixes and upgraded commons-fileupload
+  * Eric Westfall on Wed, 27 Jul 2016 23:10:35 -0400 [View Commit](../../commit/800ef060c450eaa5d52fbea61733df974a61bf8b)
+
 ##rice-2.5.3.1603.0003-kualico
 * RESKC-1235:Misc fixes to backlocation security fix for RES
   * blackcathacker on Mon, 28 Mar 2016 19:10:06 -0700 [View Commit](../../commit/fad87e76cb808203b7ff6074382bc3cb1e84bf3f)

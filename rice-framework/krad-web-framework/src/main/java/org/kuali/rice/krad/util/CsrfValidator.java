@@ -29,12 +29,16 @@ import java.util.UUID;
  *
  * @author Eric Westfall
  */
-public class CsrfValidator {
+public final class CsrfValidator {
 
     private static final Logger LOG = Logger.getLogger(CsrfValidator.class);
 
     public static final String CSRF_PARAMETER = "csrfToken";
     public static final String CSRF_SESSION_TOKEN = "csrfSessionToken";
+
+    private CsrfValidator() {
+        throw new UnsupportedOperationException("do not call");
+    }
 
     /**
      * Applies CSRF protection for any HTTP method other than GET, HEAD, or OPTIONS.

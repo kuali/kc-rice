@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* Ported XSS, CSRF security fixes and upgraded commons-fileupload
+  * Eric Westfall on Wed, 27 Jul 2016 23:10:35 -0400 [View Commit](../../commit/800ef060c450eaa5d52fbea61733df974a61bf8b)
 * RESKC-1235:Misc fixes to backlocation security fix for RES
   * blackcathacker on Mon, 28 Mar 2016 19:10:06 -0700 [View Commit](../../commit/fad87e76cb808203b7ff6074382bc3cb1e84bf3f)
 * RICE-8: Backported back location whitelist
@@ -272,6 +274,12 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1603.0003-kualico
+* RESKC-1235:Misc fixes to backlocation security fix for RES
+  * blackcathacker on Mon, 28 Mar 2016 19:10:06 -0700 [View Commit](../../commit/fad87e76cb808203b7ff6074382bc3cb1e84bf3f)
+* RICE-8: Backported back location whitelist
+  * James Bennett on Tue, 8 Mar 2016 22:10:01 -0500 [View Commit](../../commit/0e0217692625e2ca6346832d6b43aeb6bbfededc)
 
 ##rice-2.5.3.1603.0002-kualico
 * RICE-15 - removed the peopleflow behavior to execute multiple PeopleFlows at the same node in parallel instead of sequentially

@@ -17,6 +17,9 @@ package org.kuali.rice.krad.web.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
@@ -24,6 +27,7 @@ import org.kuali.rice.krad.uif.util.ProcessLogger;
 import org.kuali.rice.krad.uif.view.ViewModel;
 import org.kuali.rice.krad.util.CsrfValidator;
 import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.form.HistoryManager;
 import org.kuali.rice.krad.web.form.UifFormBase;
@@ -52,6 +56,9 @@ public class UifControllerHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private ModelAndViewService modelAndViewService;
 
+    @Autowired
+    private ParameterService parameterService;
+
     /**
      * Before the controller executes the user session is set on GlobalVariables
      * and messages are cleared, in addition setup for the history manager and a check on missing session
@@ -63,8 +70,8 @@ public class UifControllerHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
         checkHandlerMethodAccess(request, handler);
-
-        if (!CsrfValidator.validateCsrf(request, response)) {
+        final ParameterService parameterService = CoreFrameworkServiceLocator.getParameterService();
+        if (parameterService.getParameterValueAsBoolean(KRADConstants.KUALI_RICE_SYSTEM_NAMESPACE, ParameterConstants.ALL_COMPONENT, CsrfValidator.CSRF_PROTECTION_ENABLED_PARAM) && !CsrfValidator.validateCsrf(request, response)) {
             return false;
         }
 
@@ -239,5 +246,13 @@ public class UifControllerHandlerInterceptor implements HandlerInterceptor {
 
     public void setModelAndViewService(ModelAndViewService modelAndViewService) {
         this.modelAndViewService = modelAndViewService;
+    }
+
+    public ParameterService getParameterService() {
+        return parameterService;
+    }
+
+    public void setParameterService(ParameterService parameterService) {
+        this.parameterService = parameterService;
     }
 }

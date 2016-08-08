@@ -19,6 +19,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.action.RequestProcessor;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.CsrfValidator;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -36,7 +39,9 @@ import java.io.IOException;
  * @author Kuali Rice Team (rice.collab@kuali.org)
  */
 public class KSBStrutsRequestProcessor extends RequestProcessor {
-	
+
+	private static final String KUALI_RICE_SYSTEM_NAMESPACE = "KR-SYS";
+
 	/**
 	 * This overridden method ...
 	 * 
@@ -60,7 +65,8 @@ public class KSBStrutsRequestProcessor extends RequestProcessor {
 	protected boolean processValidate(HttpServletRequest request, HttpServletResponse response, ActionForm form, ActionMapping mapping) throws IOException, ServletException, InvalidCancelException {
 		// need to make sure that we don't check CSRF until after the form is populated so that Struts will parse the
 		// multipart parameters into the request if it's a multipart request
-		if (!CsrfValidator.validateCsrf(request, response)) {
+		final ParameterService parameterService = CoreFrameworkServiceLocator.getParameterService();
+		if (parameterService.getParameterValueAsBoolean(KUALI_RICE_SYSTEM_NAMESPACE, ParameterConstants.ALL_COMPONENT, CsrfValidator.CSRF_PROTECTION_ENABLED_PARAM) && !CsrfValidator.validateCsrf(request, response)) {
 			try {
 				return false;
 			} finally {

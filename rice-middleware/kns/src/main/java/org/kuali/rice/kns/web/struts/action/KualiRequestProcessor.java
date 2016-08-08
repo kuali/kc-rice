@@ -28,6 +28,9 @@ import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.util.RiceConstants;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kns.exception.FileUploadLimitExceededException;
 import org.kuali.rice.kns.service.KNSServiceLocator;
 import org.kuali.rice.kns.service.SessionDocumentService;
@@ -63,6 +66,7 @@ public class KualiRequestProcessor extends RequestProcessor {
 	
 	private static final String MDC_DOC_ID = "docId";
 	private static final String PREVIOUS_REQUEST_EDITABLE_PROPERTIES_GUID_PARAMETER_NAME = "actionEditablePropertiesGuid";
+	private static final String KUALI_RICE_SYSTEM_NAMESPACE = "KR-SYS";
 
 	private static Logger LOG = Logger.getLogger(KualiRequestProcessor.class);
 
@@ -212,7 +216,8 @@ public class KualiRequestProcessor extends RequestProcessor {
 
 		// need to make sure that we don't check CSRF until after the form is populated so that Struts will parse the
 		// multipart parameters into the request if it's a multipart request
-		if (!CsrfValidator.validateCsrf(request, response)) {
+		final ParameterService parameterService = CoreFrameworkServiceLocator.getParameterService();
+		if (parameterService.getParameterValueAsBoolean(KUALI_RICE_SYSTEM_NAMESPACE, ParameterConstants.ALL_COMPONENT, CsrfValidator.CSRF_PROTECTION_ENABLED_PARAM) && !CsrfValidator.validateCsrf(request, response)) {
 			return;
 		}
 
@@ -493,7 +498,7 @@ public class KualiRequestProcessor extends RequestProcessor {
 			ActionForward forward = null;
 			try {
 				forward = (ActionForward) template.execute(new TransactionCallback() {
-					public Object doInTransaction(TransactionStatus status) {
+					@Override public Object doInTransaction(TransactionStatus status) {
 						ActionForward actionForward = null;
 						try {
 							actionForward = action.execute(mapping, form, request, response);

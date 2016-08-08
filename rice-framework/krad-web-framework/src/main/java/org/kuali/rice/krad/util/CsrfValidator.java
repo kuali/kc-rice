@@ -35,6 +35,7 @@ public final class CsrfValidator {
 
     public static final String CSRF_PARAMETER = "csrfToken";
     public static final String CSRF_SESSION_TOKEN = "csrfSessionToken";
+    public static final String CSRF_PROTECTION_ENABLED_PARAM = "CSRF_PROTECTION_ENABLED";
 
     private CsrfValidator() {
         throw new UnsupportedOperationException("do not call");

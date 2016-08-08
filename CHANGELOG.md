@@ -275,6 +275,10 @@
 * No Changes
 
 
+##rice-2.5.3.1608.0002-kualico
+* No Changes
+
+
 ##rice-2.5.3.1608.0001-kualico
 * Ported XSS, CSRF security fixes and upgraded commons-fileupload
   * Eric Westfall on Wed, 27 Jul 2016 23:10:35 -0400 [View Commit](../../commit/800ef060c450eaa5d52fbea61733df974a61bf8b)

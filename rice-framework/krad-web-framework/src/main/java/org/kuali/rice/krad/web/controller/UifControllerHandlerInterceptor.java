@@ -56,8 +56,6 @@ public class UifControllerHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private ModelAndViewService modelAndViewService;
 
-    @Autowired
-    private ParameterService parameterService;
 
     /**
      * Before the controller executes the user session is set on GlobalVariables
@@ -246,13 +244,5 @@ public class UifControllerHandlerInterceptor implements HandlerInterceptor {
 
     public void setModelAndViewService(ModelAndViewService modelAndViewService) {
         this.modelAndViewService = modelAndViewService;
-    }
-
-    public ParameterService getParameterService() {
-        return parameterService;
-    }
-
-    public void setParameterService(ParameterService parameterService) {
-        this.parameterService = parameterService;
     }
 }

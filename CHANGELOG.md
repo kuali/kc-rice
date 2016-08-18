@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* RESKC-1502: support Data Dictionary overrides
+  * Travis Schneeberger on Thu, 18 Aug 2016 15:41:07 -0400 [View Commit](../../commit/c4c022a6dcc9ed3a95f97a293f1f243a6ff52d83)
 * Ported XSS, CSRF security fixes and upgraded commons-fileupload
   * Eric Westfall on Wed, 27 Jul 2016 23:10:35 -0400 [View Commit](../../commit/800ef060c450eaa5d52fbea61733df974a61bf8b)
 * RESKC-1235:Misc fixes to backlocation security fix for RES
@@ -272,6 +274,10 @@
   * Gayathri on Thu, 9 Apr 2015 15:03:09 -0700 [View Commit](../../commit/ac7f7f10d76d54315eede9c3ceca0857db2563d7)
 
 ##rice-2.5.4.0-kckualico
+* No Changes
+
+
+##rice-2.5.3.1608.0004-kualico
 * No Changes
 
 

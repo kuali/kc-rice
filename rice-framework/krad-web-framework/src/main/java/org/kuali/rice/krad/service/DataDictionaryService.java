@@ -80,6 +80,9 @@ public interface DataDictionaryService {
      */
     public DataDictionary getDataDictionary();
 
+
+    public void setDataDictionary(DataDictionary dataDictionary);
+
     /**
      * the html control type used to render the field
      */

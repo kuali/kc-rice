@@ -28,10 +28,10 @@ import java.util.Map;
 public interface DataDictionaryService extends org.kuali.rice.krad.service.DataDictionaryService {
 
     /**
-     * @param document
      * @return preRulesCheckClass associated with the given document's type
      */
     public Class<? extends PromptBeforeValidation> getPromptBeforeValidationClass(String docTypeName);
 
     public Map getDataDictionaryMap();
+    public void setDataDictionaryMap(Map map);
 }

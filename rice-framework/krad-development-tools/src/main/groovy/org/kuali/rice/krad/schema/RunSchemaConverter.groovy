@@ -89,7 +89,7 @@ def inputFile = new File(dictionaryFileListPath)
 inputFile.eachLine { line ->
     dataDictionary.addConfigFileLocation("", line.trim())
 }
-dataDictionary.parseDataDictionaryConfigurationFiles(false)
+dataDictionary.parseDataDictionaryConfigurationFiles()
 
 List<File> filesToConvert = new ArrayList<File>()
 

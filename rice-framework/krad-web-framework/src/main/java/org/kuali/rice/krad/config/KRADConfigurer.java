@@ -23,7 +23,6 @@ import org.kuali.rice.krad.service.DataDictionaryService;
 import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.SmartApplicationListener;
 
@@ -116,15 +115,17 @@ public class KRADConfigurer extends ModuleConfigurer implements SmartApplication
                 dds = (DataDictionaryService) GlobalResourceLoader.getService(
                         KRADServiceLocatorWeb.DATA_DICTIONARY_SERVICE);
             }
-            dds.getDataDictionary().parseDataDictionaryConfigurationFiles(false);
+            dds.getDataDictionary().parseDataDictionaryConfigurationFiles();
 
             if (isValidateDataDictionary()) {
                 LOG.info("KRAD Configurer - Validating DD");
-                dds.getDataDictionary().validateDD(isValidateDataDictionaryEboReferences());
+                dds.getDataDictionary().validateDD();
             }
 
             // KULRICE-4513 After the Data Dictionary is loaded and validated, perform Data Dictionary bean overrides.
-            dds.getDataDictionary().performBeanOverrides();
+            if (isInterfaceBasedOverridesDataDictionary()) {
+                dds.getDataDictionary().performBeanOverrides();
+            }
         }
     }
 
@@ -179,9 +180,8 @@ public class KRADConfigurer extends ModuleConfigurer implements SmartApplication
         return ConfigContext.getCurrentContextConfig().getBooleanProperty("validate.data.dictionary", false);
     }
 
-    public boolean isValidateDataDictionaryEboReferences() {
-        return ConfigContext.getCurrentContextConfig().getBooleanProperty("validate.data.dictionary.ebo.references",
-                false);
+    public boolean isInterfaceBasedOverridesDataDictionary() {
+        return ConfigContext.getCurrentContextConfig().getBooleanProperty("interface.based.overrides.data.dictionary", false);
     }
 
     public boolean isComponentPublishingEnabled() {

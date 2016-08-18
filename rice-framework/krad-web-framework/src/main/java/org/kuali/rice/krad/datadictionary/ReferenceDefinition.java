@@ -16,7 +16,6 @@
 package org.kuali.rice.krad.datadictionary;
 
 import org.apache.commons.lang.StringUtils;
-import org.kuali.rice.krad.bo.BusinessObject;
 import org.kuali.rice.krad.datadictionary.parse.BeanTag;
 import org.kuali.rice.krad.datadictionary.parse.BeanTagAttribute;
 import org.kuali.rice.krad.datadictionary.validator.ValidationTrace;
@@ -154,7 +153,7 @@ public class ReferenceDefinition extends DataDictionaryDefinitionBase {
     public void dataDictionaryPostProcessing() {
         super.dataDictionaryPostProcessing();
         if (collectionBusinessObjectClass == null && isCollectionReference()) {
-            collectionBusinessObjectClass = DataDictionary.getCollectionElementClass(businessObjectClass, collection);
+            collectionBusinessObjectClass = DataDictionaryPropertyUtils.getCollectionElementClass(businessObjectClass, collection);
         }
     }
 
@@ -162,7 +161,7 @@ public class ReferenceDefinition extends DataDictionaryDefinitionBase {
     public void completeValidation(Class<?> rootBusinessObjectClass, Class<?> otherBusinessObjectClass, ValidationTrace tracer) {
         String tmpAttributeName = isCollectionReference() ? collection : attributeName;
         // make sure the attributeName is actually a property of the BO
-        if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, tmpAttributeName)) {
+        if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, tmpAttributeName)) {
             String currentValues[] = {"rootBusinessObjectClass = " + rootBusinessObjectClass.getName(),
                     "attribute = " + tmpAttributeName};
             tracer.createError("ReferenceDefinition attribute does not exist on parent object",
@@ -176,7 +175,7 @@ public class ReferenceDefinition extends DataDictionaryDefinitionBase {
                 tracer.createError("ReferenceDefinition: Unable to determine BO class for collection",
                         currentValues);
             } else {
-	            if (!DataDictionary.isPropertyOf(collectionBusinessObjectClass, attributeToHighlightOnFail)) {
+	            if (!DataDictionaryPropertyUtils.isPropertyOf(collectionBusinessObjectClass, attributeToHighlightOnFail)) {
                     String currentValues[] = {"collectionBusinessObjectClass = " + collectionBusinessObjectClass.getName(),
                             "attributeToHighlightOnFail = " + attributeToHighlightOnFail};
                     tracer.createError("ReferenceDefinition: attributeToHighlightOnFail does not exist on collection class",
@@ -184,7 +183,7 @@ public class ReferenceDefinition extends DataDictionaryDefinitionBase {
 	            }
             }
         } else {
-        	if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, attributeToHighlightOnFail)) {
+        	if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, attributeToHighlightOnFail)) {
                 String currentValues[] = {"rootBusinessObjectClass = " + rootBusinessObjectClass.getName(),
                         "attributeToHighlightOnFail = " + attributeToHighlightOnFail};
                 tracer.createError("ReferenceDefinition: attributeToHighlightOnFail does not exist on parent class",

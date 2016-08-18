@@ -94,8 +94,13 @@ public class DataDictionaryServiceImpl implements DataDictionaryService {
     }
 
     @Override
-	public DataDictionary getDataDictionary() {
+	public synchronized DataDictionary getDataDictionary() {
         return dataDictionary;
+    }
+
+    @Override
+    public synchronized void setDataDictionary(DataDictionary dataDictionary) {
+        this.dataDictionary = dataDictionary;
     }
 
     @Override

@@ -58,7 +58,7 @@ public class TestViewService implements ViewService, Lifecycle {
     @Override
     public void start() {
         try {
-            dataDictionary.parseDataDictionaryConfigurationFiles(false);
+            dataDictionary.parseDataDictionaryConfigurationFiles();
         } catch (DataDictionaryException e) {
             LOG.error("Error initializing data dictionary", e);
         }

@@ -76,11 +76,11 @@ public class SupportAttributeDefinition extends PrimitiveAttributeDefinition {
             ValidationTrace tracer) {
         tracer.addBean(this.getClass().getSimpleName(), ValidationTrace.NO_BEAN_ID);
         try {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getSourceName())) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getSourceName())) {
                 String currentValues[] = {"attribute = " + getSourceName(), "class = " + rootBusinessObjectClass};
                 tracer.createError("Unable to find attribute in class", currentValues);
             }
-            if (!DataDictionary.isPropertyOf(otherBusinessObjectClass, getTargetName())
+            if (!DataDictionaryPropertyUtils.isPropertyOf(otherBusinessObjectClass, getTargetName())
                     && !ExternalizableBusinessObjectUtils.isExternalizableBusinessObjectInterface(
                     otherBusinessObjectClass)) {
 

@@ -74,6 +74,11 @@ public class DataDictionaryMap extends DataDictionaryMapBase {
         return subMap;
     }
 
+    @Override
+    public void clear() {
+        ddMap = new HashMap<>();
+    }
+
     public DataDictionaryService getDataDictionaryService() {
         return dataDictionaryService;
     }

@@ -18,6 +18,7 @@ package org.kuali.rice.krad.datadictionary;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.datadictionary.control.ControlDefinition;
 import org.kuali.rice.krad.datadictionary.exception.CompletionException;
 import org.kuali.rice.krad.datadictionary.parse.BeanTag;
@@ -309,10 +310,14 @@ public class ExternalizableAttributeDefinitionProxy extends AttributeDefinition 
             String currentValues[] = {"property = " + getName(), "class = " + rootObjectClass.getName()};
             tracer.createError("invalid (blank) sourceAttributeName for", currentValues);
         }
-        if (DataDictionary.validateEBOs) {
+        if(isValidateDataDictionaryEboReferences()) {
             getDelegate(); // forces validation
             super.completeValidation(rootObjectClass, otherObjectClass, tracer);
         }
+    }
+
+    public boolean isValidateDataDictionaryEboReferences() {
+        return ConfigContext.getCurrentContextConfig().getBooleanProperty("validate.data.dictionary.ebo.references", false);
     }
 
     /**

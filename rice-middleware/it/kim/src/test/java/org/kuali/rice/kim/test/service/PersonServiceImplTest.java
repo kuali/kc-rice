@@ -243,7 +243,7 @@ public class PersonServiceImplTest extends KIMTestCase {
 	public void testResolvePrincipalNamesToPrincipalIds() throws Exception {
 		
 		KRADServiceLocatorWeb.getDataDictionaryService().getDataDictionary().addConfigFileLocation("KR-KIM", "classpath:org/kuali/rice/kim/bo/datadictionary/test/SampleBO.xml" );
-		KRADServiceLocatorWeb.getDataDictionaryService().getDataDictionary().parseDataDictionaryConfigurationFiles( false );
+		KRADServiceLocatorWeb.getDataDictionaryService().getDataDictionary().parseDataDictionaryConfigurationFiles( );
 
 		Map<String,String> criteria = new HashMap<String,String>();
 		criteria.put( "anAttribute", "aValue" );
@@ -271,7 +271,7 @@ public class PersonServiceImplTest extends KIMTestCase {
 	public void testResolvePrincipalNamesToPrincipalIds_Nested() throws Exception {
 
         KRADServiceLocatorWeb.getDataDictionaryService().getDataDictionary().addConfigFileLocation( "", "classpath:org/kuali/rice/kim/bo/datadictionary/test/SampleBO.xml" );
-        KRADServiceLocatorWeb.getDataDictionaryService().getDataDictionary().parseDataDictionaryConfigurationFiles( false );
+        KRADServiceLocatorWeb.getDataDictionaryService().getDataDictionary().parseDataDictionaryConfigurationFiles( );
 
 		Map<String,String> criteria = new HashMap<String,String>();
 		criteria.put( "add.childBos.childsPersonAttribute.principalName", "kuluser" );

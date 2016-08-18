@@ -107,7 +107,7 @@ public class SortDefinition extends DataDictionaryDefinitionBase {
         }
 
         for (String attributeName : attributeNames) {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, attributeName)) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, attributeName)) {
                 String currentValues[] = {"attributeName = " + attributeName, "rootBusinessObjectClass = " + rootBusinessObjectClass};
                 tracer.createError("attribute in SortDefinition not found on business object", currentValues);
             }

@@ -103,7 +103,7 @@ public class PrimitiveAttributeDefinition extends DataDictionaryDefinitionBase {
         tracer.addBean(this.getClass().getSimpleName(), ValidationTrace.NO_BEAN_ID);
 
         try {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, sourceName)) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, sourceName)) {
                 String currentValues[] = {"attribute = " + getSourceName(), "class = " + rootBusinessObjectClass};
                 tracer.createError("Unable to find attribute on class", currentValues);
             }
@@ -114,7 +114,7 @@ public class PrimitiveAttributeDefinition extends DataDictionaryDefinitionBase {
             LOG.error( "Exception while validating PrimitiveAttributeDefintion on " + rootBusinessObjectClass + ": " + this, ex);
         }
         try {
-            if (!DataDictionary.isPropertyOf(otherBusinessObjectClass, targetName)) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(otherBusinessObjectClass, targetName)) {
                 String currentValues[] = {"attribute = " + getTargetName(), "class = " + otherBusinessObjectClass};
                 tracer.createError("Unable to find attribute on class", currentValues);
             }
@@ -125,8 +125,8 @@ public class PrimitiveAttributeDefinition extends DataDictionaryDefinitionBase {
             LOG.error( "Exception while validating PrimitiveAttributeDefintion on " + rootBusinessObjectClass + ": " + this, ex);
         }
         try {
-            Class sourceClass = DataDictionary.getAttributeClass(rootBusinessObjectClass, sourceName);
-            Class targetClass = DataDictionary.getAttributeClass(otherBusinessObjectClass, targetName);
+            Class sourceClass = DataDictionaryPropertyUtils.getAttributeClass(rootBusinessObjectClass, sourceName);
+            Class targetClass = DataDictionaryPropertyUtils.getAttributeClass(otherBusinessObjectClass, targetName);
             if ((null == sourceClass && null != targetClass)
                     || (null != sourceClass && null == targetClass)
                     || !StringUtils.equals(sourceClass.getName(), targetClass.getName())) {

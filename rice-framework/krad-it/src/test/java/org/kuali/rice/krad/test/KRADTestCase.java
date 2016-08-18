@@ -139,8 +139,8 @@ public abstract class KRADTestCase extends BaselineTestCase {
                 }
             }
 
-            dd.parseDataDictionaryConfigurationFiles(false);
-            dd.validateDD(false); // Validation performs some necessary post-processing of the beans - we need to run this each time we add new files
+            dd.parseDataDictionaryConfigurationFiles();
+            dd.validateDD(); // Validation performs some necessary post-processing of the beans - we need to run this each time we add new files
             dd.performBeanOverrides();
         }
     }

@@ -108,7 +108,7 @@ public class DataDictionaryBuilderTest {
 	public void testDataDictionaryBuilder_ValidFileInvalidXML() throws Exception {
 		String INPUT_FILE = TESTPACKAGE_INVALID + "InvalidXml1.xml";
 		dd.addConfigFileLocation("KR-SAP", INPUT_FILE);
-		dd.parseDataDictionaryConfigurationFiles(false);
+		dd.parseDataDictionaryConfigurationFiles();
 	}
 
 	@Test
@@ -119,7 +119,7 @@ public class DataDictionaryBuilderTest {
 
 		try {
 			dd.addConfigFileLocation("KR-SAP", INPUT_FILE);
-			dd.parseDataDictionaryConfigurationFiles( false );
+			dd.parseDataDictionaryConfigurationFiles( );
 		} catch (DataDictionaryException e) {
 			failedAsExpected = true;
         } catch (Exception e) {

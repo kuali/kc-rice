@@ -147,7 +147,7 @@ public class MaintenanceDocumentEntry extends DocumentEntry {
             if ( StringUtils.isBlank(lockingKey) ) {
                 String currentValues[] = {"lockingKeys = " + lockingKeys};
                 tracer.createError("invalid (blank) lockingKey", currentValues);
-            } else if (!DataDictionary.isPropertyOf(dataObjectClass, lockingKey)) {
+            } else if (!DataDictionaryPropertyUtils.isPropertyOf(dataObjectClass, lockingKey)) {
                 String currentValues[] = {"dataObjectClass = " + dataObjectClass, "lockingKey = " + lockingKey};
                 tracer.createError("lockingKey not found in data object class", currentValues);
             }
@@ -157,7 +157,7 @@ public class MaintenanceDocumentEntry extends DocumentEntry {
             if (StringUtils.isBlank(clearValueOnCopyPropertyName)) {
                 String currentValues[] = {"clearValueOnCopyPropertyNames = " + clearValueOnCopyPropertyNames};
                 tracer.createError("invalid (blank) clearValueOnCopyPropertyNames", currentValues);
-            } else if (!DataDictionary.isPropertyOf(dataObjectClass, clearValueOnCopyPropertyName)) {
+            } else if (!DataDictionaryPropertyUtils.isPropertyOf(dataObjectClass, clearValueOnCopyPropertyName)) {
                 String currentValues[] = {"dataObjectClass = " + dataObjectClass,
                         "clearValueOnCopyPropertyName = " + clearValueOnCopyPropertyName};
                 tracer.createError("clearValueOnCopyPropertyName not found in data object class", currentValues);

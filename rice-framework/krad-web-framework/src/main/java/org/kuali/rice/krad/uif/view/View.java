@@ -17,7 +17,7 @@ package org.kuali.rice.krad.uif.view;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
-import org.kuali.rice.krad.datadictionary.DataDictionary;
+import org.kuali.rice.krad.datadictionary.DataDictionaryPropertyUtils;
 import org.kuali.rice.krad.datadictionary.parse.BeanTagAttribute;
 import org.kuali.rice.krad.datadictionary.state.StateMapping;
 import org.kuali.rice.krad.datadictionary.validator.ValidationTrace;
@@ -51,7 +51,6 @@ import org.kuali.rice.krad.uif.util.ClientValidationUtils;
 import org.kuali.rice.krad.uif.util.ComponentFactory;
 import org.kuali.rice.krad.uif.util.CopyUtils;
 import org.kuali.rice.krad.uif.util.LifecycleAwareList;
-import org.kuali.rice.krad.uif.util.LifecycleAwareMap;
 import org.kuali.rice.krad.uif.util.LifecycleElement;
 import org.kuali.rice.krad.uif.util.ParentLocation;
 import org.kuali.rice.krad.uif.util.ScriptUtils;
@@ -2237,7 +2236,7 @@ public class View extends ContainerBase {
         boolean validDefaultBindingObjectPath = false;
         if (getDefaultBindingObjectPath() == null) {
             validDefaultBindingObjectPath = true;
-        } else if (DataDictionary.isPropertyOf(getFormClass(), getDefaultBindingObjectPath())) {
+        } else if (DataDictionaryPropertyUtils.isPropertyOf(getFormClass(), getDefaultBindingObjectPath())) {
             validDefaultBindingObjectPath = true;
         }
         if (!validDefaultBindingObjectPath) {

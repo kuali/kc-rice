@@ -143,7 +143,7 @@ public class RelationshipDefinition extends DataDictionaryDefinitionBase {
     public void dataDictionaryPostProcessing() {
         super.dataDictionaryPostProcessing();
         if (targetClass == null) {
-            Class<?> propertyClass = DataDictionary.getAttributeClass(sourceClass, objectAttributeName);
+            Class<?> propertyClass = DataDictionaryPropertyUtils.getAttributeClass(sourceClass, objectAttributeName);
             if (propertyClass != null) {
                 targetClass = propertyClass;
             }
@@ -177,7 +177,7 @@ public class RelationshipDefinition extends DataDictionaryDefinitionBase {
             ValidationTrace tracer) {
         tracer.addBean(this.getClass().getSimpleName(), "Attribute: " + getObjectAttributeName());
         try {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getObjectAttributeName())) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getObjectAttributeName())) {
                 String currentValues[] =
                         {"property = " + getObjectAttributeName(), "Class =" + rootBusinessObjectClass};
                 tracer.createError("Property is not an attribute of the class", currentValues);

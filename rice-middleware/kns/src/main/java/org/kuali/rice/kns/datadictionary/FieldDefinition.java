@@ -18,8 +18,8 @@ package org.kuali.rice.kns.datadictionary;
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.kns.service.BusinessObjectMetaDataService;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.krad.datadictionary.DataDictionary;
 import org.kuali.rice.krad.datadictionary.DataDictionaryDefinitionBase;
+import org.kuali.rice.krad.datadictionary.DataDictionaryPropertyUtils;
 import org.kuali.rice.krad.datadictionary.RelationshipDefinition;
 import org.kuali.rice.krad.datadictionary.exception.AttributeValidationException;
 import org.kuali.rice.krad.datadictionary.exception.ClassValidationException;
@@ -267,18 +267,18 @@ public class FieldDefinition extends DataDictionaryDefinitionBase implements Fie
     public void completeValidation(Class rootBusinessObjectClass, Class otherBusinessObjectClass) {
     	BusinessObjectMetaDataService boMetadataService = KNSServiceLocator.getBusinessObjectMetaDataService();
 
-        if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getAttributeName())) {
+        if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getAttributeName())) {
             throw new AttributeValidationException("unable to find attribute '" + attributeName + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
         }
 
         if (StringUtils.isNotBlank(getAlternateDisplayAttributeName())) {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getAlternateDisplayAttributeName())) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getAlternateDisplayAttributeName())) {
                 throw new AttributeValidationException("unable to find attribute named '" + getName() + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
             }
         }
         
         if (StringUtils.isNotBlank(getAdditionalDisplayAttributeName())) {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getAdditionalDisplayAttributeName())) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getAdditionalDisplayAttributeName())) {
                 throw new AttributeValidationException("unable to find attribute named '" + getName() + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
             }
         }
@@ -333,7 +333,7 @@ public class FieldDefinition extends DataDictionaryDefinitionBase implements Fie
         			Class targetClass = relationship.getTargetClass();
 
         			// This is insufficient to ensure the property is valid for a lookup default, but it's better than nothing.
-            		if (!DataDictionary.isPropertyOf(targetClass, propertyName)) {
+            		if (!DataDictionaryPropertyUtils.isPropertyOf(targetClass, propertyName)) {
             			throw new ClassValidationException("malformed parameter string  '"+ quickfinderParameterString +"' from "+ quickfinderParameterStringSource +
             					", '"+ propertyName +"' is not a property of "+ targetClass +"' for rootBusinessObjectClass '"+ rootBusinessObjectClass.getName() +"'");
             		}

@@ -23,17 +23,13 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.kuali.rice.krad.datadictionary.DataDictionary;
-import org.kuali.rice.krad.datadictionary.DataDictionaryEntry;
-import org.kuali.rice.krad.datadictionary.DataDictionaryException;
-import org.kuali.rice.krad.datadictionary.DefaultListableBeanFactory;
+import org.kuali.rice.krad.datadictionary.*;
 import org.kuali.rice.krad.datadictionary.uif.UifBeanFactoryPostProcessor;
 import org.kuali.rice.krad.datadictionary.uif.UifDictionaryBean;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.component.Component;
 import org.kuali.rice.krad.uif.lifecycle.ViewLifecycleUtils;
 import org.kuali.rice.krad.uif.lifecycle.ViewLifecycle;
-import org.kuali.rice.krad.uif.lifecycle.ViewLifecycleUtils;
 import org.kuali.rice.krad.uif.util.LifecycleElement;
 import org.kuali.rice.krad.uif.view.View;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -405,7 +401,7 @@ public class Validator {
         DefaultListableBeanFactory beans = new DefaultListableBeanFactory();
         XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(beans);
 
-        DataDictionary.setupProcessor(beans);
+        DataDictionaryPostProcessorUtils.setupProcessor(beans);
 
         ArrayList<String> coreFiles = new ArrayList<String>();
         ArrayList<String> testFiles = new ArrayList<String>();

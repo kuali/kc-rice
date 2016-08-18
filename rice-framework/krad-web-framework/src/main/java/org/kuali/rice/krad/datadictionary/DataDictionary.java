@@ -15,31 +15,16 @@
  */
 package org.kuali.rice.krad.datadictionary;
 
-import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.ListUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.lang.StringUtils;
+
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.core.api.util.ClassLoaderUtils;
+
 import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.datadictionary.exception.AttributeValidationException;
-import org.kuali.rice.krad.datadictionary.exception.CompletionException;
-import org.kuali.rice.krad.datadictionary.parse.StringListConverter;
-import org.kuali.rice.krad.datadictionary.parse.StringMapConverter;
-import org.kuali.rice.krad.datadictionary.uif.ComponentBeanPostProcessor;
 import org.kuali.rice.krad.datadictionary.uif.UifBeanFactoryPostProcessor;
 import org.kuali.rice.krad.datadictionary.uif.UifDictionaryIndex;
 import org.kuali.rice.krad.datadictionary.validator.ErrorReport;
@@ -47,11 +32,9 @@ import org.kuali.rice.krad.datadictionary.validator.ValidationTrace;
 import org.kuali.rice.krad.datadictionary.validator.Validator;
 import org.kuali.rice.krad.lookup.LookupView;
 import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
-import org.kuali.rice.krad.service.LegacyDataAdapter;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifConstants.ViewType;
 import org.kuali.rice.krad.uif.util.ComponentFactory;
-import org.kuali.rice.krad.uif.util.ExpressionFunctions;
 import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.uif.view.InquiryView;
 import org.kuali.rice.krad.uif.view.View;
@@ -62,16 +45,12 @@ import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanExpressionContext;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.beans.factory.config.Scope;
 import org.springframework.beans.factory.support.ChildBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.context.expression.StandardBeanExpressionResolver;
-import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.util.StopWatch;
 
 /**
@@ -84,72 +63,31 @@ public class DataDictionary {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataDictionary.class);
 
-    protected static boolean validateEBOs = true;
-
     protected DefaultListableBeanFactory ddBeans = new DefaultListableBeanFactory();
-    protected XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ddBeans);
 
     protected DataDictionaryIndex ddIndex = new DataDictionaryIndex(ddBeans);
     protected UifDictionaryIndex uifIndex = new UifDictionaryIndex(ddBeans);
 
     protected DataDictionaryMapper ddMapper = new DataDictionaryIndexMapper();
 
-    protected Map<String, List<String>> moduleDictionaryFiles = new HashMap<String, List<String>>();
-    protected List<String> moduleLoadOrder = new ArrayList<String>();
+    protected Map<String, List<Resource>> moduleDictionaryFiles = new HashMap<>();
+    protected List<String> moduleLoadOrder = new ArrayList<>();
 
-    protected ArrayList<String> beanValidationFiles = new ArrayList<String>();
+    protected StopWatch timer;
 
-    public static LegacyDataAdapter legacyDataAdapter;
-
-    protected transient StopWatch timer;
 
     /**
      * Populates and processes the dictionary bean factory based on the configured files and
      * performs indexing
      *
-     * @param allowConcurrentValidation - indicates whether the indexing should occur on a different thread
-     * or the same thread
      */
-    public void parseDataDictionaryConfigurationFiles(boolean allowConcurrentValidation) {
+    public void parseDataDictionaryConfigurationFiles() {
         timer = new StopWatch("DD Processing");
-        setupProcessor(ddBeans);
+        DataDictionaryPostProcessorUtils.setupProcessor(ddBeans);
 
-        loadDictionaryBeans(ddBeans, moduleDictionaryFiles, ddIndex, beanValidationFiles);
+        loadDictionaryBeans(ddBeans, moduleDictionaryFiles, ddIndex);
 
-        performDictionaryPostProcessing(allowConcurrentValidation);
-    }
-
-    /**
-     * Sets up the bean post processor and conversion service
-     *
-     * @param beans - The bean factory for the the dictionary beans
-     */
-    public static void setupProcessor(DefaultListableBeanFactory beans) {
-        try {
-            // UIF post processor that sets component ids
-            BeanPostProcessor idPostProcessor = ComponentBeanPostProcessor.class.newInstance();
-            beans.addBeanPostProcessor(idPostProcessor);
-            beans.setBeanExpressionResolver(new StandardBeanExpressionResolver() {
-                @Override
-                protected void customizeEvaluationContext(StandardEvaluationContext evalContext) {
-                    try {
-                        evalContext.registerFunction("getService", ExpressionFunctions.class.getDeclaredMethod("getService", new Class[]{String.class}));
-                    } catch(NoSuchMethodException me) {
-                        LOG.error("Unable to register custom expression to data dictionary bean factory", me);
-                    }
-                }
-            });
-
-            // special converters for shorthand map and list property syntax
-            GenericConversionService conversionService = new GenericConversionService();
-            conversionService.addConverter(new StringMapConverter());
-            conversionService.addConverter(new StringListConverter());
-
-            beans.setConversionService(conversionService);
-        } catch (Exception e1) {
-            throw new DataDictionaryException("Cannot create component decorator post processor: " + e1.getMessage(),
-                    e1);
-        }
+        performDictionaryPostProcessing();
     }
 
     /**
@@ -158,19 +96,17 @@ public class DataDictionary {
      * @param beans - The bean factory for the dictionary bean
      * @param moduleDictionaryFiles - List of bean xml files
      * @param index - Index of the data dictionary beans
-     * @param validationFiles - The List of bean xml files loaded into the bean file
      */
     public void loadDictionaryBeans(DefaultListableBeanFactory beans,
-            Map<String, List<String>> moduleDictionaryFiles, DataDictionaryIndex index,
-            ArrayList<String> validationFiles) {
+            Map<String, List<Resource>> moduleDictionaryFiles, DataDictionaryIndex index) {
         // expand configuration locations into files
         timer.start("XML File Loading");
         LOG.info("Starting DD XML File Load");
 
-        List<String> allBeanNames = new ArrayList<String>();
+        List<String> allBeanNames = new ArrayList<>();
         for (String namespaceCode : moduleLoadOrder) {
             LOG.info( "Processing Module: " + namespaceCode);
-            List<String> moduleDictionaryLocations = moduleDictionaryFiles.get(namespaceCode);
+            List<Resource> moduleDictionaryLocations = moduleDictionaryFiles.get(namespaceCode);
             if ( LOG.isDebugEnabled() ) {
                 LOG.debug("DD Locations in Module: " + moduleDictionaryLocations);
             }
@@ -181,11 +117,8 @@ public class DataDictionary {
 
             XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(beans);
 
-            String configFileLocationsArray[] = new String[moduleDictionaryLocations.size()];
+            Resource configFileLocationsArray[] = new Resource[moduleDictionaryLocations.size()];
             configFileLocationsArray = moduleDictionaryLocations.toArray(configFileLocationsArray);
-            for (int i = 0; i < configFileLocationsArray.length; i++) {
-                validationFiles.add(configFileLocationsArray[i]);
-            }
 
             try {
                 xmlReader.loadBeanDefinitions(configFileLocationsArray);
@@ -209,10 +142,8 @@ public class DataDictionary {
     /**
      * Invokes post processors and builds indexes for the beans contained in the dictionary
      *
-     * @param allowConcurrentValidation - indicates whether the indexing should occur on a different thread
-     * or the same thread
      */
-    public void performDictionaryPostProcessing(boolean allowConcurrentValidation) {
+    protected void performDictionaryPostProcessing() {
         LOG.info("Starting Data Dictionary Post Processing");
 
         timer.start("Spring Post Processing");
@@ -273,36 +204,36 @@ public class DataDictionary {
 
     protected void generateMissingInquiryDefinitions() {
         Collection<InquiryView> inquiryViewBeans = ddBeans.getBeansOfType(InquiryView.class).values();
-        
+
         // Index all the inquiry views by the data object class so we can find them easily below
-        Map<Class<?>,InquiryView> defaultViewsByDataObjectClass = new HashMap<Class<?>, InquiryView>();
-        
+        Map<Class<?>,InquiryView> defaultViewsByDataObjectClass = new HashMap<>();
+
         for ( InquiryView view : inquiryViewBeans ) {
             if ( view.getViewName().equals(UifConstants.DEFAULT_VIEW_NAME) ) {
                 defaultViewsByDataObjectClass.put(view.getDataObjectClassName(), view);
             }
         }
-        
+
         for (DataObjectEntry entry : ddBeans.getBeansOfType(DataObjectEntry.class).values()) {
             // if an inquiry already exists, just ignore - we only default if none exist
             if ( defaultViewsByDataObjectClass.containsKey(entry.getDataObjectClass())) {
                 continue;
             }
-            
+
             // We only generate the inquiry if the metadata says to
             if ( entry.getDataObjectMetadata() == null ) {
                 continue;
             }
-            
+
             if ( !entry.getDataObjectMetadata().shouldAutoCreateUifViewOfType(UifAutoCreateViewType.INQUIRY)) {
                 continue;
             }
-            
+
             // no inquiry exists and we want one to, create one
             if ( LOG.isInfoEnabled() ) {
                 LOG.info( "Generating Inquiry View for : " + entry.getDataObjectClass() );
             }
-            
+
             String inquiryBeanName = entry.getDataObjectClass().getSimpleName()+"-InquiryView-default";
 
             InquiryView inquiryView = KRADServiceLocatorWeb.getUifDefaultingService().deriveInquiryViewFromMetadata(entry);
@@ -322,7 +253,7 @@ public class DataDictionary {
     protected void generateMissingLookupDefinitions() {
         Collection<LookupView> lookupViewBeans = ddBeans.getBeansOfType(LookupView.class).values();
         // Index all the inquiry views by the data object class so we can find them easily below
-        Map<Class<?>,LookupView> defaultViewsByDataObjectClass = new HashMap<Class<?>, LookupView>();
+        Map<Class<?>,LookupView> defaultViewsByDataObjectClass = new HashMap<>();
         for ( LookupView view : lookupViewBeans ) {
             if ( view.getViewName().equals(UifConstants.DEFAULT_VIEW_NAME) ) {
                 defaultViewsByDataObjectClass.put(view.getDataObjectClass(), view);
@@ -360,9 +291,8 @@ public class DataDictionary {
         }
     }
 
-    public void validateDD(boolean validateEbos) {
+    public void validateDD() {
         timer.start("Validation");
-        DataDictionary.validateEBOs = validateEbos;
 
         Validator.resetErrorReport();
 
@@ -414,10 +344,6 @@ public class DataDictionary {
             builder.append(report.errorMessage()).append("\n");
         }
         return builder.toString();
-    }
-
-    public void validateDD() {
-        validateDD(true);
     }
 
     /**
@@ -508,8 +434,12 @@ public class DataDictionary {
      * @param namespaceCode - namespace to add location for
      * @param location - file or resource location to add
      */
-    protected void addModuleDictionaryFile(String namespaceCode, String location) {
-        List<String> moduleFileLocations = new ArrayList<String>();
+    public void addModuleDictionaryFile(String namespaceCode, String location) {
+        addModuleDictionaryFile(namespaceCode, new DefaultResourceLoader().getResource(location));
+    }
+
+    public void addModuleDictionaryFile(String namespaceCode, Resource location) {
+        List<Resource> moduleFileLocations = new ArrayList<>();
         if (moduleDictionaryFiles.containsKey(namespaceCode)) {
             moduleFileLocations = moduleDictionaryFiles.get(namespaceCode);
         }
@@ -522,19 +452,18 @@ public class DataDictionary {
      * Mapping of namespace codes to dictionary files that are associated with
      * that namespace
      *
-     * @return Map<String, List<String>> where map key is namespace code, and value is list of dictionary
+     * @return Map&lt;String, List&lt;Resource&gt;&gt; where map key is namespace code, and value is list of dictionary
      *         file locations
      */
-    public Map<String, List<String>> getModuleDictionaryFiles() {
+    public Map<String, List<Resource>> getModuleDictionaryFiles() {
         return moduleDictionaryFiles;
     }
 
     /**
      * Setter for the map of module dictionary files
      *
-     * @param moduleDictionaryFiles
      */
-    public void setModuleDictionaryFiles(Map<String, List<String>> moduleDictionaryFiles) {
+    public void setModuleDictionaryFiles(Map<String, List<Resource>> moduleDictionaryFiles) {
         this.moduleDictionaryFiles = moduleDictionaryFiles;
     }
 
@@ -542,7 +471,7 @@ public class DataDictionary {
      * Order modules should be loaded into the dictionary
      *
      * <p>
-     * Modules are loaded in the order they are found in this list. If not explicity set, they will be loaded in
+     * Modules are loaded in the order they are found in this list. If not explicitly set, they will be loaded in
      * the order their dictionary file locations are added
      * </p>
      *
@@ -555,7 +484,6 @@ public class DataDictionary {
     /**
      * Setter for the list of namespace codes indicating the module load order
      *
-     * @param moduleLoadOrder
      */
     public void setModuleLoadOrder(List<String> moduleLoadOrder) {
         this.moduleLoadOrder = moduleLoadOrder;
@@ -571,7 +499,6 @@ public class DataDictionary {
     }
 
     /**
-     * @param className
      * @return BusinessObjectEntry for the named class, or null if none exists
      */
     @Deprecated
@@ -580,7 +507,6 @@ public class DataDictionary {
     }
 
     /**
-     * @param className
      * @return BusinessObjectEntry for the named class, or null if none exists
      */
     public DataObjectEntry getDataObjectEntry(String className) {
@@ -590,7 +516,6 @@ public class DataDictionary {
     /**
      * This method gets the business object entry for a concrete class
      *
-     * @param className
      * @return business object entry
      */
     public BusinessObjectEntry getBusinessObjectEntryForConcreteClass(String className) {
@@ -616,7 +541,6 @@ public class DataDictionary {
     }
 
     /**
-     * @param className
      * @return DataDictionaryEntryBase for the named class, or null if none
      *         exists
      */
@@ -649,7 +573,6 @@ public class DataDictionary {
      * This is a special case that is referenced in one location. Do we need
      * another map for this stuff??
      *
-     * @param businessObjectClass
      * @return DocumentEntry associated with the given Class, or null if there
      *         is none
      */
@@ -851,7 +774,7 @@ public class DataDictionary {
      * @return List<String> bean names associated with the namespace
      */
     public List<String> getBeanNamesForNamespace(String namespaceCode) {
-        List<String> namespaceBeans = new ArrayList<String>();
+        List<String> namespaceBeans = new ArrayList<>();
 
         Map<String, List<String>> dictionaryBeansByNamespace = ddIndex.getDictionaryBeansByNamespace();
         if (dictionaryBeansByNamespace.containsKey(namespaceCode)) {
@@ -882,303 +805,6 @@ public class DataDictionary {
         return beanNamespace;
     }
 
-    /**
-     * @param targetClass
-     * @param propertyName
-     * @return true if the given propertyName names a property of the given class
-     * @throws CompletionException if there is a problem accessing the named property on the given class
-     */
-    public static boolean isPropertyOf(Class targetClass, String propertyName) {
-        if (targetClass == null) {
-            throw new IllegalArgumentException("invalid (null) targetClass");
-        }
-        if (StringUtils.isBlank(propertyName)) {
-            throw new IllegalArgumentException("invalid (blank) propertyName");
-        }
-        try {
-            PropertyDescriptor propertyDescriptor = buildReadDescriptor(targetClass, propertyName);
-
-            return propertyDescriptor != null;
-        } catch ( Exception ex ) {
-            LOG.error( "Exception while obtaining property descriptor for " + targetClass.getName() + "." + propertyName, ex );
-            return false;
-        }
-    }
-
-    /**
-     * @param targetClass
-     * @param propertyName
-     * @return true if the given propertyName names a Collection property of the given class
-     * @throws CompletionException if there is a problem accessing the named property on the given class
-     */
-    public static boolean isCollectionPropertyOf(Class targetClass, String propertyName) {
-        boolean isCollectionPropertyOf = false;
-
-        PropertyDescriptor propertyDescriptor = buildReadDescriptor(targetClass, propertyName);
-        if (propertyDescriptor != null) {
-            Class clazz = propertyDescriptor.getPropertyType();
-
-            if ((clazz != null) && Collection.class.isAssignableFrom(clazz)) {
-                isCollectionPropertyOf = true;
-            }
-        }
-
-        return isCollectionPropertyOf;
-    }
-
-    public static LegacyDataAdapter getLegacyDataAdapter() {
-        if (legacyDataAdapter == null) {
-            legacyDataAdapter = KRADServiceLocatorWeb.getLegacyDataAdapter();
-        }
-        return legacyDataAdapter;
-    }
-
-    /**
-     * This method determines the Class of the attributeName passed in. Null will be returned if the member is not
-     * available, or if
-     * a reflection exception is thrown.
-     *
-     * @param boClass - Class that the attributeName property exists in.
-     * @param attributeName - Name of the attribute you want a class for.
-     * @return The Class of the attributeName, if the attribute exists on the rootClass. Null otherwise.
-     */
-    public static Class getAttributeClass(Class boClass, String attributeName) {
-
-        // fail loudly if the attributeName isnt a member of rootClass
-        if (!isPropertyOf(boClass, attributeName)) {
-            throw new AttributeValidationException(
-                    "unable to find attribute '" + attributeName + "' in rootClass '" + boClass.getName() + "'");
-        }
-
-        //Implementing Externalizable Business Object Services...
-        //The boClass can be an interface, hence handling this separately,
-        //since the original method was throwing exception if the class could not be instantiated.
-        if (boClass.isInterface()) {
-            return getAttributeClassWhenBOIsInterface(boClass, attributeName);
-        } else {
-            return getAttributeClassWhenBOIsClass(boClass, attributeName);
-        }
-
-    }
-
-    /**
-     * This method gets the property type of the given attributeName when the bo class is a concrete class
-     *
-     * @param boClass
-     * @param attributeName
-     * @return property type
-     */
-    private static Class<?> getAttributeClassWhenBOIsClass(Class<?> boClass, String attributeName) {
-        Object boInstance;
-        try {
-
-            //KULRICE-11351 should not differentiate between primitive types and their wrappers during DD validation
-            if (boClass.isPrimitive()) {
-                boClass = ClassUtils.primitiveToWrapper(boClass);
-            }
-
-            boInstance = boClass.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to instantiate Data Object: " + boClass, e);
-        }
-
-        // attempt to retrieve the class of the property
-        try {
-            return getLegacyDataAdapter().getPropertyType(boInstance, attributeName);
-        } catch (Exception e) {
-            throw new RuntimeException(
-                    "Unable to determine property type for: " + boClass.getName() + "." + attributeName, e);
-        }
-    }
-
-    /**
-     * This method gets the property type of the given attributeName when the bo class is an interface
-     * This method will also work if the bo class is not an interface,
-     * but that case requires special handling, hence a separate method getAttributeClassWhenBOIsClass
-     *
-     * @param boClass
-     * @param attributeName
-     * @return property type
-     */
-    private static Class<?> getAttributeClassWhenBOIsInterface(Class<?> boClass, String attributeName) {
-        if (boClass == null) {
-            throw new IllegalArgumentException("invalid (null) boClass");
-        }
-        if (StringUtils.isBlank(attributeName)) {
-            throw new IllegalArgumentException("invalid (blank) attributeName");
-        }
-
-        PropertyDescriptor propertyDescriptor = null;
-
-        String[] intermediateProperties = attributeName.split("\\.");
-        int lastLevel = intermediateProperties.length - 1;
-        Class currentClass = boClass;
-
-        for (int i = 0; i <= lastLevel; ++i) {
-
-            String currentPropertyName = intermediateProperties[i];
-            propertyDescriptor = buildSimpleReadDescriptor(currentClass, currentPropertyName);
-
-            if (propertyDescriptor != null) {
-
-                Class propertyType = propertyDescriptor.getPropertyType();
-                if (getLegacyDataAdapter().isExtensionAttribute(currentClass, currentPropertyName, propertyType)) {
-                    propertyType = getLegacyDataAdapter().getExtensionAttributeClass(currentClass, currentPropertyName);
-                }
-                if (Collection.class.isAssignableFrom(propertyType)) {
-                    // TODO: determine property type using generics type definition
-                    throw new AttributeValidationException(
-                            "Can't determine the Class of Collection elements because when the business object is an (possibly ExternalizableBusinessObject) interface.");
-                } else {
-                    currentClass = propertyType;
-                }
-            } else {
-                throw new AttributeValidationException(
-                        "Can't find getter method of " + boClass.getName() + " for property " + attributeName);
-            }
-        }
-        return currentClass;
-    }
-
-    /**
-     * This method determines the Class of the elements in the collectionName passed in.
-     *
-     * @param boClass Class that the collectionName collection exists in.
-     * @param collectionName the name of the collection you want the element class for
-     * @return collection element type
-     */
-    public static Class getCollectionElementClass(Class boClass, String collectionName) {
-        if (boClass == null) {
-            throw new IllegalArgumentException("invalid (null) boClass");
-        }
-        if (StringUtils.isBlank(collectionName)) {
-            throw new IllegalArgumentException("invalid (blank) collectionName");
-        }
-
-        PropertyDescriptor propertyDescriptor = null;
-
-        String[] intermediateProperties = collectionName.split("\\.");
-        Class currentClass = boClass;
-
-        for (int i = 0; i < intermediateProperties.length; ++i) {
-
-            String currentPropertyName = intermediateProperties[i];
-            propertyDescriptor = buildSimpleReadDescriptor(currentClass, currentPropertyName);
-
-            if (propertyDescriptor != null) {
-
-                Class type = propertyDescriptor.getPropertyType();
-                if (Collection.class.isAssignableFrom(type)) {
-                    currentClass = getLegacyDataAdapter().determineCollectionObjectType(currentClass, currentPropertyName);
-                } else {
-                    currentClass = propertyDescriptor.getPropertyType();
-                }
-            }
-        }
-
-        return currentClass;
-    }
-
-    static private Map<String, Map<String, PropertyDescriptor>> cache =
-            new TreeMap<String, Map<String, PropertyDescriptor>>();
-
-    /**
-     * @param propertyClass
-     * @param propertyName
-     * @return PropertyDescriptor for the getter for the named property of the given class, if one exists.
-     */
-    public static PropertyDescriptor buildReadDescriptor(Class propertyClass, String propertyName) {
-        if (propertyClass == null) {
-            throw new IllegalArgumentException("invalid (null) propertyClass");
-        }
-        if (StringUtils.isBlank(propertyName)) {
-            throw new IllegalArgumentException("invalid (blank) propertyName");
-        }
-
-        PropertyDescriptor propertyDescriptor = null;
-
-        String[] intermediateProperties = propertyName.split("\\.");
-        int lastLevel = intermediateProperties.length - 1;
-        Class currentClass = propertyClass;
-
-        for (int i = 0; i <= lastLevel; ++i) {
-
-            String currentPropertyName = intermediateProperties[i];
-            propertyDescriptor = buildSimpleReadDescriptor(currentClass, currentPropertyName);
-
-            if (i < lastLevel) {
-
-                if (propertyDescriptor != null) {
-
-                    Class propertyType = propertyDescriptor.getPropertyType();
-                    if (getLegacyDataAdapter().isExtensionAttribute(currentClass, currentPropertyName, propertyType)) {
-                        propertyType = getLegacyDataAdapter().getExtensionAttributeClass(currentClass,
-                                currentPropertyName);
-                    }
-                    if (Collection.class.isAssignableFrom(propertyType)) {
-                        currentClass = getLegacyDataAdapter().determineCollectionObjectType(currentClass, currentPropertyName);
-                    } else {
-                        currentClass = propertyType;
-                    }
-
-                }
-
-            }
-
-        }
-
-        return propertyDescriptor;
-    }
-
-    /**
-     * @param propertyClass
-     * @param propertyName
-     * @return PropertyDescriptor for the getter for the named property of the given class, if one exists.
-     */
-    public static PropertyDescriptor buildSimpleReadDescriptor(Class propertyClass, String propertyName) {
-        if (propertyClass == null) {
-            throw new IllegalArgumentException("invalid (null) propertyClass");
-        }
-        if (StringUtils.isBlank(propertyName)) {
-            throw new IllegalArgumentException("invalid (blank) propertyName");
-        }
-
-        PropertyDescriptor p = null;
-
-        // check to see if we've cached this descriptor already. if yes, return true.
-        String propertyClassName = propertyClass.getName();
-        Map<String, PropertyDescriptor> m = cache.get(propertyClassName);
-        if (null != m) {
-            p = m.get(propertyName);
-            if (null != p) {
-                return p;
-            }
-        }
-
-        // Use PropertyUtils.getPropertyDescriptors instead of manually constructing PropertyDescriptor because of
-        // issues with introspection and generic/co-variant return types
-        // See https://issues.apache.org/jira/browse/BEANUTILS-340 for more details
-
-        PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(propertyClass);
-        if (ArrayUtils.isNotEmpty(descriptors)) {
-            for (PropertyDescriptor descriptor : descriptors) {
-                if (descriptor.getName().equals(propertyName)) {
-                    p = descriptor;
-                }
-            }
-        }
-
-        // cache the property descriptor if we found it.
-        if (p != null) {
-            if (m == null) {
-                m = new TreeMap<String, PropertyDescriptor>();
-                cache.put(propertyClassName, m);
-            }
-            m.put(propertyName, p);
-        }
-
-        return p;
-    }
 
     public Set<InactivationBlockingMetadata> getAllInactivationBlockingMetadatas(Class blockedClass) {
         return ddMapper.getAllInactivationBlockingMetadatas(ddIndex, blockedClass);

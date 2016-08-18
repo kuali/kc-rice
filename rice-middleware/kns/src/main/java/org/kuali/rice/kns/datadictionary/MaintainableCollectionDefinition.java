@@ -17,7 +17,7 @@ package org.kuali.rice.kns.datadictionary;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.krad.bo.BusinessObject;
-import org.kuali.rice.krad.datadictionary.DataDictionary;
+import org.kuali.rice.krad.datadictionary.DataDictionaryPropertyUtils;
 import org.kuali.rice.krad.datadictionary.exception.AttributeValidationException;
 import org.kuali.rice.krad.datadictionary.exception.DuplicateEntryException;
 
@@ -115,12 +115,12 @@ public class MaintainableCollectionDefinition extends MaintainableItemDefinition
      * @see org.kuali.rice.krad.datadictionary.DataDictionaryDefinition#completeValidation(java.lang.Class, java.lang.Object)
      */
     public void completeValidation(Class rootBusinessObjectClass, Class otherBusinessObjectClass) {
-        if (!DataDictionary.isCollectionPropertyOf(rootBusinessObjectClass, getName())) {
+        if (!DataDictionaryPropertyUtils.isCollectionPropertyOf(rootBusinessObjectClass, getName())) {
             throw new AttributeValidationException("unable to find collection named '" + getName() + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
         }
 
         if (dissallowDuplicateKey()) {
-            if (!DataDictionary.isPropertyOf(businessObjectClass, attributeToHighlightOnDuplicateKey)) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(businessObjectClass, attributeToHighlightOnDuplicateKey)) {
                 throw new AttributeValidationException("unable to find attribute named '" + attributeToHighlightOnDuplicateKey + "'in dataObjectClass '" + businessObjectClass.getName() + "' of collection '" + getName() + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
             }
         }

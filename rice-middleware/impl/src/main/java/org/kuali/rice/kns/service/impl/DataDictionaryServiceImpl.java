@@ -41,10 +41,7 @@ public class DataDictionaryServiceImpl extends org.kuali.rice.krad.service.impl.
     public DataDictionaryServiceImpl(DataDictionary dataDictionary) {
         super(dataDictionary);
     }
-    
-    /**
-     * @see org.kuali.rice.krad.service.DataDictionaryService#getPromptBeforeValidationClass(java.lang.String)
-     */
+
     public Class<? extends PromptBeforeValidation> getPromptBeforeValidationClass(String docTypeName) {
         Class preRulesCheckClass = null;
 
@@ -54,7 +51,13 @@ public class DataDictionaryServiceImpl extends org.kuali.rice.krad.service.impl.
         return preRulesCheckClass;
     }
 
+    @Override
     public Map getDataDictionaryMap() {
         return dataDictionaryMap;
+    }
+
+    @Override
+    public void setDataDictionaryMap(Map map) {
+        this.dataDictionaryMap = (DataDictionaryMap) map;
     }
 }

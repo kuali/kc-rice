@@ -265,7 +265,7 @@ public class CollectionDefinition extends DataDictionaryDefinitionBase implement
     public void completeValidation(Class rootBusinessObjectClass, Class otherBusinessObjectClass,
             ValidationTrace tracer) {
         tracer.addBean(this.getClass().getSimpleName(), "Attribute: " + getName());
-        if (!DataDictionary.isCollectionPropertyOf(rootBusinessObjectClass, name)) {
+        if (!DataDictionaryPropertyUtils.isCollectionPropertyOf(rootBusinessObjectClass, name)) {
             String currentValues[] = {"property = " + getName(), "Class =" + rootBusinessObjectClass};
             tracer.createError("Property is not collection property of the class", currentValues);
         }

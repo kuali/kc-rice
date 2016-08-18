@@ -17,7 +17,7 @@ package org.kuali.rice.kns.datadictionary;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.krad.bo.BusinessObject;
-import org.kuali.rice.krad.datadictionary.DataDictionary;
+import org.kuali.rice.krad.datadictionary.DataDictionaryPropertyUtils;
 import org.kuali.rice.krad.datadictionary.exception.AttributeValidationException;
 import org.kuali.rice.krad.valuefinder.ValueFinder;
 
@@ -180,18 +180,18 @@ required is true if the field must contain a non-null value
      * @see org.kuali.rice.krad.datadictionary.DataDictionaryDefinition#completeValidation(java.lang.Class, java.lang.Object)
      */
     public void completeValidation(Class rootBusinessObjectClass, Class otherBusinessObjectClass) {
-        if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getName())) {
+        if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getName())) {
             throw new AttributeValidationException("unable to find attribute or collection named '" + getName() + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
         }
 
         if (StringUtils.isNotBlank(getAlternateDisplayAttributeName())) {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getAlternateDisplayAttributeName())) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getAlternateDisplayAttributeName())) {
                 throw new AttributeValidationException("unable to find attribute or collection named '" + getAlternateDisplayAttributeName() + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
             }
         }
         
         if (StringUtils.isNotBlank(getAdditionalDisplayAttributeName())) {
-            if (!DataDictionary.isPropertyOf(rootBusinessObjectClass, getAdditionalDisplayAttributeName())) {
+            if (!DataDictionaryPropertyUtils.isPropertyOf(rootBusinessObjectClass, getAdditionalDisplayAttributeName())) {
                 throw new AttributeValidationException("unable to find attribute or collection named '" + getAdditionalDisplayAttributeName() + "' in rootBusinessObjectClass '" + rootBusinessObjectClass.getName() + "' (" + "" + ")");
             }
         }

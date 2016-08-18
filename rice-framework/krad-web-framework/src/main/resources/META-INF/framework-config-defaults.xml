@@ -66,6 +66,7 @@
   <param name="load.data.dictionary" override="false">true</param>=
  	<param name="validate.data.dictionary" override="false">true</param>
  	<param name="validate.data.dictionary.ebo.references" override="false">true</param>
+  <param name="interface.based.overrides.data.dictionary" override="false">false</param>
   <param name="validate.views.onbuild" override="false">false</param>
 
   <!-- indicates whether messages from an external repository should bea loaded for data dictionary beans. Enable if

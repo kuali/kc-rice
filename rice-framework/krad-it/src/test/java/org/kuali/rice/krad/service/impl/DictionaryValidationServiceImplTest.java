@@ -87,7 +87,7 @@ public class DictionaryValidationServiceImplTest extends KRADTestCase {
                 "classpath:org/kuali/rice/krad/test/datadictionary/validation/Employee.xml");
         dataDictionary.addConfigFileLocation("KR-NS","classpath:org/kuali/rice/krad/test/datadictionary/validation/Person.xml");
 
-        dataDictionary.parseDataDictionaryConfigurationFiles(false);
+        dataDictionary.parseDataDictionaryConfigurationFiles();
 
         addressEntry = dataDictionary.getDataObjectEntry("org.kuali.rice.krad.datadictionary.validation.Address");
     }

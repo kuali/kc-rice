@@ -100,7 +100,7 @@ public class BusinessObjectEntry extends DataObjectEntry {
                 if (StringUtils.isNotBlank(ibd.getBlockedReferencePropertyName())
                         && ibd.getBlockedBusinessObjectClass() == null) {
                     // if the user didn't specify a class name for the blocked reference, determine it here
-                    ibd.setBlockedBusinessObjectClass(DataDictionary.getAttributeClass(getDataObjectClass(),
+                    ibd.setBlockedBusinessObjectClass(DataDictionaryPropertyUtils.getAttributeClass(getDataObjectClass(),
                             ibd.getBlockedReferencePropertyName()));
                 }
                 ibd.setBlockingReferenceBusinessObjectClass(getBusinessObjectClass());

@@ -1,6 +1,9 @@
 
 
 ##CURRENT
+* RESKC-1596:Allow users to select derived role types when creating roles (#108)
+
+  * Douglas Pace on Tue, 23 Aug 2016 10:57:44 -0700 [View Commit](../../commit/0c6d195ebb3e438efc91b58521e5cf962dafc259)
 * RESKC-1502: support Data Dictionary overrides
   * Travis Schneeberger on Thu, 18 Aug 2016 15:41:07 -0400 [View Commit](../../commit/c4c022a6dcc9ed3a95f97a293f1f243a6ff52d83)
 * Ported XSS, CSRF security fixes and upgraded commons-fileupload
@@ -276,6 +279,10 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1608.0005-kualico
+* RESKC-1502: support Data Dictionary overrides
+  * Travis Schneeberger on Thu, 18 Aug 2016 15:41:07 -0400 [View Commit](../../commit/c4c022a6dcc9ed3a95f97a293f1f243a6ff52d83)
 
 ##rice-2.5.3.1608.0004-kualico
 * No Changes

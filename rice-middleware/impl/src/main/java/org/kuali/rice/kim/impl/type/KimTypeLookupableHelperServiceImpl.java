@@ -99,8 +99,7 @@ public class KimTypeLookupableHelperServiceImpl extends KualiLookupableHelperSer
     		// OR it is not an application role
     		showReturnHref = kimType!=null && 
     			( StringUtils.isBlank( kimType.getServiceName() )
-    					|| (KimFrameworkServiceLocator.getKimTypeService(kimType) instanceof RoleTypeService
-    						&&!((RoleTypeService) KimFrameworkServiceLocator.getKimTypeService(kimType)).isDerivedRoleType() )
+    					|| KimFrameworkServiceLocator.getKimTypeService(kimType) instanceof RoleTypeService
     					);
     	} else{
     		docTypeName = KimConstants.KimUIConstants.KIM_GROUP_DOCUMENT_TYPE_NAME;

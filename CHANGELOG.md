@@ -1,6 +1,9 @@
 
 
 ##CURRENT
+* RESKC-1566:Fix various issues with the KRAD incident report page (#109)
+
+  * Douglas Pace on Thu, 1 Sep 2016 12:05:39 -0700 [View Commit](../../commit/d0713d8b6103013ef199fb6ee3e3a304e6fa5c48)
 * RESKC-1596:Allow users to select derived role types when creating roles (#108)
 
   * Douglas Pace on Tue, 23 Aug 2016 10:57:44 -0700 [View Commit](../../commit/0c6d195ebb3e438efc91b58521e5cf962dafc259)
@@ -279,6 +282,11 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1608.0006-kualico
+* RESKC-1596:Allow users to select derived role types when creating roles (#108)
+
+  * Douglas Pace on Tue, 23 Aug 2016 10:57:44 -0700 [View Commit](../../commit/0c6d195ebb3e438efc91b58521e5cf962dafc259)
 
 ##rice-2.5.3.1608.0005-kualico
 * RESKC-1502: support Data Dictionary overrides

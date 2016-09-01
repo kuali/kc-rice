@@ -21,9 +21,11 @@ import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 import org.kuali.rice.krad.service.KualiExceptionIncidentService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.web.form.IncidentReportForm;
 import org.kuali.rice.krad.web.form.UifFormBase;
+import org.kuali.rice.krad.web.form.UifFormManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -52,6 +54,17 @@ public class IncidentReportController extends UifControllerBase {
         return new IncidentReportForm();
     }
 
+    @ModelAttribute(value = "KualiForm")
+    public UifFormBase initForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IncidentReportForm requestForm = createInitialForm();
+        String formKeyParam = request.getParameter(UifParameters.FORM_KEY);
+        if (StringUtils.isNotBlank(formKeyParam) && GlobalVariables.getUifFormManager() != null) {
+            // retrieves the session form and updates the request from with the session transient attributes
+            GlobalVariables.getUifFormManager().updateFormWithSession(requestForm, formKeyParam);
+        }
+        return requestForm;
+    }
+
     /**
      * Emails the report and closes the incident report screen
      */
@@ -63,7 +76,7 @@ public class IncidentReportController extends UifControllerBase {
                 ((IncidentReportForm) uifForm).createEmailMessage());
 
         // return the close redirect
-        return back(uifForm);
+        return cancel(uifForm, null, request, null);
     }
 
     /**

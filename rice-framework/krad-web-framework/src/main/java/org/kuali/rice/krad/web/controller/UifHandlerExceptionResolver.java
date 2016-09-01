@@ -15,8 +15,11 @@
  */
 package org.kuali.rice.krad.web.controller;
 
+import java.util.UUID;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 import org.kuali.rice.krad.uif.UifConstants;
@@ -27,6 +30,7 @@ import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.form.DocumentFormBase;
 import org.kuali.rice.krad.web.form.IncidentReportForm;
+import org.kuali.rice.krad.web.form.UifFormManager;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.ModelAndViewService;
 import org.springframework.web.servlet.ModelAndView;
@@ -83,19 +87,23 @@ public class UifHandlerExceptionResolver implements org.springframework.web.serv
             incidentViewId = ((DocumentFormBase) form).getViewId();
         }
 
-        if (GlobalVariables.getUifFormManager() != null) {
-            GlobalVariables.getUifFormManager().removeSessionForm(form);
+        UifFormManager uifFormManager = (UifFormManager) request.getSession().getAttribute(UifParameters.FORM_MANAGER);
+        if (uifFormManager == null) {
+            uifFormManager = new UifFormManager();
+            request.getSession().setAttribute(UifParameters.FORM_MANAGER, uifFormManager);
+            GlobalVariables.setUifFormManager(uifFormManager);
+        } else {
+           uifFormManager.removeSessionForm(form);
         }
 
         UserSession userSession = (UserSession) request.getSession().getAttribute(KRADConstants.USER_SESSION_KEY);
         IncidentReportForm incidentReportForm = new IncidentReportForm();
+        incidentReportForm.preBind(request);
         incidentReportForm.setSessionId(request.getSession().getId());
 
         // Set the post url map to the incident report controller and not 
         // the one the exception occurred on
-        String postUrl = request.getRequestURL().toString();
-        postUrl = postUrl.substring(0, postUrl.lastIndexOf("/")) + "/incidentReport";
-        incidentReportForm.setFormPostUrl(postUrl);
+        String postUrl = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.KRAD_URL_KEY) + "/incidentReport";
 
         incidentReportForm.setException(ex);
         incidentReportForm.setIncidentDocId(incidentDocId);
@@ -126,8 +134,10 @@ public class UifHandlerExceptionResolver implements org.springframework.web.serv
         // Set the ajax return type
         incidentReportForm.setAjaxReturnType(UifConstants.AjaxReturnTypes.UPDATEVIEW.getKey());
 
-        incidentReportForm.setRequest(request);
         incidentReportForm.postBind(request);
+        incidentReportForm.setFormPostUrl(postUrl);
+        incidentReportForm.setFormKey(UUID.randomUUID().toString());
+        uifFormManager.addSessionForm(incidentReportForm);
 
         ModelAndView modelAndView = getModelAndViewService().getModelAndView(incidentReportForm, "");
         try {

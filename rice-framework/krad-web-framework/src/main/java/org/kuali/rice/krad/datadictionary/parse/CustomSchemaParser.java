@@ -15,9 +15,9 @@
  */
 package org.kuali.rice.krad.datadictionary.parse;
 
-import com.sun.org.apache.xml.internal.serialize.Method;
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+import org.apache.xml.serialize.Method;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,6 +40,7 @@ import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -579,14 +580,25 @@ public class CustomSchemaParser extends AbstractSingleBeanDefinitionParser {
         OutputFormat format = new OutputFormat(Method.XML, null, false);
         format.setOmitXMLDeclaration(true);
 
-        XMLSerializer serial = new XMLSerializer(stringOut, format);
+        NodeXMLSerializer serial = new NodeXMLSerializer(stringOut, format);
 
         try {
-            serial.serialize(node);
+            serial.serializeNode(node);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         return stringOut.toString();
     }
+
+    private static class NodeXMLSerializer extends XMLSerializer {
+        public NodeXMLSerializer(Writer writer, OutputFormat format ) {
+            super(writer, format);
+        }
+
+        @Override
+        protected void serializeNode(Node node) throws IOException {
+            super.serializeNode(node);
+        }
+    };
 }

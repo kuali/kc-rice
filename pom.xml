@@ -283,10 +283,6 @@
     <jdk.source.version>1.8</jdk.source.version>
     <jdk.target.version>1.8</jdk.target.version>
 
-    <error_prone_core.version>2.0.6</error_prone_core.version>
-    <plexus-compiler-javac.version>2.6</plexus-compiler-javac.version>
-    <plexus-compiler-javac-errorprone.version>2.6</plexus-compiler-javac-errorprone.version>
-
     <scm.connection>scm:git:git://github.com/kuali/kc-rice.git</scm.connection>
     <scm.developerConnection>scm:git:git@github.com:kuali/kc-rice.git</scm.developerConnection>
     <scm.url>https://github.com/kuali/kc-rice</scm.url>
@@ -769,43 +765,101 @@
         </plugins>
       </build>
     </profile>
+
+    <!--
+     uses the java jdk jdeps tool to confirm no internal jdk apis are used.  Some of these apis will be removed in
+     later versions of java.
+     -->
+    <profile>
+        <id>jdeps</id>
+        
+        <activation>
+            <property>
+                <name>enforce-project-quality</name>
+            </property>
+        </activation>
+        
+        <properties>
+            <maven-jdeps-plugin.version>3.0.0</maven-jdeps-plugin.version>
+        </properties>
+        <build>
+            <pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jdeps-plugin</artifactId>
+                        <version>${maven-jdeps-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>ban internal jdk apis</id>
+                                <goals>
+                                    <goal>jdkinternals</goal>
+                                    <goal>test-jdkinternals</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jdeps-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+    
     <!-- enables the error prone compiler for strict compilation -->
     <profile>
-      <id>error-prone</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <configuration>
-                <useIncrementalCompilation>false</useIncrementalCompilation>
-                <source>${project.compile.source}</source>
-                <target>${project.compile.target}</target>
-                <compilerId>javac-with-errorprone</compilerId>
-                <forceJavacCompilerUse>true</forceJavacCompilerUse>
-              </configuration>
-              <dependencies>
-                <dependency>
-                  <groupId>com.google.errorprone</groupId>
-                  <artifactId>error_prone_core</artifactId>
-                  <version>${error_prone_core.version}</version>
-                </dependency>
-                <dependency>
-                  <groupId>org.codehaus.plexus</groupId>
-                  <artifactId>plexus-compiler-javac</artifactId>
-                  <version>${plexus-compiler-javac.version}</version>
-                </dependency>
-                <dependency>
-                  <groupId>org.codehaus.plexus</groupId>
-                  <artifactId>plexus-compiler-javac-errorprone</artifactId>
-                  <version>${plexus-compiler-javac-errorprone.version}</version>
-                </dependency>
-              </dependencies>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
+        <id>error-prone</id>
+        <activation>
+            <property>
+                <name>enforce-project-quality</name>
+            </property>
+        </activation>
+        
+        <properties>
+            <error_prone_core.version>2.0.6</error_prone_core.version>
+            <plexus-compiler-javac.version>2.6</plexus-compiler-javac.version>
+            <plexus-compiler-javac-errorprone.version>2.6</plexus-compiler-javac-errorprone.version>
+            <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        </properties>
+        <build>
+            <pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin.version}</version>
+                        <configuration>
+                            <useIncrementalCompilation>false</useIncrementalCompilation>
+                            <source>${project.compile.source}</source>
+                            <target>${project.compile.target}</target>
+                            <compilerId>javac-with-errorprone</compilerId>
+                            <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.google.errorprone</groupId>
+                                <artifactId>error_prone_core</artifactId>
+                                <version>${error_prone_core.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-compiler-javac</artifactId>
+                                <version>${plexus-compiler-javac.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-compiler-javac-errorprone</artifactId>
+                                <version>${plexus-compiler-javac-errorprone.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </pluginManagement>
+        </build>
     </profile>
   </profiles>
 

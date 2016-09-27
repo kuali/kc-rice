@@ -289,6 +289,14 @@
 * No Changes
 
 
+##rice-2.5.3.1609.0002-kualico
+* RICE-43 - fixed a number of CSS issues and moved to the "kuali" version of fancybox
+  * Eric Westfall on Sun, 25 Sep 2016 23:34:20 -0400 [View Commit](../../commit/ecb5da07d1c67c5fda4319955d4599931e1aa5d3)
+* RICE-43 - added an "isOpen()" method to fancybox
+  * Eric Westfall on Thu, 15 Sep 2016 01:53:44 -0400 [View Commit](../../commit/6de457cb039121bca209aac39fb7976fcb2581c1)
+* RICE-43 - working on downgrading fancybox to the version which is MIT licensed
+  * Eric Westfall on Wed, 14 Sep 2016 01:03:14 -0400 [View Commit](../../commit/a6426bfd95996acf56d3f4c78fc93c3e0c4abf49)
+
 ##rice-2.5.3.1609.0001-kualico
 * RESKC-1566:Fix various issues with the KRAD incident report page (#109)
 

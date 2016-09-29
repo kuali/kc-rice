@@ -33,20 +33,9 @@
     </property>
   </bean>
 
-  <bean id="RuleTemplateAttribute-id" parent="RuleTemplate-id-parentBean"/>
+  <bean id="RuleTemplateAttribute-id" parent="RuleTemplateAttribute-id-parentBean"/>
 
-  <bean id="RuleTemplate-id-parentBean" abstract="true" parent="AttributeDefinition">
-    <property name="shortLabel" value="Id"/>
-    <property name="maxLength" value="30"/>
-    <property name="validationPattern">
-      <bean parent="AnyCharacterValidationPattern"/>
-    </property>
-    <property name="control">
-      <bean parent="TextControlDefinition" p:size="30"/>
-    </property>
-    <property name="name" value="id"/>
-    <property name="label" value="Id"/>
-  </bean>
+  <bean id="RuleTemplateAttribute-id-parentBean" abstract="true" parent="RuleTemplate-id-parentBean"/>
 
   <bean id="RuleTemplateAttribute-required" parent="RuleTemplateAttribute-required-parentBean"/>
 

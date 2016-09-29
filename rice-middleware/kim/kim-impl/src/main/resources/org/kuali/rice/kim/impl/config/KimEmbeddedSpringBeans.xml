@@ -238,7 +238,6 @@
         <value>classpath:org/kuali/rice/kim/document/datadictionary/IdentityManagementPersonDocument.xml</value>
         <value>classpath:org/kuali/rice/kim/document/datadictionary/IdentityManagementRoleDocument.xml</value>
         <value>classpath:org/kuali/rice/kim/document/datadictionary/IdentityManagementGroupDocument.xml</value>
-        <value>classpath:org/kuali/rice/kim/impl/responsibility/ReviewResponsibility.xml</value>
         <value>classpath:org/kuali/rice/kim/document/datadictionary/IdentityManagementGenericPermissionMaintenanceDocument.xml</value>
 
         <value>classpath:org/kuali/rice/kim/impl/identity/address/AddressTypeLookupView.xml</value>

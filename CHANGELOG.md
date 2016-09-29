@@ -289,6 +289,10 @@
 * No Changes
 
 
+##rice-2.5.3.1609.0003-kualico
+* No Changes
+
+
 ##rice-2.5.3.1609.0002-kualico
 * RICE-43 - fixed a number of CSS issues and moved to the "kuali" version of fancybox
   * Eric Westfall on Sun, 25 Sep 2016 23:34:20 -0400 [View Commit](../../commit/ecb5da07d1c67c5fda4319955d4599931e1aa5d3)

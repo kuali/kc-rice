@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* fixing support for document attachments in kns maintenance documents where editing a BO with an existing attachment can cause constraint violations.
+  * Travis Schneeberger on Wed, 5 Oct 2016 15:43:33 -0400 [View Commit](../../commit/140f4fb5fe824abad030b656f8a32537daf51ceb)
 * RICE-43 - fixed a number of CSS issues and moved to the "kuali" version of fancybox
   * Eric Westfall on Sun, 25 Sep 2016 23:34:20 -0400 [View Commit](../../commit/ecb5da07d1c67c5fda4319955d4599931e1aa5d3)
 * RICE-43 - added an "isOpen()" method to fancybox
@@ -286,6 +288,10 @@
   * Gayathri on Thu, 9 Apr 2015 15:03:09 -0700 [View Commit](../../commit/ac7f7f10d76d54315eede9c3ceca0857db2563d7)
 
 ##rice-2.5.4.0-kckualico
+* No Changes
+
+
+##rice-2.5.3.1609.0004-kualico
 * No Changes
 
 

@@ -165,6 +165,16 @@ public class MaintenanceDocumentBase extends org.kuali.rice.krad.maintenance.Mai
                 newAttachment.setAttachmentContent(boAttachment.getAttachmentContent());
                 newAttachment.setContentType(boAttachment.getContentType());
                 newAttachment.setFileName(boAttachment.getFileName());
+
+                //due to a OJB to JPA conversion bug, set some fields that
+                //would normally get set by pre save hooks
+                if (newAttachment.getObjectId() == null) {
+                    newAttachment.setObjectId(UUID.randomUUID().toString());
+                }
+                if(newAttachment.getVersionNumber() == null) {
+                    newAttachment.setVersionNumber(1L);
+                }
+
                 //null out boAttachment file, will be copied back before final save.
                 boAttachment.setAttachmentContent(null);
                 attachment = newAttachment;

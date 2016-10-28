@@ -291,6 +291,10 @@
 * No Changes
 
 
+##rice-2.5.3.1610.0001-kualico
+* fixing support for document attachments in kns maintenance documents where editing a BO with an existing attachment can cause constraint violations.
+  * Travis Schneeberger on Wed, 5 Oct 2016 15:43:33 -0400 [View Commit](../../commit/140f4fb5fe824abad030b656f8a32537daf51ceb)
+
 ##rice-2.5.3.1609.0004-kualico
 * No Changes
 

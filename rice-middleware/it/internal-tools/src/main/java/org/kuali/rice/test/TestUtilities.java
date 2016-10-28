@@ -145,7 +145,7 @@ public final class TestUtilities {
         boolean overrides = true; // default is to just override
         Method m = null;;
         try {
-            m = annotation.getClass().getMethod("overrideSuperClasses", null);
+            m = annotation.annotationType().getMethod("overrideSuperClasses", null);
         } catch (NoSuchMethodException nsme) {
             // do nothing
         }

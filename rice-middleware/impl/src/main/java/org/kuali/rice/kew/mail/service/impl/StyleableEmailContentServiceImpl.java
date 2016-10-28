@@ -140,7 +140,7 @@ public class StyleableEmailContentServiceImpl extends BaseEmailContentServiceImp
 
     protected static void addDelegatorElement(Document doc, Element baseElement, ActionItem actionItem) {
         Element delegatorElement = doc.createElement("delegator");
-        if ( (actionItem.getDelegatorPrincipalId() != null) && (actionItem.getDelegatorPrincipalId() != null) ) {
+        if ( (actionItem.getDelegatorPrincipalId() != null) ) {
             // add empty delegator element
             baseElement.appendChild(delegatorElement);
             return;
@@ -161,7 +161,7 @@ public class StyleableEmailContentServiceImpl extends BaseEmailContentServiceImp
             }
         } else if (actionItem.getDelegatorPrincipalId() != null) {
             delegatorType = "workgroup";
-            delegatorId = actionItem.getDelegatorGroupId().toString();
+            delegatorId = actionItem.getDelegatorGroupId();
             delegatorDisplayValue = KimApiServiceLocator.getGroupService().getGroup(actionItem.getDelegatorGroupId()).getName();
         }
         delegatorElement.setAttribute("type", delegatorType);

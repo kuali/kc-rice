@@ -26,6 +26,7 @@ import static org.junit.Assert.*;
  */
 public class UserOptionsIdTest {
 
+    @SuppressWarnings("SelfEquals")
     @Test
     public void testEquals() throws Exception {
         UserOptionsId options1 = new UserOptionsId("one", "two");

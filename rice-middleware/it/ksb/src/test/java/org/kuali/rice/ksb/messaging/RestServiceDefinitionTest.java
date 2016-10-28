@@ -109,6 +109,7 @@ public class RestServiceDefinitionTest extends KSBTestCase {
     }
     
     @Test
+    @SuppressWarnings("SelfEquals")
     public void testIsSameSuccessWithSameDefinition() {
         assertTrue(this.restDefinition.equals(this.restDefinition));
     }

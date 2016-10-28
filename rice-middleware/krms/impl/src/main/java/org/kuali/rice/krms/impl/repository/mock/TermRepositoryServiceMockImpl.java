@@ -212,7 +212,7 @@ public class TermRepositoryServiceMockImpl implements TermRepositoryService {
         }
         for (TermResolverDefinition info : this.termResolverMap.values()) {
             if (namespace.equals(info.getNamespace())) {
-                if (name.equals(name)) {
+                if (name.equals(info.getName())) {
                     return info;
                 }
             }
@@ -231,7 +231,7 @@ public class TermRepositoryServiceMockImpl implements TermRepositoryService {
         }
         for (TermSpecificationDefinition info : this.termSpecificationMap.values()) {
             if (namespace.equals(info.getNamespace())) {
-                if (name.equals(name)) {
+                if (name.equals(info.getName())) {
                     return info;
                 }
             }

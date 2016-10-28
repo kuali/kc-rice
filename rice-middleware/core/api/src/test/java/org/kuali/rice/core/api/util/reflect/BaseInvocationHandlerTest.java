@@ -38,6 +38,7 @@ public class BaseInvocationHandlerTest {
     }
 
     @Test
+    @SuppressWarnings("SelfEquals")
     public void testEquals() {
 
         // create two different proxies to the same invocation handler

@@ -820,9 +820,9 @@
         </activation>
         
         <properties>
-            <error_prone_core.version>2.0.6</error_prone_core.version>
-            <plexus-compiler-javac.version>2.6</plexus-compiler-javac.version>
-            <plexus-compiler-javac-errorprone.version>2.6</plexus-compiler-javac-errorprone.version>
+            <error_prone_core.version>2.0.13</error_prone_core.version>
+            <plexus-compiler-javac.version>2.7</plexus-compiler-javac.version>
+            <plexus-compiler-javac-errorprone.version>2.7</plexus-compiler-javac-errorprone.version>
             <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         </properties>
         <build>

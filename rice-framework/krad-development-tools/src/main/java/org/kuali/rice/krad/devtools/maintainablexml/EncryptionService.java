@@ -41,6 +41,7 @@ import org.apache.commons.lang.StringUtils;
  * 
  * @author Kuali Rice Team (rice.collab@kuali.org)
  */
+@SuppressWarnings("InsecureCipherMode")
 public class EncryptionService {
 
     public final static String ALGORITHM = "DES/ECB/PKCS5Padding";

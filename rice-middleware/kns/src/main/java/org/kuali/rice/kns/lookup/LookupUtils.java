@@ -124,6 +124,13 @@ public class LookupUtils {
         return null;
     }
 
+    public static boolean isDistinctSearch() {
+        return CoreFrameworkServiceLocator.getParameterService()
+                .getParameterValueAsBoolean(KRADConstants.KNS_NAMESPACE,
+                        KRADConstants.DetailTypes.LOOKUP_PARM_DETAIL_TYPE,
+                        KRADConstants.SystemGroupParameterNames.LOOKUP_RESULTS_DISTINCT);
+    }
+
     /**
      * Parses and returns the lookup result set limit for the passed in BO (if one exists)
      *

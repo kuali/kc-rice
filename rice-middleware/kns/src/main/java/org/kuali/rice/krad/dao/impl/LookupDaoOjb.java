@@ -189,21 +189,25 @@ public class LookupDaoOjb extends PlatformAwareDaoBaseOjb implements LookupDao {
     }
 
     private Collection executeSearch(Class businessObjectClass, Criteria criteria, boolean unbounded, Integer searchResultsLimit) {
-    	Collection searchResults = new ArrayList();
+    	Collection searchResults;
     	Long matchingResultsCount = null;
     	try {
             if (!unbounded && searchResultsLimit == null) {
                 searchResultsLimit = org.kuali.rice.kns.lookup.LookupUtils.getSearchResultsLimit(businessObjectClass);
             }
+
+            final QueryByCriteria ojbCriteria = org.kuali.rice.kns.lookup.LookupUtils.isDistinctSearch() ? QueryFactory.newQuery(businessObjectClass, criteria, true) :
+                    QueryFactory.newQuery(businessObjectClass, criteria);
+
     		// A negative number in searchResultsLimit means the search results should be unlimited.
             if (!unbounded && (searchResultsLimit != null) && searchResultsLimit >= 0) {
-    			matchingResultsCount = new Long(getPersistenceBrokerTemplate().getCount(QueryFactory.newQuery(businessObjectClass, criteria)));
+    			matchingResultsCount = (long) getPersistenceBrokerTemplate().getCount(ojbCriteria);
     			applySearchResultsLimit(businessObjectClass, criteria, getDbPlatform(), searchResultsLimit);
     		}
-    		if ((matchingResultsCount == null) || (matchingResultsCount.intValue() <= searchResultsLimit.intValue())) {
-    			matchingResultsCount = new Long(0);
+    		if ((matchingResultsCount == null) || (matchingResultsCount.intValue() <= searchResultsLimit)) {
+    			matchingResultsCount = 0L;
     		}
-    		searchResults = getPersistenceBrokerTemplate().getCollectionByQuery(QueryFactory.newQuery(businessObjectClass, criteria));
+    		searchResults = getPersistenceBrokerTemplate().getCollectionByQuery(ojbCriteria);
     		// populate Person objects in business objects
     		List bos = new ArrayList();
     		bos.addAll(searchResults);
@@ -211,12 +215,10 @@ public class LookupDaoOjb extends PlatformAwareDaoBaseOjb implements LookupDao {
 
 
     	}
-    	catch (OjbOperationException e) {
+    	catch (OjbOperationException|DataIntegrityViolationException e) {
     		throw new RuntimeException("LookupDaoOjb encountered exception during executeSearch", e);
     	}
-    	catch (DataIntegrityViolationException e) {
-    		throw new RuntimeException("LookupDaoOjb encountered exception during executeSearch", e);
-    	}
+
     	return new CollectionIncomplete(searchResults, matchingResultsCount);
     }
 

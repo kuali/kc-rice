@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* RESKC-1801: supporting the distinct flag for lookups.  When distinct is true, lookup results will not return multiples of the same BO.
+  * Travis Schneeberger on Fri, 28 Oct 2016 17:44:01 -0400 [View Commit](../../commit/2022937387fd759bd57c88250caa1dccc1afb31f)
 * fixing support for document attachments in kns maintenance documents where editing a BO with an existing attachment can cause constraint violations.
   * Travis Schneeberger on Wed, 5 Oct 2016 15:43:33 -0400 [View Commit](../../commit/140f4fb5fe824abad030b656f8a32537daf51ceb)
 * RICE-43 - fixed a number of CSS issues and moved to the "kuali" version of fancybox
@@ -288,6 +290,10 @@
   * Gayathri on Thu, 9 Apr 2015 15:03:09 -0700 [View Commit](../../commit/ac7f7f10d76d54315eede9c3ceca0857db2563d7)
 
 ##rice-2.5.4.0-kckualico
+* No Changes
+
+
+##rice-2.5.3.1610.0002-kualico
 * No Changes
 
 

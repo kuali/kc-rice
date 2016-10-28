@@ -71,7 +71,7 @@ public class PeopleFlowMaintainableImpl extends MaintainableImpl {
 
                 Collections.sort((List) collection, new Comparator<Object>() {
                     public int compare(Object o1, Object o2) {
-                        if ((o1 instanceof PeopleFlowMemberBo) && (o1 instanceof PeopleFlowMemberBo)) {
+                        if ((o1 instanceof PeopleFlowMemberBo) && (o2 instanceof PeopleFlowMemberBo)) {
                             return ((PeopleFlowMemberBo) o1).getPriority() - ((PeopleFlowMemberBo) o2)
                                     .getPriority();
                         }

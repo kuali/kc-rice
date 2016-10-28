@@ -34,6 +34,7 @@ import java.security.MessageDigest;
  * 
  * @author Kuali Rice Team (rice.collab@kuali.org)
  */
+@SuppressWarnings("InsecureCipherMode")
 public class DemonstrationGradeEncryptionServiceImpl implements EncryptionService {
     public final static String ALGORITHM = "DES/ECB/PKCS5Padding";
     public final static String HASH_ALGORITHM = "SHA"; 

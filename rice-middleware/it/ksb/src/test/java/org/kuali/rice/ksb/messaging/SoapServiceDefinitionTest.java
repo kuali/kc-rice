@@ -44,8 +44,9 @@ public class SoapServiceDefinitionTest extends KSBTestCase {
         this.soapDefinition.setService(new ArrayList<String>());
         this.soapDefinition.validate();
     }
-    
+
     @Test
+    @SuppressWarnings("SelfEquals")
     public void testIsSameSuccessWithSameDefinition() {
         assertTrue(this.soapDefinition.equals(this.soapDefinition));
     }

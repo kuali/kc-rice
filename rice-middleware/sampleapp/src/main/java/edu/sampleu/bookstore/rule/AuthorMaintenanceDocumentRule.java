@@ -66,7 +66,7 @@ public class AuthorMaintenanceDocumentRule extends MaintenanceDocumentRuleBase {
 				tempAddress = address;
 				for(Address address2 : addressEntries){
 					if(!tempAddress.equals(address2)){
-						if(tempAddress.getAddressType()!= null && tempAddress.getAddressType() != null && tempAddress.getAddressType().getType().equals(address2.getAddressType().getType())){
+						if(tempAddress.getAddressType()!= null && tempAddress.getAddressType().getType().equals(address2.getAddressType().getType())){
 							System.out.println("Got Same Address Typr");
 							GlobalVariables.getMessageMap().putError(
 									AUTHOR_ENTRIES_PROPERTY_PATH,SAME_ADDRESS_TYPE_ERROR_KEY,

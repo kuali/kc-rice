@@ -233,9 +233,11 @@ public class AuthorizationServiceImplTest extends KIMTestCase {
 		assertNotNull( "returned list may not be null", members );
 		assertEquals("Should have 2 members", 2, members.size());
 		Iterator<RoleMembership> iter = members.iterator();
-		assertTrue("One of those members should be p1.", principal1Id.equals(iter.next().getMemberId()) || principal1Id.equals(iter.next().getMemberId()));
+		RoleMembership a = iter.next();
+		RoleMembership b = iter.next();
+		assertTrue("One of those members should be p1.", principal1Id.equals(a.getMemberId()) || principal1Id.equals(b.getMemberId()));
 	}
-	
+
 //	@Test
 //	public void testGetPermissionsForRole() {
 //		List<PermissionDetailInfo> perms = authorizationService.getPermissionsForRole( "r1" );

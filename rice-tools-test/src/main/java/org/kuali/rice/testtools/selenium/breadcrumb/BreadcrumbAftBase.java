@@ -15,6 +15,7 @@
  */
 package org.kuali.rice.testtools.selenium.breadcrumb;
 
+import com.google.common.primitives.Ints;
 import org.junit.Test;
 import org.kuali.rice.testtools.selenium.WebDriverLegacyITBase;
 import org.openqa.selenium.By;
@@ -79,7 +80,7 @@ public abstract class BreadcrumbAftBase extends WebDriverLegacyITBase {
     protected void testBreadcrumbsShuffled() throws Exception {
         int[] copiedBreadcrumbOrderIndex = Arrays.copyOf(breadcrumbOrderIndexes, breadcrumbOrderIndexes.length);
 
-        Collections.shuffle(Arrays.asList(copiedBreadcrumbOrderIndex));
+        Collections.shuffle(Ints.asList(copiedBreadcrumbOrderIndex));
         for (int i = 0, s = copiedBreadcrumbOrderIndex.length; i < s; i++) {
             jGrowl("Click on Bread crumb index number " + i);
             testBreadcrumb(copiedBreadcrumbOrderIndex[i]);

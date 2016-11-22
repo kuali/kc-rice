@@ -68,7 +68,7 @@
     <checkstyle.suppressions.location>/org/kuali/rice/suppressions.xml</checkstyle.suppressions.location>
     <oracle.jdbc.version>12.1.0.2</oracle.jdbc.version>
     <oracle.jdbc.artifactId>ojdbc7</oracle.jdbc.artifactId>
-    <mysql.jdbc.version>5.1.39</mysql.jdbc.version>
+    <mysql.jdbc.version>5.1.40</mysql.jdbc.version>
     <mysql.jdbc.artifactId>mysql-connector-java</mysql.jdbc.artifactId>
 
     <jmeter.phase>verify</jmeter.phase>
@@ -171,11 +171,11 @@
     <kuali-mvn.version>1.0.2</kuali-mvn.version>
     <log4j.version>1.2.17</log4j.version>
     <mail.version>1.5.6</mail.version>
-    <metrics.version>3.1.2</metrics.version>
+
     <mockito.version>1.10.19</mockito.version>
     <plexus-utils.version>3.0.22</plexus-utils.version>
     <netty.version>3.10.6.Final</netty.version>
-    <powermock.version>1.6.5</powermock.version>
+
     <!-- According to KULRICE-11635 (see comment) we'll need to upgrade this to >= 2.1.4 to get to Spring 4.1-->
     <!-- Quartz 2.0.x is an impacting api and database-level change -->
     <quartz.version>1.8.6</quartz.version>
@@ -209,6 +209,7 @@
     <!-- Plugin versions: -->
 
     <plugin.build-helper.version>1.8</plugin.build-helper.version>
+    <plugin.enforcer.version>1.4.1</plugin.enforcer.version>
     <plugin.gmavenplus.version>1.5</plugin.gmavenplus.version>
     <plugin.http.version>1.0.5</plugin.http.version>
     <plugin.jetty.version>9.2.1.v20140609</plugin.jetty.version>
@@ -217,7 +218,8 @@
     <plugin.selenium.version>2.3</plugin.selenium.version>
     <!-- Pin the tomcat7 plugin to an explicit version -->
     <plugin.tomcat7.version>2.1</plugin.tomcat7.version>
-    <plugin.dependency-check.version>1.4.3</plugin.dependency-check.version>
+    <plugin.dependency-check.version>1.4.4</plugin.dependency-check.version>
+    <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
 
     <!-- Saucelabs settings (aside from version, which is above): -->
 
@@ -815,10 +817,9 @@
         </activation>
         
         <properties>
-            <error_prone_core.version>2.0.13</error_prone_core.version>
-            <plexus-compiler-javac.version>2.7</plexus-compiler-javac.version>
-            <plexus-compiler-javac-errorprone.version>2.7</plexus-compiler-javac-errorprone.version>
-            <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+            <error_prone_core.version>2.0.14</error_prone_core.version>
+            <plexus-compiler-javac.version>2.8.1</plexus-compiler-javac.version>
+            <plexus-compiler-javac-errorprone.version>2.8.1</plexus-compiler-javac-errorprone.version>
         </properties>
         <build>
             <pluginManagement>
@@ -973,6 +974,7 @@
         -->
         <plugin>
           <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${plugin.enforcer.version}</version>
           <executions>
             <execution>
               <id>enforce-banned-dependencies</id>
@@ -1004,6 +1006,9 @@
 
                   <bannedDependencies>
                     <excludes>
+
+                      <exclude>org.kuali.commons</exclude>
+                      <exclude>org.apache.struts</exclude>
 
                       <!--
                       excluding all versions because of https://issues.apache.org/jira/browse/COLLECTIONS-580
@@ -1152,6 +1157,7 @@
                       <include>org.apache.ws.security:wss4j:${wss4j.version}</include>
 
                       <include>commons-collections:commons-collections:${commons-collections.version}</include>
+                      <include>org.apache.struts:*:${struts.version}</include>
                     </includes>
                   </bannedDependencies>
                 </rules>
@@ -1162,6 +1168,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
           <configuration>
             <fork>true</fork>
             <meminitial>512</meminitial>

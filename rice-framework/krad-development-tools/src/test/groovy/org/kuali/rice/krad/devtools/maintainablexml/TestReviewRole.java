@@ -280,7 +280,7 @@ public class TestReviewRole extends PersistableBusinessObjectBase implements Mut
      */
     public String getRoleMemberRoleId() {
         if ( StringUtils.isBlank(roleMemberRoleId) ) {
-            if ( StringUtils.isNotBlank(roleMemberRoleName) && StringUtils.isNotBlank(roleMemberRoleName) ) {
+            if ( StringUtils.isNotBlank(roleMemberRoleNamespaceCode) && StringUtils.isNotBlank(roleMemberRoleName) ) {
                 getRole();
             }
         }

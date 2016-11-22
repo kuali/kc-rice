@@ -115,7 +115,7 @@
 
 
     <dependency>
-      <groupId>org.kuali.commons</groupId>
+      <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
     </dependency>
 
@@ -132,6 +132,12 @@
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <scope>provided</scope>
     </dependency>
 
     <!-- test-scoped dependencies: -->

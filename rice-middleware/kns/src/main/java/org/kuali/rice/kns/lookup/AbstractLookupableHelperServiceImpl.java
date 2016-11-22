@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.Consumer;
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -1247,12 +1247,12 @@ public abstract class AbstractLookupableHelperServiceImpl implements LookupableH
         return areAllValuesOf(elements, propertyName, BigDecimal::new);
     }
 
-    private boolean areAllValuesOf(Collection<?> elements, String propertyName, Function<String,?> stringCtor) {
+    private boolean areAllValuesOf(Collection<?> elements, String propertyName, Consumer<String> stringCtor) {
         return elements.stream().allMatch(el -> {
             final Object val = ObjectUtils.getPropertyValue(el, propertyName);
             if (val instanceof CharSequence) {
                 try {
-                    stringCtor.apply(String.valueOf(val));
+                    stringCtor.accept(String.valueOf(val));
                 } catch (NumberFormatException e) {
                     return false;
                 }

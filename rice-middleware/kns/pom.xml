@@ -137,6 +137,11 @@
       <artifactId>cglib-nodep</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+    </dependency>
+
     <!-- test-scoped dependencies: -->
 
     <dependency>
@@ -144,11 +149,7 @@
       <artifactId>groovy-all</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>

@@ -1,6 +1,8 @@
 
 
 ##CURRENT
+* RESKC-1783: Revert XStream version change
+  * Terry Durkin on Wed, 30 Nov 2016 10:46:02 -0500 [View Commit](../../commit/44f4a42ad314f935b5d4eca510398f458e92bcc7)
 * RESKC-1783: removing unused cas dependency from rice-client-contrib, adding missing dependencies, fixing error prone violations
   * Travis Schneeberger on Tue, 22 Nov 2016 14:21:18 -0500 [View Commit](../../commit/f92295681b5e0a4f54b8a80963e2e2757d9ec35e)
 * RESKC-1783: remove unused properties, update minor versions of several dependencies, align several plugins with kuali research, add several dependencies to the enforcer plugin
@@ -310,6 +312,26 @@
 ##rice-2.5.4.0-kckualico
 * No Changes
 
+
+##rice-2.5.3.1611.0001-kualico
+* RESKC-1783: removing unused cas dependency from rice-client-contrib, adding missing dependencies, fixing error prone violations
+  * Travis Schneeberger on Tue, 22 Nov 2016 14:21:18 -0500 [View Commit](../../commit/f92295681b5e0a4f54b8a80963e2e2757d9ec35e)
+* RESKC-1783: remove unused properties, update minor versions of several dependencies, align several plugins with kuali research, add several dependencies to the enforcer plugin
+  * Travis Schneeberger on Tue, 22 Nov 2016 12:06:26 -0500 [View Commit](../../commit/42be076915c98dab324ef69ca7234a47d7e40cd3)
+* RESKC-1783: Rice dependency upgrades for improved security
+  * Terry Durkin on Tue, 22 Nov 2016 11:46:44 -0500 [View Commit](../../commit/855cdda981ed3737a7c15bd9411c77f49acde746)
+* RICE-47 - fixed last few security issues coming up in owasp dependency check
+  * Eric Westfall on Mon, 17 Oct 2016 01:59:25 -0400 [View Commit](../../commit/e50f22c01b3a59731bbce679642764dd2726a7fb)
+* RICE-47 - removed acegi, upgraded httpclient, upgraded struts, upgraded xstream
+  * Eric Westfall on Wed, 12 Oct 2016 02:02:43 -0400 [View Commit](../../commit/78ad1ae8e1a59c97b760140cecbf73ec3e2211b7)
+* RICE-47 - made a number of changes to address security issues
+
+* javamail
+* groovy
+* gmaven -> gmavenplus
+* beanutils
+* mysql
+  * Eric Westfall on Mon, 3 Oct 2016 02:35:01 -0400 [View Commit](../../commit/c8e5f0044dd673dd282c1c281511e5b4b8d7d9b8)
 
 ##rice-2.5.3.1610.0003-kualico
 * RESKC-1801: supporting the distinct flag for lookups.  When distinct is true, lookup results will not return multiples of the same BO.

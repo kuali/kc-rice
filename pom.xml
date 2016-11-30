@@ -203,7 +203,7 @@
     <!-- need v. 1.4.01 of xml-apis with xercesImpl 2.11.0 -->
     <xml-apis.version>1.4.01</xml-apis.version>
     <xmlunit.version>1.6</xmlunit.version>
-    <xstream.version>1.4.9</xstream.version>
+    <xstream.version>1.2.2</xstream.version>
     <yuicompressor.version>2.4.8</yuicompressor.version>
 
     <!-- Plugin versions: -->

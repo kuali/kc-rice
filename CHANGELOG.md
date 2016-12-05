@@ -313,6 +313,10 @@
 * No Changes
 
 
+##rice-2.5.3.1611.0002-kualico
+* RESKC-1783: Revert XStream version change
+  * Terry Durkin on Wed, 30 Nov 2016 10:46:02 -0500 [View Commit](../../commit/44f4a42ad314f935b5d4eca510398f458e92bcc7)
+
 ##rice-2.5.3.1611.0001-kualico
 * RESKC-1783: removing unused cas dependency from rice-client-contrib, adding missing dependencies, fixing error prone violations
   * Travis Schneeberger on Tue, 22 Nov 2016 14:21:18 -0500 [View Commit](../../commit/f92295681b5e0a4f54b8a80963e2e2757d9ec35e)

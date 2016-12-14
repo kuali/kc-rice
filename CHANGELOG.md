@@ -313,6 +313,10 @@
 * No Changes
 
 
+##rice-2.5.3.1612.0001-kualico
+* No Changes
+
+
 ##rice-2.5.3.1611.0002-kualico
 * RESKC-1783: Revert XStream version change
   * Terry Durkin on Wed, 30 Nov 2016 10:46:02 -0500 [View Commit](../../commit/44f4a42ad314f935b5d4eca510398f458e92bcc7)

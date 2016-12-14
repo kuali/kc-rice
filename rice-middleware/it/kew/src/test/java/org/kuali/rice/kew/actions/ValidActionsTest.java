@@ -164,7 +164,7 @@ public class ValidActionsTest extends KEWTestCase {
 
         for (int j = 0; j < invalidActionsNotAllowed.length; j++) {
             String actionDisallowed = invalidActionsNotAllowed[j];
-            if (validActionsSet.contains(actionDisallowed)) {
+            if (validActionsSet.contains(ActionType.fromCode(actionDisallowed))) {
                 fail("Action '" + KewApiConstants.ACTION_TAKEN_CD.get(actionDisallowed) + "' should not be allowed for user " + networkId);
             }
         }

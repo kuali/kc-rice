@@ -51,7 +51,7 @@ public class EDocLiteServiceImplTest extends KEWTestCase {
         EDocLiteService edls = EdlServiceLocator.getEDocLiteService();
         StyleService styleService = CoreServiceApiServiceLocator.getStyleService();
         //edls.loadXml(new FileInputStream("conf/examples/xml/EDocLiteContent.xml"));
-        assertTrue("Definition not found", edls.getEDocLiteDefinitions().contains("profile"));
+        assertTrue("Definition not found", edls.getEDocLiteDefinition("profile") != null);
         Style defaultStyle = styleService.getStyle("Default");
         assertNotNull("Style not found", defaultStyle);
         assertEquals(1, edls.getEDocLiteAssociations().size());

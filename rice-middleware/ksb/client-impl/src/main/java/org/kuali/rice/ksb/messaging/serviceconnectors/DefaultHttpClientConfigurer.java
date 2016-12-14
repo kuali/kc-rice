@@ -305,7 +305,7 @@ public class DefaultHttpClientConfigurer implements HttpClientConfigurer, Initia
         Map<String, String> httpParams = ConfigContext.getCurrentContextConfig().getPropertiesWithPrefix("http.", false);
 
         for (Map.Entry<String, String> paramEntry : httpParams.entrySet()) {
-            if (!isParamNameSupported(paramEntry.getKey()) && !unsupportedParamsWhitelist.contains(paramEntry)) {
+            if (!isParamNameSupported(paramEntry.getKey()) && !unsupportedParamsWhitelist.contains(paramEntry.getKey())) {
                 LOG.warn("Ignoring unsupported config param \"" + paramEntry.getKey() + "\" with value \"" + paramEntry.getValue() + "\"");
             }
         }

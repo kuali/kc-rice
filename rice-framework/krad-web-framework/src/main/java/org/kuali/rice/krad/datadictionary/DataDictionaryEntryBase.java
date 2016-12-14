@@ -119,9 +119,9 @@ abstract public class DataDictionaryEntryBase extends DictionaryBeanBase impleme
                 throw new DataDictionaryException("invalid (blank) complexAttributeName on " + this);
             }
 
-            if (complexAttributeMap.containsKey(complexAttribute)) {
+            if (complexAttributeMap.containsKey(complexAttributeName)) {
                 throw new DuplicateEntryException("complex attribute '"
-                        + complexAttribute
+                        + complexAttributeName
                         + "' already defined as an complex attribute for class '"
                         + getEntryClass().getName()
                         + "'");

@@ -161,10 +161,10 @@ public class PostProcessorServiceImpl implements PostProcessorService {
                     Document document = documentService.getByDocumentHeaderId(event.getDocumentId());
                     if (document == null) {
                         // only throw an exception if we are not cancelling
-                        if (!KewApiConstants.ACTION_TAKEN_CANCELED.equals(event.getActionTaken())) {
+                        if (!KewApiConstants.ACTION_TAKEN_CANCELED_CD.equals(event.getActionTaken().getActionTaken().getCode())) {
                             LOG.warn("doActionTaken() Unable to load document with id " + event.getDocumentId() +
                                     " using action taken code '" + KewApiConstants.ACTION_TAKEN_CD.get(
-                                    event.getActionTaken().getActionTaken()));
+                                    event.getActionTaken().getActionTaken().getCode()));
                         }
                     } else {
                         document.doActionTaken(event);
@@ -199,10 +199,10 @@ public class PostProcessorServiceImpl implements PostProcessorService {
                     Document document = documentService.getByDocumentHeaderId(event.getDocumentId());
                     if (document == null) {
                         // only throw an exception if we are not cancelling
-                        if (!KewApiConstants.ACTION_TAKEN_CANCELED.equals(event.getActionTaken())) {
+                        if (!KewApiConstants.ACTION_TAKEN_CANCELED_CD.equals(event.getActionTaken().getActionTaken().getCode())) {
                             LOG.warn("afterActionTaken() Unable to load document with id " + event.getDocumentId() +
                                     " using action taken code '" + KewApiConstants.ACTION_TAKEN_CD.get(
-                                    event.getActionTaken().getActionTaken()));
+                                    event.getActionTaken().getActionTaken().getCode()));
                         }
                     } else {
                         document.afterActionTaken(performed, event);

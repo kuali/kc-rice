@@ -265,8 +265,8 @@ public class Validator {
             if (tracer.getValidationStage() == ValidationTrace.START_UP) {
                 ViewLifecycle.getExpressionEvaluator().populatePropertyExpressionsFromGraph((UifDictionaryBean) temp, false);
             }
-            if (((Component) temp).isRender()) {
-                ((DataDictionaryEntry) temp).completeValidation(tracer.getCopy());
+            if (temp.isRender()) {
+                ((Component) temp).completeValidation(tracer.getCopy());
                 runValidationsOnLifecycle(temp, tracer.getCopy());
             }
         }

@@ -446,7 +446,7 @@ public class Header extends ContentElementBase {
         tracer.addBean(this);
 
         // Checks that a correct header level is set
-        String headerLevel = getHeaderLevel().toUpperCase();
+        String headerLevel = getHeaderLevel() != null ? getHeaderLevel().toUpperCase() : "";
         boolean correctHeaderLevel = false;
         if (headerLevel.compareTo("H1") == 0) {
             correctHeaderLevel = true;

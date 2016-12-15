@@ -2234,7 +2234,7 @@ public class View extends ContainerBase {
 
         // Check to insure the binding object path is a valid property
         boolean validDefaultBindingObjectPath = false;
-        if (getDefaultBindingObjectPath() == null) {
+        if (getDefaultBindingObjectPath() == null || getDefaultBindingObjectPath() == "") {
             validDefaultBindingObjectPath = true;
         } else if (DataDictionaryPropertyUtils.isPropertyOf(getFormClass(), getDefaultBindingObjectPath())) {
             validDefaultBindingObjectPath = true;
